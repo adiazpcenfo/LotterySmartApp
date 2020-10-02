@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "500039270712",
+    "firebase_url": "https://lotterysmart.firebaseio.com",
+    "project_id": "lotterysmart",
+    "storage_bucket": "lotterysmart.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:500039270712:android:7057b4502827914e3641cd",
+        "android_client_info": {
+          "package_name": "com.mobile.lotterysmartapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "500039270712-14i337qrv4vo3sv6avtp0n7hcnv9ib9h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoKjHmt-8iK7hHiqkjmVw2XRq41Ew_0a0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "500039270712-14i337qrv4vo3sv6avtp0n7hcnv9ib9h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

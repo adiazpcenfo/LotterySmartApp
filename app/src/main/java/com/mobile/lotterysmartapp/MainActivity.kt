@@ -6,6 +6,10 @@ import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import com.mobile.lotterysmartapp.model.User
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,6 +22,18 @@ class MainActivity : AppCompatActivity() {
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
+        //Firebase database
+        //https://firebase.google.com/docs/database/android/read-and-write#kotlin+ktx
+        val user = User("Franko")
+        val database = Firebase.database.reference
+        database.child("users").child("username").setValue(user.name)
+
+        //Firebase analytics personalized events
+        //https://firebase.google.com/docs/analytics/android/start#kotlin
+        val analytics = FirebaseAnalytics.getInstance(this)
+        val bundle = Bundle()
+        bundle.putString("Message","Application started")
+        analytics.logEvent("InitScreen", bundle)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
