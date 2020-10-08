@@ -6,4 +6,5 @@
     <string name="access">Acceder</string>
     <string name="register">Registrar</string>
     <string name="title_activity_home">HomeActivity</string>
+    <string name="puntos_de_venta">Puntos de venta</string>
 </resources>
