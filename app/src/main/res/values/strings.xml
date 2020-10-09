@@ -6,4 +6,8 @@
     <string name="access">Acceder</string>
     <string name="register">Registrar</string>
     <string name="title_activity_home">HomeActivity</string>
+    <string name="AppTitle">Lottery smart</string>
+    <string name="ForgetPassword">¿Olvidaste tu contraseña?</string>
+    <string name="title_activity_forget_password">ForgetPasswordActivity</string>
+    <string name="RestorePassword">Restablecer contraseña</string>
 </resources>

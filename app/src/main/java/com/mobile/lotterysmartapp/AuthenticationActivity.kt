@@ -38,7 +38,7 @@ class AuthenticationActivity : AppCompatActivity() {
     }
 
     /**
-     * Set process for login
+     * Setup process for login
      *
      * @author Franklin Cardenas
      */
@@ -47,7 +47,7 @@ class AuthenticationActivity : AppCompatActivity() {
 
         //Setup register button
         buttonRegister.setOnClickListener {
-            if (editTextEmail != null && editTextPassword != null) {
+            if (!editTextEmail.text.isNullOrBlank() && !editTextPassword.text.isNullOrBlank()) {
                 FirebaseAuth.getInstance().createUserWithEmailAndPassword(
                     editTextEmail.text.toString(),
                     editTextPassword.text.toString()
@@ -55,15 +55,17 @@ class AuthenticationActivity : AppCompatActivity() {
                     if (it.isSuccessful) {
                         showHome(it.result?.user?.email, Provider.APPLICATION)
                     } else {
-                        alert()
+                        alert("Error", "No se pudo registrar. Intentelo de nuevo.")
                     }
                 }
+            } else {
+                alert("Error", "Ingrese usuario y contrasena.")
             }
         }
 
         //Setup Log In Button
         buttonLogIn.setOnClickListener {
-            if (editTextEmail != null && editTextPassword != null) {
+            if (!editTextEmail.text.isNullOrBlank() && !editTextPassword.text.isNullOrBlank()) {
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(
                     editTextEmail.text.toString(),
                     editTextPassword.text.toString()
@@ -71,12 +73,19 @@ class AuthenticationActivity : AppCompatActivity() {
                     if (it.isSuccessful) {
                         showHome(it.result?.user?.email, Provider.APPLICATION)
                     } else {
-                        alert()
+                        alert("Error", "No se pudo iniciar sesion. Intentelo de nuevo.")
                     }
                 }
+            } else {
+                alert("Error", "Ingrese usuario y contrasena.")
             }
-        }
 
+        }
+        //Setup Forget Password Button
+        buttonForgetPassword.setOnClickListener {
+            val forgetPasswordIntent = Intent(this, ForgetPasswordActivity::class.java).apply {}
+            startActivity(forgetPasswordIntent)
+        }
     }
 
     /**
@@ -95,14 +104,16 @@ class AuthenticationActivity : AppCompatActivity() {
     }
 
     /**
-     * Show alert in case the new account could not be created.
+     * Create an alert.
      *
+     * @param title String
+     * @param message String
      * @author Franklin Cardenas
      */
-    private fun alert() {
+    private fun alert(title : String?, message : String?) {
         val alertBuilder = AlertDialog.Builder(this)
-        alertBuilder.setTitle("Error")
-        alertBuilder.setMessage("Ocurrio un error al procesar su nueva cuenta, por favor intentelo de nuevo.")
+        alertBuilder.setTitle(title)
+        alertBuilder.setMessage(message)
         alertBuilder.setPositiveButton("Aceptar", null)
         val dialog : AlertDialog = alertBuilder.create()
         dialog.show()
