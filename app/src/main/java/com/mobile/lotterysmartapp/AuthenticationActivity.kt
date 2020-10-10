@@ -47,7 +47,7 @@ class AuthenticationActivity : AppCompatActivity() {
 
         //Setup register button
         buttonRegister.setOnClickListener {
-            if (editTextEmail != null && editTextPassword != null) {
+            /*if (editTextEmail != null && editTextPassword != null) {
                 FirebaseAuth.getInstance().createUserWithEmailAndPassword(
                     editTextEmail.text.toString(),
                     editTextPassword.text.toString()
@@ -58,7 +58,12 @@ class AuthenticationActivity : AppCompatActivity() {
                         alert()
                     }
                 }
-            }
+            }else{
+                val user = "adiaz"
+                val email="adiazp@ucenfo.ac.cr"
+                showHome("adiazp@ucenfo.ac.cr" , Provider.APPLICATION)
+            }*/
+            showDrawMantain("adiazp@ucenfo.ac.cr" , Provider.APPLICATION)
         }
 
         //Setup Log In Button
@@ -88,6 +93,14 @@ class AuthenticationActivity : AppCompatActivity() {
      */
     private fun showHome(email : String?, provider : Provider) {
         val homeIntent = Intent(this, HomeActivity::class.java).apply {
+            putExtra(Constants.EMAIL, email)
+            putExtra(Constants.PROVIDER, provider)
+        }
+        startActivity(homeIntent)
+    }
+
+    private fun showDrawMantain(email : String?, provider : Provider) {
+        val homeIntent = Intent(this, DrawActivity::class.java).apply {
             putExtra(Constants.EMAIL, email)
             putExtra(Constants.PROVIDER, provider)
         }

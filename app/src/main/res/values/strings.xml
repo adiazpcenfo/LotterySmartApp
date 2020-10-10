@@ -6,4 +6,13 @@
     <string name="access">Acceder</string>
     <string name="register">Registrar</string>
     <string name="title_activity_home">HomeActivity</string>
+    <string name="drawName">Nombre de Sorteo</string>
+    <string name="name">Nombre</string>
+    <string name="result1">Primer Premio</string>
+    <string name="result2">Segundo Premio</string>
+    <string name="result3">Tercer Premio</string>
+    <string name="drawDate">Fecha de Sorteo</string>
+    <string name="drawMaint">Sorteo</string>
+    <string name="save">Guardar</string>
+    <string name="cancel">Cancelar</string>
 </resources>
