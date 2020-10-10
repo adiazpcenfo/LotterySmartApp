@@ -47,18 +47,21 @@ class AuthenticationActivity : AppCompatActivity() {
 
         //Setup register button
         buttonRegister.setOnClickListener {
-            if (editTextEmail != null && editTextPassword != null) {
-                FirebaseAuth.getInstance().createUserWithEmailAndPassword(
-                    editTextEmail.text.toString(),
-                    editTextPassword.text.toString()
-                ).addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        showHome(it.result?.user?.email, Provider.APPLICATION)
-                    } else {
-                        alert()
-                    }
-                }
-            }
+//            if (editTextEmail != null && editTextPassword != null) {
+//                FirebaseAuth.getInstance().createUserWithEmailAndPassword(
+//                    editTextEmail.text.toString(),
+//                    editTextPassword.text.toString()
+//                ).addOnCompleteListener {
+//                    if (it.isSuccessful) {
+//                        showHome(it.result?.user?.email, Provider.APPLICATION)
+//                    } else {
+//                        alert()
+//                    }
+//                }
+//            }
+            val intent = Intent(this,RegisterUserActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
         }
 
         //Setup Log In Button

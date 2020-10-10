@@ -6,4 +6,14 @@
     <string name="access">Acceder</string>
     <string name="register">Registrar</string>
     <string name="title_activity_home">HomeActivity</string>
+    <string name="registrar_usuario">Registrar usuario</string>
+    <string name="nombre">Nombre</string>
+    <string name="correo_electronico">Correo electronico</string>
+    <string name="confirmar_contrase_a">Confirmar contraseña</string>
+    <string name="contrase_a">Contraseña</string>
+    <string name="apellidos">Apellidos</string>
+    <string name="atr_s">Atrás</string>
+    <string name="siguiente">Siguiente</string>
+    <string name="registrar">Registrar</string>
+
 </resources>
