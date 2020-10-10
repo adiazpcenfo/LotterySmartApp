@@ -41,7 +41,6 @@ class AuthenticationActivity : AppCompatActivity() {
 
         //Setup login page
         setup()
-
     }
 
     /**
@@ -68,7 +67,6 @@ class AuthenticationActivity : AppCompatActivity() {
             } else {
                 alertUtil.simpleAlert(error, userAndPasswordNotPresent, this)
             }
-
         }
         //Setup Forget Password Button
         buttonForgetPassword.setOnClickListener {

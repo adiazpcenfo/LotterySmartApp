@@ -84,8 +84,7 @@ class ForgetPasswordActivity : AppCompatActivity() {
                 badlyFormattedEmail,
                 this
             )
-            else -> alertUtil.simpleAlert(error, couldNotRestartPawword, this
-            )
+            else -> alertUtil.simpleAlert(error, couldNotRestartPawword, this)
         }
     }
 }
