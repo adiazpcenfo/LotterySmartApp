@@ -1,18 +1,37 @@
 package com.mobile.lotterysmartapp
 
-import android.app.AlertDialog
-import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.mobile.lotterysmartapp.model.Provider
-import kotlinx.android.synthetic.main.activity_authentication.*
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.mobile.lotterysmartapp.util.AlertUtil
 import kotlinx.android.synthetic.main.activity_forget_password.*
+import java.lang.Exception
 
+/**
+ * Class in charge of Forget Password Activity.
+ *
+ * @author Franklin Cardenas
+ */
 class ForgetPasswordActivity : AppCompatActivity() {
 
+    private val alertUtil = AlertUtil()
+    private val success = "Proceso completado"
+    private val error = "Error"
+    private val checkEmail =
+        "Revise su correo para seguir con el proceso de reestablecimiento de contraseña."
+    private val couldNotRestartPawword =
+        "No se pudo realizar el proceso de restableblecimiento de contraseña. Intente de nuevo."
+    private val notExistingUser = "Ingrese un usuario existente."
+    private val unregisteredUser = "El usuario no esta registrado en Lottery Smart."
+    private val badlyFormattedEmail = "El correo ingresado no tiene un formato válido"
+
+    /**
+     * On Create method for Authentication Activity.
+     *
+     * @author Franklin Cardenas
+     */
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_forget_password)
@@ -21,12 +40,12 @@ class ForgetPasswordActivity : AppCompatActivity() {
     }
 
     /**
-     * Setup process for restoring password
+     * Setup process for restoring password.
      *
      * @author Franklin Cardenas
      */
     private fun setup() {
-        this.title = "Login"
+        this.title = "Login";
 
         //Setup Restore Password button
         buttonRestorePassword.setOnClickListener {
@@ -35,37 +54,37 @@ class ForgetPasswordActivity : AppCompatActivity() {
                     .sendPasswordResetEmail(editTextEmailForgetPassword.text.toString())
                     .addOnCompleteListener {
                         if (it.isSuccessful) {
-                            alert(
-                                "Realizado!",
-                                "Revise su correo para seguir con el proceso de reestablecimiento de contraseña."
-                            )
-                            this.finish()
+                            alertUtil.simpleAlert(success, checkEmail, this)
                         } else {
-                            alert(
-                                "Error",
-                                "No se pudo realizar el proceso de restableblecimiento de contraseña. Intente de nuevo."
-                            )
+                            displayError(it.exception!!)
                         }
                     }
             } else {
-                alert("Error", "Ingrese un usuario existente.")
+                alertUtil.simpleAlert(error, notExistingUser, this)
             }
         }
     }
 
     /**
-     * Create an alert.
+     * Error handler when Password reset email is not successful.
      *
-     * @param title String
-     * @param message String
+     * @param exception - exception received
      * @author Franklin Cardenas
      */
-    private fun alert(title : String?, message : String?) {
-        val alertBuilder = AlertDialog.Builder(this)
-        alertBuilder.setTitle(title)
-        alertBuilder.setMessage(message)
-        alertBuilder.setPositiveButton("Aceptar", null)
-        val dialog : AlertDialog = alertBuilder.create()
-        dialog.show()
+    private fun displayError(exception : Exception) {
+        when (exception) {
+            is FirebaseAuthInvalidUserException -> alertUtil.simpleAlert(
+                error,
+                unregisteredUser,
+                this
+            )
+            is FirebaseAuthInvalidCredentialsException -> alertUtil.simpleAlert(
+                error,
+                badlyFormattedEmail,
+                this
+            )
+            else -> alertUtil.simpleAlert(error, couldNotRestartPawword, this
+            )
+        }
     }
 }

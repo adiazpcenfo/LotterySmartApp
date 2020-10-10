@@ -1,6 +1,5 @@
 package com.mobile.lotterysmartapp
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +7,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.mobile.lotterysmartapp.model.Constants
 import com.mobile.lotterysmartapp.model.Provider
+import com.mobile.lotterysmartapp.util.AlertUtil
 import kotlinx.android.synthetic.main.activity_authentication.*
 
 /**
@@ -16,6 +16,11 @@ import kotlinx.android.synthetic.main.activity_authentication.*
  * @author Franklin Cardenas
  */
 class AuthenticationActivity : AppCompatActivity() {
+
+    private val alertUtil = AlertUtil()
+    private val couldNotLogin = "No se pudo iniciar sesion. Intentelo de nuevo."
+    private val error = "Error"
+    private val userAndPasswordNotPresent = "Ingrese usuario y contraseña."
 
     /**
      * On Create method for Authentication Activity.
@@ -45,24 +50,6 @@ class AuthenticationActivity : AppCompatActivity() {
     private fun setup() {
         this.title = "Login"
 
-        //Setup register button
-        buttonRegister.setOnClickListener {
-            if (!editTextEmail.text.isNullOrBlank() && !editTextPassword.text.isNullOrBlank()) {
-                FirebaseAuth.getInstance().createUserWithEmailAndPassword(
-                    editTextEmail.text.toString(),
-                    editTextPassword.text.toString()
-                ).addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        showHome(it.result?.user?.email, Provider.APPLICATION)
-                    } else {
-                        alert("Error", "No se pudo registrar. Intentelo de nuevo.")
-                    }
-                }
-            } else {
-                alert("Error", "Ingrese usuario y contrasena.")
-            }
-        }
-
         //Setup Log In Button
         buttonLogIn.setOnClickListener {
             if (!editTextEmail.text.isNullOrBlank() && !editTextPassword.text.isNullOrBlank()) {
@@ -73,11 +60,11 @@ class AuthenticationActivity : AppCompatActivity() {
                     if (it.isSuccessful) {
                         showHome(it.result?.user?.email, Provider.APPLICATION)
                     } else {
-                        alert("Error", "No se pudo iniciar sesion. Intentelo de nuevo.")
+                        alertUtil.simpleAlert(error, couldNotLogin, this)
                     }
                 }
             } else {
-                alert("Error", "Ingrese usuario y contrasena.")
+                alertUtil.simpleAlert(error, userAndPasswordNotPresent, this)
             }
 
         }
@@ -102,26 +89,5 @@ class AuthenticationActivity : AppCompatActivity() {
         }
         startActivity(homeIntent)
     }
-
-    /**
-     * Create an alert.
-     *
-     * @param title String
-     * @param message String
-     * @author Franklin Cardenas
-     */
-    private fun alert(title : String?, message : String?) {
-        val alertBuilder = AlertDialog.Builder(this)
-        alertBuilder.setTitle(title)
-        alertBuilder.setMessage(message)
-        alertBuilder.setPositiveButton("Aceptar", null)
-        val dialog : AlertDialog = alertBuilder.create()
-        dialog.show()
-    }
-
 }
-
-//val user = User("Franko")
-//val database = Firebase.database.reference
-//database.child("users").child("username").setValue(user.name)
 
