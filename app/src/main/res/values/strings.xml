@@ -10,4 +10,5 @@
     <string name="ForgetPassword">¿Olvidaste tu contraseña?</string>
     <string name="title_activity_forget_password">ForgetPasswordActivity</string>
     <string name="RestorePassword">Restablecer contraseña</string>
+    <string name="puntos_de_venta">Puntos de venta</string>
 </resources>
