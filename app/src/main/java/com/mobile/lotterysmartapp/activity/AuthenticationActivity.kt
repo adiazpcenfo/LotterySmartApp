@@ -1,10 +1,11 @@
-package com.mobile.lotterysmartapp
+package com.mobile.lotterysmartapp.activity
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
+import com.mobile.lotterysmartapp.R
 import com.mobile.lotterysmartapp.model.Constants
 import com.mobile.lotterysmartapp.model.Provider
 import com.mobile.lotterysmartapp.util.AlertUtil
@@ -18,7 +19,8 @@ import kotlinx.android.synthetic.main.activity_authentication.*
 class AuthenticationActivity : AppCompatActivity() {
 
     private val alertUtil = AlertUtil()
-    private val couldNotLogin = "No se pudo iniciar sesion. Intentelo de nuevo."
+    private val couldNotLogin =
+        "No se pudo iniciar sesion.\nEmail o constraseña Incorrecta.\nIntentelo de nuevo."
     private val error = "Error"
     private val userAndPasswordNotPresent = "Ingrese usuario y contraseña."
 

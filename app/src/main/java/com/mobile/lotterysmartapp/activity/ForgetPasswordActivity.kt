@@ -1,10 +1,11 @@
-package com.mobile.lotterysmartapp
+package com.mobile.lotterysmartapp.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.mobile.lotterysmartapp.R
 import com.mobile.lotterysmartapp.util.AlertUtil
 import kotlinx.android.synthetic.main.activity_forget_password.*
 import java.lang.Exception
