@@ -1,9 +1,10 @@
-package com.mobile.lotterysmartapp
+package com.mobile.lotterysmartapp.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ListView
 import com.google.firebase.database.*
+import com.mobile.lotterysmartapp.R
 import com.mobile.lotterysmartapp.model.User
 
 class SellerListActivity : AppCompatActivity() {

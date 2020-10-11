@@ -1,4 +1,4 @@
-package com.mobile.lotterysmartapp
+package com.mobile.lotterysmartapp.activity
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import com.mobile.lotterysmartapp.R
 import com.mobile.lotterysmartapp.model.User
 
 class SellerListAdapter(val mCtx: Context, val layoutId: Int, val sellerList: List<User>) :

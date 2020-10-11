@@ -1,13 +1,10 @@
-package com.mobile.lotterysmartapp
+package com.mobile.lotterysmartapp.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.ListView
-import com.google.firebase.database.DatabaseReference
-import com.mobile.lotterysmartapp.model.User
-import kotlinx.android.synthetic.main.activity_authentication.*
+import com.mobile.lotterysmartapp.R
 
 class SearchSellerActivity : AppCompatActivity() {
 
