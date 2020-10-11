@@ -36,11 +36,12 @@ class SellerListActivity : AppCompatActivity() {
                             sellerList.add(seller)
                         }
 
-                        val adapter = SellerListAdapter(
-                            this@SellerListActivity,
-                            R.layout.seller_list,
-                            sellerList
-                        )
+                        val adapter =
+                            SellerListAdapter(
+                                this@SellerListActivity,
+                                R.layout.seller_list,
+                                sellerList
+                            )
                         listView.adapter = adapter
                     }
                 }

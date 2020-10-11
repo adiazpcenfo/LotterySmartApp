@@ -1,39 +1,39 @@
 package com.mobile.lotterysmartapp.model
 
+import android.text.Editable
+
 /**
  * Class that represents User collection on the database.
  *
  * @author Franklin Cardenas
  */
 class User {
-    var email : String
-        get() = this.email
-        set(email) {
-            this.email = email
-        }
-    var name : String
-        get() = this.name
-        set(name) {
-            this.name = name
-        }
-    var middleName : String
-        get() = this.middleName
-        set(middleName) {
-            this.middleName = middleName
-        }
-    var userType : String
-        get() = this.userType
-        set(userType) {
-            this.userType = userType
-        }
-    var coordinatesX : String
-        get() = this.coordinatesX
-        set(coordinatesX) {
-            this.coordinatesX = coordinatesX
-        }
-    var coordinatesY : String
-        get() = this.coordinatesY
-        set(coordinatesY) {
-            this.coordinatesY = coordinatesY
-        }
+    var email = ""
+    var name = ""
+    var middleName = ""
+    var userType = ""
+    var coordinatesX = ""
+    var coordinatesY = ""
+
+    constructor(
+        email: String,
+        name: String,
+        middleName: String,
+        userType: String,
+        coordinatesX: String,
+        coordinatesY: String
+    ){
+        this.email = email
+        this.name = name
+        this.middleName = middleName
+        this.userType = userType
+        this.coordinatesX = coordinatesX
+        this.coordinatesY = coordinatesY
+    }
+
+}
+
+enum class userType(val type:String){
+    SELLER("Vendedor"),
+    BUYER("Comprador")
 }

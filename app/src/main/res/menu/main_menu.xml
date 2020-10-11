@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/home_icon"
+            android:title="Home" />
+
+        <item
+            android:id="@+id/list_sellers"
+            android:icon="@drawable/list_sellers"
+            android:title="Vendedores"/>
+
+        <item
+            android:id="@+id/list_reserved_nums"
+            android:icon="@drawable/list_reserved_nums"
+            android:title="Números reservados" />
+
+        <item
+            android:id="@+id/list_winners"
+            android:icon="@drawable/list_winners"
+            android:title="Números ganadores" />
+    </group>
+
+    <item android:title="Perfil">
+
+        <menu>
+
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/modify_profile"
+                    android:icon="@drawable/configuration"
+                    android:title="Modificar perfil" />
+
+                <item
+                    android:id="@+id/log_out"
+                    android:icon="@drawable/log_out_icon"
+                    android:title="Cerrar sesión" />
+
+            </group>
+        </menu>
+    </item>
+
+</menu>
