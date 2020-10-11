@@ -32,9 +32,9 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
         //Get user and provider from login or register
-        val bundle = intent.extras
-        val email = bundle?.getString(Constants.EMAIL)
-        val provider = bundle?.getString(Constants.PROVIDER)
+        //val bundle = intent.extras
+        //val email = bundle?.getString(Constants.EMAIL)
+        //val provider = bundle?.getString(Constants.PROVIDER)
 
         //Setup process for Home Activity
         setup()
