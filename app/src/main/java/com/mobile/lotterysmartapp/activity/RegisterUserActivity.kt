@@ -1,4 +1,4 @@
-package com.mobile.lotterysmartapp
+package com.mobile.lotterysmartapp.activity
 
 import android.app.AlertDialog
 
@@ -9,18 +9,19 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.mobile.lotterysmartapp.R
 import com.mobile.lotterysmartapp.model.User
 import com.mobile.lotterysmartapp.model.userType
 import kotlinx.android.synthetic.main.activity_register_user.*
 
 
 class RegisterUserActivity : AppCompatActivity() {
-    private val ACCOUNT_SUCCESS = "Su cuenta se registró correctamente."
-    private val VERIFY_PASSWORDS = "Verifique que la contraseña tenga más de 6 caracteres."
-    private val VERIFY_INPUTS = "Por favor verifique que todos los datos sean correctos."
-    private val ACCOUNT_ERROR = "Lo sentimos, su cuenta no se registró correctamente, por favor intente de nuevo."
-    private val ERROR = "¡Error!"
-    private val SUCCES = "¡Éxito!"
+    private val accountSuccess = "Su cuenta se registró correctamente."
+    private val verifyPassword = "Verifique que la contraseña tenga más de 6 caracteres."
+    private val verifyInputs = "Por favor verifique que todos los datos sean correctos."
+    private val accountError = "Lo sentimos, su cuenta no se registró correctamente, por favor intente de nuevo."
+    private val errorAlert = "¡Error!"
+    private val successAlert = "¡Éxito!"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +73,7 @@ class RegisterUserActivity : AppCompatActivity() {
                    textPassword.text.toString()
                ).addOnCompleteListener {
                    if (it.isSuccessful) {
-                       database.child(getRandomString(10)).setValue(
+                       database.child(getRandomString()).setValue(
                            User(
                                textEmail.text.toString(),
                                textName.text.toString(),
@@ -82,16 +83,16 @@ class RegisterUserActivity : AppCompatActivity() {
                                "0"
                            )
                        )
-                       alert(SUCCES, ACCOUNT_SUCCESS)
+                       alert(successAlert, accountSuccess)
                    }
                }.addOnFailureListener{
-                   alert(ERROR, VERIFY_INPUTS)
+                   alert(errorAlert, verifyInputs)
                }
            }else{
-               alert(ERROR, ACCOUNT_ERROR )
+               alert(errorAlert, accountError )
            }
        }else{
-           alert(ERROR, VERIFY_PASSWORDS)
+           alert(errorAlert, verifyPassword)
        }
     }
 
@@ -139,11 +140,12 @@ class RegisterUserActivity : AppCompatActivity() {
     /**
      * Makes a random sequence of Strings
      *
-     * @param length length of the sequence of Strings
+     * @param length size of the sequence of Strings
      *
      * @author Jimena Vega
      */
-    private fun getRandomString(length: Int): String {
+    private fun getRandomString(): String {
+        val length = 10
         val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
         return (1..length).map { allowedChars.random() }.joinToString("")
     }

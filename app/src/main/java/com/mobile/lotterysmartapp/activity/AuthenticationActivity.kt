@@ -51,6 +51,13 @@ class AuthenticationActivity : AppCompatActivity() {
     private fun setup() {
         this.title = "Login"
 
+        //Setup register button
+        buttonRegister.setOnClickListener{
+            val intent = Intent(this,RegisterUserActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
+
         //Setup Log In Button
         buttonLogIn.setOnClickListener {
             if (!editTextEmail.text.isNullOrBlank() && !editTextPassword.text.isNullOrBlank()) {

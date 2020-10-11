@@ -9,9 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RegisterUserActivity"></activity>
         <activity
-            android:name=".AuthenticationActivity"
+            android:name=".menu.main_menu"
+            android:label="@string/title_activity_main_menu"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".activity.RegisterUserActivity" />
+        <activity
+            android:name=".activity.AuthenticationActivity"
             android:label="Lottery Smart"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -23,11 +27,11 @@
         <activity
             android:name=".activity.HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.ForgetPasswordActivity"
             android:label="@string/title_activity_forget_password"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

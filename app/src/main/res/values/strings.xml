@@ -11,4 +11,21 @@
     <string name="title_activity_forget_password">ForgetPasswordActivity</string>
     <string name="RestorePassword">Restablecer contraseña</string>
     <string name="puntos_de_venta">Puntos de venta</string>
+    <string name="registrar">Registrar</string>
+    <string name="contrase_a">Contraseña</string>
+    <string name="confirmar_contrase_a">Confirmar contraseña</string>
+    <string name="nombre">Nombre</string>
+    <string name="apellidos">Apellidos</string>
+    <string name="correo_electr_nico">Correo electrónico</string>
+    <string name="registrar_usuario">Registrar Usuario</string>
+    <string name="title_activity_main_menu">main_menu</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
 </resources>
