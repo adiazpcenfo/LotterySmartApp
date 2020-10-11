@@ -2,6 +2,7 @@ package com.mobile.lotterysmartapp.model
 
 import android.view.ViewParent
 import com.google.firebase.database.IgnoreExtraProperties
+import java.time.LocalDate
 import java.util.*
 
 /**
@@ -11,7 +12,8 @@ import java.util.*
  */
 
 
-data class Draw (var Id: String ="", val state: String="", val name: String="", val result1: String="", val result2: String="", val result3: String=""){
+data class Draw (var Id: String ="", val state: String="", val name: String="", val result1: String="", val result2: String="", val result3: String="",val drawDate: String=""){
+//data class Draw (){
 
     /*var Id : String
         get() = this.Id
@@ -51,4 +53,5 @@ data class Draw (var Id: String ="", val state: String="", val name: String="", 
         }*/
     //( var getId:String, var getName:String, var getResult1: String,var getResult2: String,var getResult3: String, var getState: String)
    // constructor( id:String, name:String,result1: String,result2: String,result3: String,state: String)
+    //constructor( Id: String ="", state: String="",name: String="",result1: String="", result2: String="", result3: String="") : this()
 }
