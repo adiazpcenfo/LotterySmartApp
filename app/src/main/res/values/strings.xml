@@ -32,4 +32,13 @@
     <string name="tu_app_de_loter_a">Tu app de lotería</string>
     <string name="estamos_trabajando">Estamos trabajando....</string>
     <string name="todo">TODO</string>
+    <string name="drawName">Nombre de Sorteo</string>
+    <string name="name">Nombre</string>
+    <string name="result1">Primer Premio</string>
+    <string name="result2">Segundo Premio</string>
+    <string name="result3">Tercer Premio</string>
+    <string name="drawDate">Fecha de Sorteo</string>
+    <string name="drawMaint">Sorteo</string>
+    <string name="save">Guardar</string>
+    <string name="cancel">Cancelar</string>
 </resources>

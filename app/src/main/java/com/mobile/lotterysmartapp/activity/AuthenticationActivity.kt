@@ -96,5 +96,13 @@ class AuthenticationActivity : AppCompatActivity() {
         }
         startActivity(homeIntent)
     }
+
+    private fun showDrawMantain(email : String?, provider : Provider) {
+        val homeIntent = Intent(this, DrawActivity::class.java).apply {
+            putExtra(Constants.EMAIL, email)
+            putExtra(Constants.PROVIDER, provider)
+        }
+        startActivity(homeIntent)
+    }
 }
 
