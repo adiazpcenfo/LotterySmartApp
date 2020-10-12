@@ -7,6 +7,11 @@ import com.google.firebase.database.*
 import com.mobile.lotterysmartapp.model.Inventory
 import com.mobile.lotterysmartapp.model.User
 
+/**
+ * Class in charge of Seller List Activity.
+ *
+ * @author Josue Calderon Varela
+ */
 class SellerListActivity : AppCompatActivity() {
 
 
@@ -15,6 +20,12 @@ class SellerListActivity : AppCompatActivity() {
     lateinit var sellerList: MutableList<Inventory>
     lateinit var userList: MutableList<User>
     lateinit var listView: ListView
+
+    /**
+     *On Create method for SellerListActivity.
+     *
+     * @author Josue Calderón Varela
+     */
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,8 +37,13 @@ class SellerListActivity : AppCompatActivity() {
         ref = FirebaseDatabase.getInstance().getReference("Inventory")
         ref2 = FirebaseDatabase.getInstance().getReference("User")
         loadTable()
-
     }
+
+    /**
+     *Load all data from inventory using Realtime Database with specific filter
+     *
+     * @author Josue Calderón Varela
+     */
 
     fun loadTable() {
 

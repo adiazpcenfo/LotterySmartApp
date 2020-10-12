@@ -10,6 +10,11 @@ import com.google.firebase.database.*
 import com.mobile.lotterysmartapp.model.Inventory
 import com.mobile.lotterysmartapp.model.User
 
+/**
+ * Class in charge of Seller List Adapter.
+ *
+ * @author Josue Calderon Varela
+ */
 class SellerListAdapter(
     val mCtx: Context,
     val layoutId: Int,
@@ -21,6 +26,17 @@ class SellerListAdapter(
     lateinit var userList: MutableList<User>
 
 
+    /**
+     * Load data into a custom listView to be used in a main listView
+     * Get data from firebase to use a user data and complete an specific textView into a custom
+     * listView.
+     *
+     * @author Josue Calderon Varela
+     * @param position sellerList position
+     * @param convertView view
+     * @param parent ViewGroup
+     * @return data view
+     */
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)
         val view: View = layoutInflater.inflate(layoutId, null)
