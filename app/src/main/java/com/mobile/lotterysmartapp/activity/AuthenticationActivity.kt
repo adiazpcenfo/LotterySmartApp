@@ -1,13 +1,14 @@
-package com.mobile.lotterysmartapp
+package com.mobile.lotterysmartapp.activity
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
+import com.mobile.lotterysmartapp.R
 import com.mobile.lotterysmartapp.model.Constants
 import com.mobile.lotterysmartapp.model.Provider
+import com.mobile.lotterysmartapp.util.AlertUtil
 import kotlinx.android.synthetic.main.activity_authentication.*
 
 /**
@@ -16,6 +17,12 @@ import kotlinx.android.synthetic.main.activity_authentication.*
  * @author Franklin Cardenas
  */
 class AuthenticationActivity : AppCompatActivity() {
+
+    private val alertUtil = AlertUtil()
+    private val couldNotLogin =
+        "No se pudo iniciar sesion.\nEmail o constraseña Incorrecta.\nIntentelo de nuevo."
+    private val error = "Error"
+    private val userAndPasswordNotPresent = "Ingrese usuario y contraseña."
 
     /**
      * On Create method for Authentication Activity.
@@ -34,11 +41,10 @@ class AuthenticationActivity : AppCompatActivity() {
 
         //Setup login page
         setup()
-
     }
 
     /**
-     * Set process for login
+     * Setup process for login
      *
      * @author Franklin Cardenas
      */
@@ -46,24 +52,15 @@ class AuthenticationActivity : AppCompatActivity() {
         this.title = "Login"
 
         //Setup register button
-        buttonRegister.setOnClickListener {
-            if (editTextEmail != null && editTextPassword != null) {
-                FirebaseAuth.getInstance().createUserWithEmailAndPassword(
-                    editTextEmail.text.toString(),
-                    editTextPassword.text.toString()
-                ).addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        showHome(it.result?.user?.email, Provider.APPLICATION)
-                    } else {
-                        alert()
-                    }
-                }
-            }
+        buttonRegister.setOnClickListener{
+            val intent = Intent(this,RegisterUserActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
         }
 
         //Setup Log In Button
         buttonLogIn.setOnClickListener {
-            if (editTextEmail != null && editTextPassword != null) {
+            if (!editTextEmail.text.isNullOrBlank() && !editTextPassword.text.isNullOrBlank()) {
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(
                     editTextEmail.text.toString(),
                     editTextPassword.text.toString()
@@ -71,12 +68,18 @@ class AuthenticationActivity : AppCompatActivity() {
                     if (it.isSuccessful) {
                         showHome(it.result?.user?.email, Provider.APPLICATION)
                     } else {
-                        alert()
+                        alertUtil.simpleAlert(error, couldNotLogin, this)
                     }
                 }
+            } else {
+                alertUtil.simpleAlert(error, userAndPasswordNotPresent, this)
             }
         }
-
+        //Setup Forget Password Button
+        buttonForgetPassword.setOnClickListener {
+            val forgetPasswordIntent = Intent(this, ForgetPasswordActivity::class.java).apply {}
+            startActivity(forgetPasswordIntent)
+        }
     }
 
     /**
@@ -94,23 +97,12 @@ class AuthenticationActivity : AppCompatActivity() {
         startActivity(homeIntent)
     }
 
-    /**
-     * Show alert in case the new account could not be created.
-     *
-     * @author Franklin Cardenas
-     */
-    private fun alert() {
-        val alertBuilder = AlertDialog.Builder(this)
-        alertBuilder.setTitle("Error")
-        alertBuilder.setMessage("Ocurrio un error al procesar su nueva cuenta, por favor intentelo de nuevo.")
-        alertBuilder.setPositiveButton("Aceptar", null)
-        val dialog : AlertDialog = alertBuilder.create()
-        dialog.show()
-    }
-
+//    private fun showDrawMantain(email : String?, provider : Provider) {
+//        val homeIntent = Intent(this, DrawActivity::class.java).apply {
+//            putExtra(Constants.EMAIL, email)
+//            putExtra(Constants.PROVIDER, provider)
+//        }
+//        startActivity(homeIntent)
+//    }
 }
-
-//val user = User("Franko")
-//val database = Firebase.database.reference
-//database.child("users").child("username").setValue(user.name)
 
