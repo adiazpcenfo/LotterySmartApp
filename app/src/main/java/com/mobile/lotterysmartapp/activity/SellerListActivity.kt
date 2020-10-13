@@ -1,25 +1,16 @@
-package com.mobile.lotterysmartapp
+package com.mobile.lotterysmartapp.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Spinner
 import com.google.firebase.database.*
+import com.mobile.lotterysmartapp.R
 import com.mobile.lotterysmartapp.model.Draw
 import com.mobile.lotterysmartapp.model.Inventory
-import com.mobile.lotterysmartapp.model.User
 
-/**
- * Class in charge of Seller List Activity.
- *
- * @author Josue Calderon Varela
- */
 class SellerListActivity : AppCompatActivity() {
-
-
     lateinit var ref: DatabaseReference
     lateinit var ref2: DatabaseReference
     lateinit var sellerList: MutableList<Inventory>
@@ -64,7 +55,17 @@ class SellerListActivity : AppCompatActivity() {
 
             override fun onDataChange(snapshot: DataSnapshot) {
 
-                var numbersOptions = arrayOf("Seleccionar número")
+                var numbersOptions = arrayListOf("Seleccionar número")
+
+                for (i: Number in 0 until 100) {
+                    numbersOptions.add(i.toString())
+                }
+
+                numberSpinner.adapter = ArrayAdapter<String>(
+                    this@SellerListActivity,
+                    android.R.layout.simple_list_item_1,
+                    numbersOptions
+                )
 
                 if (snapshot.exists()) {
                     sellerList.clear()
@@ -74,11 +75,12 @@ class SellerListActivity : AppCompatActivity() {
                             sellerList.add(inventory)
                         }
 
-                        val adapter = SellerListAdapter(
-                            this@SellerListActivity,
-                            R.layout.seller_list,
-                            sellerList
-                        )
+                        val adapter =
+                            SellerListAdapter(
+                                this@SellerListActivity,
+                                R.layout.seller_list,
+                                sellerList
+                            )
                         listView.adapter = adapter
                     }
                 }
@@ -88,9 +90,14 @@ class SellerListActivity : AppCompatActivity() {
 
     }
 
+    /**
+     *Fill spinner with draw name data
+     *
+     * @author Josue Calderón Varela
+     */
     fun spinner() {
 
-        var ar = arrayListOf("")
+        var ar = arrayListOf("Seleccionar sorteo")
 
         ref2.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
@@ -101,12 +108,10 @@ class SellerListActivity : AppCompatActivity() {
 
 
                 if (snapshot.exists()) {
-                    drawList.clear()
                     for (d in snapshot.children) {
                         val draw = d.getValue(Draw::class.java)
                         if (draw != null) {
                             ar.add(draw.name)
-
                             drawSpinnerSelect.adapter = ArrayAdapter<String>(
                                 this@SellerListActivity,
                                 android.R.layout.simple_list_item_1,
