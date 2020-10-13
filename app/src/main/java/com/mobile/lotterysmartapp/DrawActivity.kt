@@ -63,12 +63,21 @@ class DrawActivity : AppCompatActivity() {
 
             getLastRegister()
 
-            val draw = Draw("","ACT",editTextName.text.toString(),
+            /*val draw = Draw("","ACT",editTextName.text.toString(),
                 editTextResult1.text.toString(),
                 editTextResult2.text.toString(),
                 editTextResult3.text.toString(),
                 editTextDrawDate.text.toString()
-            )
+            )*/
+
+            val draw = Draw()
+            draw.id=""
+            draw.name=editTextName.text.toString()
+            draw.result1=editTextResult1.text.toString()
+            draw.result2=editTextResult2.text.toString()
+            draw.result3=editTextResult3.text.toString()
+            draw.drawDate=editTextDrawDate.text.toString()
+            draw.state = "ACT"
 
             if(validateForm(draw)){
 
@@ -78,7 +87,7 @@ class DrawActivity : AppCompatActivity() {
 
 
                 if (key != null) {
-                    draw.Id = key
+                    draw.id = key
                     //guarda el valor
                     database.child("Draw").child(key).setValue(draw)
                 }
