@@ -1,31 +1,23 @@
-package com.mobile.lotterysmartapp
+package com.mobile.lotterysmartapp.activity
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Context
-import android.content.Intent
-import android.inputmethodservice.Keyboard
 import android.os.Bundle
 import android.os.PersistableBundle
-import android.text.method.TextKeyListener.clear
-import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.mobile.lotterysmartapp.model.Constants
+import com.mobile.lotterysmartapp.R
 import com.mobile.lotterysmartapp.model.Draw
-import com.mobile.lotterysmartapp.model.Provider
 import kotlinx.android.synthetic.main.activity_draw_maintenance.*
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
-import javax.xml.datatype.DatatypeConstants.MONTHS
 
 class DrawActivity : AppCompatActivity() {
 

@@ -32,7 +32,7 @@
             android:label="@string/title_activity_forget_password"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity 
-        android:name=".DrawActivity" 
+        android:name=".activity.DrawActivity"
         android:label="DrawActivity" 
         android:theme="@style/AppTheme.NoActionBar" />
     </application>

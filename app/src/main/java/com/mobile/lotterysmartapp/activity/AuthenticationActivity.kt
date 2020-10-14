@@ -40,19 +40,20 @@ class AuthenticationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authentication)
 
+        //Check active session
+        session()
+
         //Set up startup analytics
         val analytics = FirebaseAnalytics.getInstance(this)
         val bundle = Bundle()
         bundle.putString("Message", "Application started")
         analytics.logEvent("InitScreen", bundle)
-
         setup()
-
-        session()
     }
 
+
     /**
-     * Makes authentication layout visible.
+     * Makes authentication layout visible at startup.
      *
      * @author Franklin Cardenas
      */
@@ -71,7 +72,7 @@ class AuthenticationActivity : AppCompatActivity() {
         setupRegisterButton()
         setupLoginButton()
         setupForgetPasswordButton()
-        setupGoogleSigninButton()
+        setupGoogleSignInButton()
     }
 
     /**
@@ -91,7 +92,7 @@ class AuthenticationActivity : AppCompatActivity() {
      *
      * @author Franklin Cardenas
      */
-    private fun setupGoogleSigninButton() {
+    private fun setupGoogleSignInButton() {
         buttonGoogleSignIn.setOnClickListener {
             val googleConfiguration =
                 GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -174,7 +175,6 @@ class AuthenticationActivity : AppCompatActivity() {
             authenticationLayout.visibility = View.INVISIBLE
             showHome(email, Provider.valueOf(provider))
         }
-
     }
 
     /**
@@ -209,7 +209,6 @@ class AuthenticationActivity : AppCompatActivity() {
             }
         }
     }
-
 
 //    private fun showDrawMantain(email : String?, provider : Provider) {
 //        val homeIntent = Intent(this, DrawActivity::class.java).apply {
