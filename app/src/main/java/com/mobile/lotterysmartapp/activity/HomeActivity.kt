@@ -182,6 +182,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         preferences.apply()
 
         FirebaseAuth.getInstance().signOut()
-        onBackPressed()
+        finish()
     }
 }
