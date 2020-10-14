@@ -5,8 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.mobile.lotterysmartapp.R
 import com.mobile.lotterysmartapp.model.Constants
 import com.mobile.lotterysmartapp.model.Provider
@@ -25,6 +29,7 @@ class AuthenticationActivity : AppCompatActivity() {
         "No se pudo iniciar sesion.\nEmail o constraseña Incorrecta.\nIntentelo de nuevo."
     private val error = "Error"
     private val userAndPasswordNotPresent = "Ingrese usuario y contraseña."
+    private val googleSignInId = 100
 
     /**
      * On Create method for Authentication Activity.
@@ -66,6 +71,7 @@ class AuthenticationActivity : AppCompatActivity() {
         setupRegisterButton()
         setupLoginButton()
         setupForgetPasswordButton()
+        setupGoogleSigninButton()
     }
 
     /**
@@ -77,6 +83,24 @@ class AuthenticationActivity : AppCompatActivity() {
         buttonForgetPassword.setOnClickListener {
             val forgetPasswordIntent = Intent(this, ForgetPasswordActivity::class.java).apply {}
             startActivity(forgetPasswordIntent)
+        }
+    }
+
+    /**
+     * Setup for Forget My Password Button.
+     *
+     * @author Franklin Cardenas
+     */
+    private fun setupGoogleSigninButton() {
+        buttonGoogleSignIn.setOnClickListener {
+            val googleConfiguration =
+                GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestIdToken(getString(R.string.default_web_client_id)).requestEmail()
+                    .build()
+            val googleClient = GoogleSignIn.getClient(this, googleConfiguration)
+            googleClient.signOut()
+            authenticationLayout.visibility = View.INVISIBLE
+            startActivityForResult(googleClient.signInIntent, googleSignInId)
         }
     }
 
@@ -152,6 +176,40 @@ class AuthenticationActivity : AppCompatActivity() {
         }
 
     }
+
+    /**
+     * Checks the result from Google Sign In Activity.
+     *
+     * @author Franklin Cardenas
+     */
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == googleSignInId) {
+
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            val account = task.getResult(ApiException::class.java)
+
+            try {
+                if (account != null) {
+                    val credential = GoogleAuthProvider
+                        .getCredential(account.idToken, null)
+
+                    FirebaseAuth.getInstance().signInWithCredential(credential)
+                        .addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                showHome(account.email ?: "", Provider.GOOGLE)
+                            } else {
+                                alertUtil.simpleAlert(error, couldNotLogin, this)
+                            }
+                        }
+                }
+            } catch (e: ApiException) {
+                alertUtil.simpleAlert(error, couldNotLogin, this)
+            }
+        }
+    }
+
 
 //    private fun showDrawMantain(email : String?, provider : Provider) {
 //        val homeIntent = Intent(this, DrawActivity::class.java).apply {
