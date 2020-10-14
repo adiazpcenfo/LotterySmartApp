@@ -8,4 +8,5 @@ package com.mobile.lotterysmartapp.model
 object Constants {
     const val EMAIL = "email"
     const val PROVIDER = "provider"
+    const val NAME = "name"
 }
