@@ -15,6 +15,8 @@ class User {
     var coordinatesX = ""
     var coordinatesY = ""
 
+    constructor()
+
     constructor(
         email: String,
         name: String,

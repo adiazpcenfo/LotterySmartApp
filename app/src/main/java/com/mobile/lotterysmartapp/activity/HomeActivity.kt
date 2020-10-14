@@ -21,6 +21,7 @@ import com.mobile.lotterysmartapp.R
  */
 class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+    //Declaration of the variables for the menu
     lateinit var drawerLayout : DrawerLayout
     lateinit var navigationView: NavigationView
     lateinit var toolbar: Toolbar
@@ -46,6 +47,8 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         //Setup process for Home Activity
         setup()
+
+        //Setup function for the menu
         setupMenu()
 
     }
@@ -59,6 +62,11 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
+    /**
+     * Setup method for the menu
+     *
+     * @author Jimena Vega
+     */
     private fun setupMenu(){
         drawerLayout=findViewById(R.id.drawer_layout);
         navigationView=findViewById(R.id.nav_view);
@@ -75,6 +83,13 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navigationView.setCheckedItem(R.id.nav_home)
     }
 
+    /**
+     * Method that redirects the user to the view selected
+     *
+     *@param menuItem stores the value of the option selected
+     *
+     * @author Jimena Vega
+     */
     override fun onNavigationItemSelected( menuItem: MenuItem): Boolean {
         var intentMenu = Intent()
         intentMenu.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -106,6 +121,11 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
+    /**
+     * Hides the menu when pressed
+     *
+     * @author Jimena Vega
+     */
     override fun onBackPressed() {
         if(drawerLayout.isDrawerOpen(GravityCompat.START)){
             drawerLayout.closeDrawer(GravityCompat.START)
