@@ -21,7 +21,7 @@
     <string name="registrar_usuario">Registrar Usuario</string>
     <string name="title_activity_main_menu">main_menu</string>
     <string name="navigation_drawer_open">Abrir drawer de navegacion</string>
-    <string name="navigation_drawer_close">Cerrar drawee de navegacion</string>
+    <string name="navigation_drawer_close">Cerrar drawer de navegacion</string>
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>

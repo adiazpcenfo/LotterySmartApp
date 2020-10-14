@@ -22,12 +22,11 @@ import com.mobile.lotterysmartapp.R
 class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     //Declaration of the variables for the menu
-    lateinit var drawerLayout : DrawerLayout
-    lateinit var navigationView: NavigationView
-    lateinit var toolbar: Toolbar
-    lateinit var menu: Menu
-    lateinit var textView: TextView
-
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navigationView: NavigationView
+    private lateinit var toolbar: Toolbar
+    private lateinit var menu: Menu
+    private lateinit var textView: TextView
 
 
     /**
@@ -35,7 +34,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
      *
      * @author Franklin Cardenas
      */
-    override fun onCreate(savedInstanceState : Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         setSupportActionBar(findViewById(R.id.toolbar))
@@ -67,20 +66,25 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
      *
      * @author Jimena Vega
      */
-    private fun setupMenu(){
-        drawerLayout=findViewById(R.id.drawer_layout);
-        navigationView=findViewById(R.id.nav_view);
-        textView=findViewById(R.id.textView);
-        toolbar=findViewById(R.id.toolbar);
+    private fun setupMenu() {
+        drawerLayout = findViewById(R.id.drawer_layout)
+        navigationView = findViewById(R.id.nav_view)
+        textView = findViewById(R.id.textView)
+        toolbar = findViewById(R.id.toolbar)
 
         setSupportActionBar(toolbar)
 
         navigationView.bringToFront()
-        val toggle = ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close)
+        val toggle = ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         navigationView.setNavigationItemSelectedListener(this)
-        navigationView.setCheckedItem(R.id.nav_home)
     }
 
     /**
@@ -90,34 +94,49 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
      *
      * @author Jimena Vega
      */
-    override fun onNavigationItemSelected( menuItem: MenuItem): Boolean {
+    override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         var intentMenu = Intent()
         intentMenu.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        when (menuItem.itemId){
+        when (menuItem.itemId) {
 
             //Send to home option
-            R.id.nav_view->{
-                
+            R.id.nav_home -> {
+                intentMenu = Intent(this, HomeActivity::class.java)
+                startActivity(intentMenu)
             }
 
             //Send to seller list option
-            R.id.sellerList-> {
+            R.id.list_sellers -> {
+                intentMenu = Intent(this, SellerListActivity::class.java)
+                startActivity(intentMenu)
+                drawerLayout.closeDrawer(GravityCompat.START)
+            }
 
+
+            //Send to reserved nums option
+            R.id.list_reserved_nums -> {
 
             }
 
-            //Send to reserved nums option
-            //Code here
-
             //Send to nums winners option
-            //Code here
+            R.id.list_winners -> {
+
+            }
+
 
             //Send to modify profile option
-            //Code here
+            R.id.modify_profile -> {
+
+            }
+
 
             //Logout user option
-            //Code here
+            R.id.log_out -> {
+
+            }
+
         }
+
         return true
     }
 
@@ -127,9 +146,9 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
      * @author Jimena Vega
      */
     override fun onBackPressed() {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
-        }else  {
+        } else {
             super.onBackPressed()
         }
     }
