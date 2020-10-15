@@ -1,5 +1,7 @@
 package com.mobile.lotterysmartapp.activity
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import android.widget.*
@@ -90,7 +92,7 @@ class SellerListActivity : AppCompatActivity() {
     }
 
     /**
-     *Fill spinner with numbers (0...100) and get value from spinner
+     *Fill spinner with numbers (0...99) and get value from spinner
      *
      * @author Josue Calderón Varela
      */
@@ -135,8 +137,15 @@ class SellerListActivity : AppCompatActivity() {
      * @author Josue Calderón Varela
      */
     fun search() {
+
         buttonSearch.setOnClickListener() {
-            loadTable()
+
+            if (numSelectedValue == "Número" || drawSelectedValue == "Sorteo") {
+                alert()
+            } else {
+                loadTable()
+            }
+
         }
     }
 
@@ -199,6 +208,31 @@ class SellerListActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    /**
+     *Create alert to validate empty draw and number spinner value
+     *
+     * @author Josue Calderón Varela
+     */
+    private fun alert() {
+
+        val builder = AlertDialog.Builder(this)
+
+        builder.setTitle("Datos vacíos")
+        builder.setMessage("Seleccionar sorteo y número para realizar la búsqueda.")
+
+        builder.setPositiveButton(android.R.string.yes) { dialog, which ->
+
+            Toast.makeText(
+                applicationContext,
+                android.R.string.yes, Toast.LENGTH_SHORT
+            ).show()
+
+        }
+
+        builder.show()
+
     }
 }
 
