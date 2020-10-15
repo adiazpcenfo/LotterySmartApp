@@ -1,6 +1,7 @@
 package com.mobile.lotterysmartapp.activity
 
 import android.app.AlertDialog
+import android.content.Intent
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,6 +11,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.mobile.lotterysmartapp.R
+import com.mobile.lotterysmartapp.model.Constants
+import com.mobile.lotterysmartapp.model.Provider
 import com.mobile.lotterysmartapp.model.User
 import com.mobile.lotterysmartapp.model.userType
 import kotlinx.android.synthetic.main.activity_register_user.*
@@ -84,6 +87,7 @@ class RegisterUserActivity : AppCompatActivity() {
                            )
                        )
                        alert(successAlert, accountSuccess)
+                       showHome(textEmail.text.toString(), textName.text.toString() )
                    }
                }.addOnFailureListener{
                    alert(errorAlert, verifyInputs)
@@ -148,6 +152,32 @@ class RegisterUserActivity : AppCompatActivity() {
         val length = 10
         val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
         return (1..length).map { allowedChars.random() }.joinToString("")
+    }
+
+    /**
+     * Show home screen and pass it the user credentials.
+     *
+     * @author Franklin Cardenas
+     * @param email user email
+     * @param provider Account provider
+     */
+    private fun showHome(email : String?, name : String?) {
+        val homeIntent = Intent(this, HomeActivity::class.java).apply {
+            putExtra(Constants.EMAIL, email)
+            putExtra(Constants.NAME, name)
+        }
+        startActivity(homeIntent)
+    }
+
+    /**
+     * Send the user to the login view when the back button is used
+     *
+     * @author Jimena Vega
+     */
+    override fun onBackPressed() {
+        val intentToBack = Intent(this,AuthenticationActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intentToBack)
     }
 }
 
