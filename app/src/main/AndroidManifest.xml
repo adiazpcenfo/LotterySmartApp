@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.SellerListActivity"></activity>
+        <activity android:name=".activity.TypeUserActivity"></activity>
+        <activity android:name=".activity.RegisterSellerActivity" />
+        <activity android:name=".activity.SellerListActivity" />
         <activity android:name=".activity.SearchSellerActivity" />
         <activity android:name=".activity.RegisterUserActivity" />
         <activity
@@ -30,10 +32,10 @@
             android:name=".activity.ForgetPasswordActivity"
             android:label="@string/title_activity_forget_password"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity 
-        android:name=".DrawActivity" 
-        android:label="DrawActivity" 
-        android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".DrawActivity"
+            android:label="DrawActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

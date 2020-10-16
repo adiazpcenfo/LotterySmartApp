@@ -41,4 +41,9 @@
     <string name="drawMaint">Sorteo</string>
     <string name="save">Guardar</string>
     <string name="cancel">Cancelar</string>
+    <string name="quiero_ser_comprador">Quiero ser cliente</string>
+    <string name="tipo_de_usuario">Seleccione el tipo de usuario:</string>
+    <string name="quiero_ser_vendedor">Quiero ser vendedor</string>
+    <string name="bienvenido_a_lottery_smart">Bienvenido a Lottery Smart</string>
+    <string name="podr_s_registrar_tu_puesto_de_loter_a_reservar_n_meros_para_tus_clientes_y_mucho_m_s">Podrás registrar tu puesto de lotería, reservar números para tus clientes y ¡mucho más!</string>
 </resources>
