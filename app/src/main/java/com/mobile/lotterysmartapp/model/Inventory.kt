@@ -6,44 +6,74 @@ package com.mobile.lotterysmartapp.model
  * @author Franklin Cardenas
  */
 class Inventory {
-    var Id : Long
-        get() = this.Id
-        set(value) {
-            this.Id = value
+
+    constructor(
+        Id: Long,
+        drawId: String,
+        userEmail: String,
+        state: String,
+        number: Int,
+        series: Int,
+        fractions: Int,
+        availableFractions: Int
+    ) {
+        this.Id = Id
+        this.drawId = drawId
+        this.userEmail = userEmail
+        this.state = state
+        this.number = number
+        this.series = series
+        this.fractions = fractions
+        this.availableFractions = availableFractions
+    }
+
+    constructor()
+
+    var Id: Long = 0L
+        get() = field        // getter
+        set(value) {         // setter
+            field = value
         }
-    var drawId : String
-        get() = this.drawId
-        set(drawId) {
-            this.drawId = drawId
+
+    var drawId: String = ""
+        get() = field        // getter
+        set(value) {         // setter
+            field = value
         }
-    var userEmail : String
-        get() = this.userEmail
-        set(userEmail) {
-            this.userEmail = userEmail
+
+    var userEmail: String = ""
+        get() = field        // getter
+        set(value) {         // setter
+            field = value
         }
-    var state : String
-        get() = this.state
-        set(state) {
-            this.state = state
+
+    var state: String = ""
+        get() = field        // getter
+        set(value) {         // setter
+            field = value
         }
-    var number : Int
-        get() = this.number
-        set(number) {
-            this.number = number
+
+    var number: Int = 0
+        get() = field        // getter
+        set(value) {         // setter
+            field = value
         }
-    var series : Int
-        get() = this.series
-        set(series) {
-            this.series = series
+
+    var series: Int = 0
+        get() = field        // getter
+        set(value) {         // setter
+            field = value
         }
-    var fractions : Int
-        get() = this.fractions
-        set(fractions) {
-            this.fractions = fractions
+
+    var fractions: Int = 0
+        get() = field        // getter
+        set(value) {         // setter
+            field = value
         }
-    var availableFractions : Int
-        get() = this.availableFractions
-        set(availableFractions) {
-            this.availableFractions = availableFractions
+
+    var availableFractions: Int = 0
+        get() = field        // getter
+        set(value) {         // setter
+            field = value
         }
 }
