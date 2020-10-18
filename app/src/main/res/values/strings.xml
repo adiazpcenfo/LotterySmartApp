@@ -46,4 +46,10 @@
     <string name="quiero_ser_vendedor">Quiero ser vendedor</string>
     <string name="bienvenido_a_lottery_smart">Bienvenido a Lottery Smart</string>
     <string name="podr_s_registrar_tu_puesto_de_loter_a_reservar_n_meros_para_tus_clientes_y_mucho_m_s">Podrás registrar tu puesto de lotería, reservar números para tus clientes y ¡mucho más!</string>
+    <string name="modificar_perfil">Modificar perfil</string>
+    <string name="guardar">Guardar</string>
+    <string name="atr_s">Atrás</string>
+    <string name="registrar_vendedor">Registrar vendedor</string>
+    <string name="la_contrase_a_debe_contener_m_s_de_6_caracteres">**La contraseña debe contener más de 6 caracteres.</string>
+    <string name="su_ubicaci_n">Su ubicación:</string>
 </resources>
