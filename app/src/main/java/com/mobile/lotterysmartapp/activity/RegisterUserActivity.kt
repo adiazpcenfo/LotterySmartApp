@@ -175,8 +175,8 @@ class RegisterUserActivity : AppCompatActivity() {
      * @author Jimena Vega
      */
     override fun onBackPressed() {
-        val intentToBack = Intent(this,AuthenticationActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        val intentToBack = Intent(this,TypeUserActivity::class.java)
+        intentToBack.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intentToBack)
     }
 }
