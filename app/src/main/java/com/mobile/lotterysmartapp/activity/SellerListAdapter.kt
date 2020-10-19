@@ -66,7 +66,7 @@ class SellerListAdapter(
                             userList.add(user)
 
                             name.text = user.name
-                            email.text = seller.userEmail
+                            email.text = seller.series
                         }
                     }
                 }
