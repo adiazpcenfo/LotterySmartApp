@@ -75,6 +75,10 @@ class SellerListActivity : AppCompatActivity() {
                     val inventory = s.getValue(Inventory::class.java)
                     if (inventory != null && inventory.drawName == drawSelectedValue && inventory.number == numSelectedValue) {
                         sellerList.add(inventory)
+                    }else{
+
+                        alertNotExist()
+
                     }
                 }
 
@@ -221,6 +225,31 @@ class SellerListActivity : AppCompatActivity() {
 
         builder.setTitle("Datos vacíos")
         builder.setMessage("Seleccionar sorteo y número para realizar la búsqueda.")
+
+        builder.setPositiveButton(android.R.string.yes) { dialog, which ->
+
+            Toast.makeText(
+                applicationContext,
+                android.R.string.yes, Toast.LENGTH_SHORT
+            ).show()
+
+        }
+
+        builder.show()
+
+    }
+
+    /**
+     *Create alert for when there are no results
+     *
+     * @author Josue Calderón Varela
+     */
+    private fun alertNotExist() {
+
+        val builder = AlertDialog.Builder(this)
+
+        builder.setTitle("No está disponible")
+        builder.setMessage("El número buscado no se encuentra disponible.")
 
         builder.setPositiveButton(android.R.string.yes) { dialog, which ->
 
