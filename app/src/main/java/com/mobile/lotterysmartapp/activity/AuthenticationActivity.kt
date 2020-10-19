@@ -75,11 +75,6 @@ class AuthenticationActivity : AppCompatActivity() {
         setupGoogleSignInButton()
     }
 
-        //Setup register button
-        buttonRegister.setOnClickListener{
-            val intent = Intent(this,TypeUserActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
     /**
      * Setup for Forget My Password Button.
      *
@@ -143,7 +138,7 @@ class AuthenticationActivity : AppCompatActivity() {
      */
     private fun setupRegisterButton() {
         buttonRegister.setOnClickListener {
-            val intent = Intent(this, RegisterUserActivity::class.java)
+            val intent = Intent(this, TypeUserActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }

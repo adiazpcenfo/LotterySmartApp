@@ -8,17 +8,17 @@ package com.mobile.lotterysmartapp.model
 class Inventory {
 
     constructor(
-        Id: Long,
-        drawId: String,
+        Id: String,
+        drawName: String,
         userEmail: String,
         state: String,
-        number: Int,
-        series: Int,
-        fractions: Int,
-        availableFractions: Int
+        number: String,
+        series: String,
+        fractions: String,
+        availableFractions: String
     ) {
         this.Id = Id
-        this.drawId = drawId
+        this.drawName = drawName
         this.userEmail = userEmail
         this.state = state
         this.number = number
@@ -29,13 +29,13 @@ class Inventory {
 
     constructor()
 
-    var Id: Long = 0L
+    var Id: String = ""
         get() = field        // getter
         set(value) {         // setter
             field = value
         }
 
-    var drawId: String = ""
+    var drawName: String = ""
         get() = field        // getter
         set(value) {         // setter
             field = value
@@ -53,25 +53,25 @@ class Inventory {
             field = value
         }
 
-    var number: Int = 0
+    var number: String = ""
         get() = field        // getter
         set(value) {         // setter
             field = value
         }
 
-    var series: Int = 0
+    var series: String = ""
         get() = field        // getter
         set(value) {         // setter
             field = value
         }
 
-    var fractions: Int = 0
+    var fractions: String = ""
         get() = field        // getter
         set(value) {         // setter
             field = value
         }
 
-    var availableFractions: Int = 0
+    var availableFractions: String = ""
         get() = field        // getter
         set(value) {         // setter
             field = value
