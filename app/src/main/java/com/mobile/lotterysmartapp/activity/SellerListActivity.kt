@@ -1,7 +1,6 @@
 package com.mobile.lotterysmartapp.activity
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import android.widget.*
@@ -11,6 +10,10 @@ import com.mobile.lotterysmartapp.R
 import com.mobile.lotterysmartapp.model.Draw
 import com.mobile.lotterysmartapp.model.Inventory
 import kotlinx.android.synthetic.main.activity_seller_list.*
+import java.text.DecimalFormat
+import kotlin.math.acos
+import kotlin.math.cos
+import kotlin.math.sin
 
 
 class SellerListActivity : AppCompatActivity() {
@@ -23,6 +26,7 @@ class SellerListActivity : AppCompatActivity() {
     lateinit var query: Query
     var numSelectedValue: String = ""
     var drawSelectedValue: String = ""
+    var rangeSelected: String = ""
     var queryListener: ValueEventListener? = null
 
     /**
@@ -44,7 +48,9 @@ class SellerListActivity : AppCompatActivity() {
 
         drawSpinner()
         numberSpinner()
+        rangeSeekBar()
         search()
+        println(distance(9.906309, -84.014143, 9.913842, -84.042573))
 
     }
 
@@ -151,6 +157,40 @@ class SellerListActivity : AppCompatActivity() {
             }
 
         }
+    }
+
+    /**
+     *Select range to find a number
+     *
+     * @author Josue Calderón Varela
+     */
+    fun rangeSeekBar() {
+
+        var startPoint = 0
+        var endPoint = 0
+
+        seekBarRange.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+
+                rangeTxt.text = progress.toString()
+                rangeSelected = progress.toString()
+
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                if (seekBar != null) {
+                    startPoint = seekBar.progress
+                }
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                if (seekBar != null) {
+                    endPoint = seekBar.progress
+                }
+            }
+
+        })
+
     }
 
     /**
@@ -262,6 +302,34 @@ class SellerListActivity : AppCompatActivity() {
 
         builder.show()
 
+    }
+
+    fun distance(
+        lat1: Double,
+        lon1: Double,
+        lat2: Double,
+        lon2: Double
+    ): String {
+        val theta = lon1 - lon2
+        var dist = (sin(deg2rad(lat1))
+                * sin(deg2rad(lat2))
+                + (cos(deg2rad(lat1))
+                * cos(deg2rad(lat2))
+                * cos(deg2rad(theta))))
+        dist = acos(dist)
+        dist = rad2deg(dist)
+        dist *= 60 * 1.1515
+        val numeroFormateado = DecimalFormat("#.0")
+
+        return numeroFormateado.format(dist)
+    }
+
+    private fun deg2rad(deg: Double): Double {
+        return deg * Math.PI / 180.0
+    }
+
+    private fun rad2deg(rad: Double): Double {
+        return rad * 180.0 / Math.PI
     }
 }
 
