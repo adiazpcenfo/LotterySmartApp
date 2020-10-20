@@ -55,12 +55,6 @@ class DrawActivity : AppCompatActivity() {
 
             getLastRegister()
 
-            /*val draw = Draw("","ACT",editTextName.text.toString(),
-                editTextResult1.text.toString(),
-                editTextResult2.text.toString(),
-                editTextResult3.text.toString(),
-                editTextDrawDate.text.toString()
-            )*/
 
             val draw = Draw()
             draw.id=""
@@ -194,5 +188,7 @@ class DrawActivity : AppCompatActivity() {
         val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy ", Locale.ENGLISH)
         val date = LocalDate.parse(dateS, formatter)
         return date//java.sql.Timestamp.valueOf(date.toString())
+
+
     }
 }

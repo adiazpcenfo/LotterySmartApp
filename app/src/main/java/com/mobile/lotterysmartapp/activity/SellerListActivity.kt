@@ -57,7 +57,7 @@ class SellerListActivity : AppCompatActivity() {
 
     fun loadTable() {
 
-        query = ref.orderByChild("number").equalTo(numSelectedValue)
+        query = ref.orderByChild("number").equalTo(numSelectedValue.toString())
         query = ref.orderByChild("drawName").equalTo(drawSelectedValue)
 
         queryListener?.let { query.addValueEventListener(it) }
@@ -73,7 +73,7 @@ class SellerListActivity : AppCompatActivity() {
                 for (s in snapshot.children) {
 
                     val inventory = s.getValue(Inventory::class.java)
-                    if (inventory != null && inventory.drawName == drawSelectedValue && inventory.number == numSelectedValue) {
+                    if (inventory != null && inventory.drawName == drawSelectedValue && inventory.number == numSelectedValue.toInt()) {
                         sellerList.add(inventory)
                     }
                 }
