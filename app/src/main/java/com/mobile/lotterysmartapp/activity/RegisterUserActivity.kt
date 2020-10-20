@@ -86,8 +86,8 @@ class RegisterUserActivity : AppCompatActivity() {
                                "0"
                            )
                        )
-                       alert(successAlert, accountSuccess)
-                       showHome(textEmail.text.toString(), textName.text.toString() )
+                       showHome(textEmail.text.toString(),  Provider.APPLICATION)
+                       clearForm()
                    }
                }.addOnFailureListener{
                    alert(errorAlert, verifyInputs)
@@ -130,6 +130,9 @@ class RegisterUserActivity : AppCompatActivity() {
     /**
      * Show alert in case the new account could not be created.
      *
+     * @param title a string with the title to show
+     * @param message a string with the message to show
+     *
      * @author Franklin Cardenas
      */
     private fun alert(title: String?, message: String?) {
@@ -139,6 +142,19 @@ class RegisterUserActivity : AppCompatActivity() {
         alertBuilder.setPositiveButton("Aceptar", null)
         val dialog: AlertDialog = alertBuilder.create()
         dialog.show()
+    }
+
+    /**
+     * Clear the inputs from the form.
+     *
+     * @author Jimena Vega
+     */
+    private fun clearForm(){
+        textName.text.clear()
+        textMiddleName.text.clear()
+        textEmail.text.clear()
+        textPassword.text.clear()
+        textConfirmPassword.text.clear()
     }
 
     /**
@@ -161,20 +177,21 @@ class RegisterUserActivity : AppCompatActivity() {
      * @param email user email
      * @param provider Account provider
      */
-    private fun showHome(email : String?, name : String?) {
+    private fun showHome(email : String?, provider: Provider) {
         val homeIntent = Intent(this, HomeActivity::class.java).apply {
             putExtra(Constants.EMAIL, email)
-            putExtra(Constants.NAME, name)
+            putExtra(Constants.PROVIDER, provider.toString())
         }
         startActivity(homeIntent)
     }
 
     /**
-     * Send the user to the login view when the back button is used
+     * Send the user to the type of user view when the back button is used
      *
      * @author Jimena Vega
      */
     override fun onBackPressed() {
+        clearForm()
         val intentToBack = Intent(this,TypeUserActivity::class.java)
         intentToBack.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intentToBack)
