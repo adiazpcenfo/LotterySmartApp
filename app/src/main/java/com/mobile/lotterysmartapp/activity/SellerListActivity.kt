@@ -1,33 +1,51 @@
 package com.mobile.lotterysmartapp.activity
 
+import android.Manifest
 import android.app.AlertDialog
+import android.content.pm.PackageManager
+import android.location.Geocoder
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.motion.widget.Debug.getLocation
+import androidx.core.app.ActivityCompat
 import com.google.firebase.database.*
 import com.mobile.lotterysmartapp.R
 import com.mobile.lotterysmartapp.model.Draw
 import com.mobile.lotterysmartapp.model.Inventory
+import com.mobile.lotterysmartapp.model.User
 import kotlinx.android.synthetic.main.activity_seller_list.*
+import kotlinx.coroutines.delay
 import java.text.DecimalFormat
+import java.util.*
 import kotlin.math.acos
 import kotlin.math.cos
 import kotlin.math.sin
 
-
 class SellerListActivity : AppCompatActivity() {
     lateinit var ref: DatabaseReference
     lateinit var ref2: DatabaseReference
+    lateinit var ref3: DatabaseReference
     lateinit var sellerList: ArrayList<Inventory>
     lateinit var listView: ListView
     lateinit var drawSpinner: Spinner
     lateinit var numberSpinner: Spinner
+    lateinit var seekBarRange: SeekBar
     lateinit var query: Query
     var numSelectedValue: String = ""
     var drawSelectedValue: String = ""
-    var rangeSelected: String = ""
+    var latitudeValue = 0.0
+    var longitudeValue = 0.0
+    var rangeSelected: Int = 0
+    var finalDistance = 0
     var queryListener: ValueEventListener? = null
+    private var locationManager: LocationManager? = null
+
 
     /**
      *On Create method for SellerListActivity.
@@ -43,17 +61,72 @@ class SellerListActivity : AppCompatActivity() {
         listView = findViewById(R.id.sellerList)
         drawSpinner = findViewById(R.id.drawSpinner)
         numberSpinner = findViewById(R.id.numberSpinner)
+        seekBarRange = findViewById(R.id.seekBarRange)
+
         ref = FirebaseDatabase.getInstance().getReference("Inventory")
         ref2 = FirebaseDatabase.getInstance().getReference("Draw")
+        ref3 = FirebaseDatabase.getInstance().getReference("User")
+
+        locationManager = getSystemService(LOCATION_SERVICE) as LocationManager?
+
+
+        try {
+
+            locationManager?.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER,
+                5000,
+                5f,
+                locationListener
+            )
+        } catch (ex: SecurityException) {
+            Log.d("myTag", "Security Exception, no location available")
+        }
+
+
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+
+            getLocation()
+
+        } else {
+
+            ActivityCompat.requestPermissions(
+                this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
+
+                , 100
+            )
+        }
 
         drawSpinner()
         numberSpinner()
         rangeSeekBar()
         search()
-        println(distance(9.906309, -84.014143, 9.913842, -84.042573))
 
     }
 
+    val locationListener: LocationListener = object : LocationListener {
+        override fun onLocationChanged(location: Location) {
+
+            try {
+                val geocoder = Geocoder(this@SellerListActivity, Locale.getDefault())
+                val addresses =
+                    geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                var latV = addresses[0].latitude
+                var longV = addresses[0].longitude
+                latitudeValue = latV
+                longitudeValue = longV
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
+        override fun onProviderEnabled(provider: String) {}
+        override fun onProviderDisabled(provider: String) {}
+    }
 
     /**
      *Load all data from inventory using Realtime Database with specific filter
@@ -61,7 +134,7 @@ class SellerListActivity : AppCompatActivity() {
      * @author Josue Calderón Varela
      */
 
-    fun loadTable() {
+    private fun loadTable() {
 
         query = ref.orderByChild("number").equalTo(numSelectedValue)
         query = ref.orderByChild("drawName").equalTo(drawSelectedValue)
@@ -77,36 +150,67 @@ class SellerListActivity : AppCompatActivity() {
 
                 sellerList.clear()
                 for (s in snapshot.children) {
+                    for (u in snapshot.children) {
 
-                    val inventory = s.getValue(Inventory::class.java)
-                    if (inventory != null && inventory.drawName == drawSelectedValue && inventory.number == numSelectedValue) {
-                        sellerList.add(inventory)
-                    }else{
+                        val inventory = s.getValue(Inventory::class.java)
+                        val user = u.getValue(User::class.java)
 
-                        alertNotExist()
+                        if (inventory != null && user != null && inventory.drawName == drawSelectedValue && inventory.number == numSelectedValue && getDistance() <= rangeSelected
+                        ) {
+                            sellerList.add(inventory)
+                        } else {
+
+                            alertNotExist()
+
+                        }
 
                     }
+
+                    val adapter =
+                        SellerListAdapter(
+                            this@SellerListActivity,
+                            R.layout.seller_list,
+                            sellerList
+                        )
+                    listView.adapter = adapter
+                    adapter.notifyDataSetChanged()
+
                 }
-
-                val adapter =
-                    SellerListAdapter(
-                        this@SellerListActivity,
-                        R.layout.seller_list,
-                        sellerList
-                    )
-                listView.adapter = adapter
-                adapter.notifyDataSetChanged()
-
             }
         }
     }
+
+    fun getDistance():Int{
+
+        ref3.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    for (u in snapshot.children) {
+                        val user = u.getValue(User::class.java)
+                        if (user != null) {
+                            var distanceValue = distance(latitudeValue, longitudeValue, user.coordinatesX, user.coordinatesY)
+                            finalDistance = distanceValue
+                        }
+                    }
+                }
+            }
+        })
+
+        return finalDistance
+
+    }
+
 
     /**
      *Fill spinner with numbers (0...99) and get value from spinner
      *
      * @author Josue Calderón Varela
      */
-    fun numberSpinner() {
+    private fun numberSpinner() {
 
         var numbersOptions = arrayListOf("Número")
 
@@ -138,6 +242,8 @@ class SellerListActivity : AppCompatActivity() {
 
                 }
             }
+
+
     }
 
 
@@ -146,13 +252,17 @@ class SellerListActivity : AppCompatActivity() {
      *
      * @author Josue Calderón Varela
      */
-    fun search() {
+    private fun search() {
 
         buttonSearch.setOnClickListener() {
 
-            if (numSelectedValue == "Número" || drawSelectedValue == "Sorteo") {
+
+
+            if (numSelectedValue == "Número" || drawSelectedValue == "Sorteo" || rangeSelected == 0) {
                 alert()
             } else {
+                getDistance()
+                Thread.sleep(5_000)
                 loadTable()
             }
 
@@ -164,16 +274,20 @@ class SellerListActivity : AppCompatActivity() {
      *
      * @author Josue Calderón Varela
      */
-    fun rangeSeekBar() {
+    private fun rangeSeekBar() {
 
         var startPoint = 0
         var endPoint = 0
 
-        seekBarRange.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+        seekBarRange.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(
+                seekBar: SeekBar?,
+                progress: Int,
+                fromUser: Boolean
+            ) {
 
-                rangeTxt.text = progress.toString()
-                rangeSelected = progress.toString()
+                rangeTxt.text = ("$progress km")
+                rangeSelected = progress
 
             }
 
@@ -309,7 +423,7 @@ class SellerListActivity : AppCompatActivity() {
         lon1: Double,
         lat2: Double,
         lon2: Double
-    ): String {
+    ): Int {
         val theta = lon1 - lon2
         var dist = (sin(deg2rad(lat1))
                 * sin(deg2rad(lat2))
@@ -319,9 +433,9 @@ class SellerListActivity : AppCompatActivity() {
         dist = acos(dist)
         dist = rad2deg(dist)
         dist *= 60 * 1.1515
-        val numeroFormateado = DecimalFormat("#.0")
+        val format = DecimalFormat("#")
 
-        return numeroFormateado.format(dist)
+        return format.format(dist).toInt()
     }
 
     private fun deg2rad(deg: Double): Double {

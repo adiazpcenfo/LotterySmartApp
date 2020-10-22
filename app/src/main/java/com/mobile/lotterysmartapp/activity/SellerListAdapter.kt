@@ -26,7 +26,6 @@ class SellerListAdapter(
     lateinit var ref: DatabaseReference
     lateinit var userList: MutableList<User>
 
-
     /**
      * Load data into a custom listView to be used in a main listView
      * Get data from firebase to use a user data and complete an specific textView into a custom
@@ -62,7 +61,7 @@ class SellerListAdapter(
                     userList.clear()
                     for (s in snapshot.children) {
                         val user = s.getValue(User::class.java)
-                        if (user != null && seller.userEmail == user.email) {
+                        if (user != null && seller.userEmail == user.email && user.userType == "Vendedor") {
                             userList.add(user)
 
                             name.text = user.name
@@ -74,4 +73,5 @@ class SellerListAdapter(
         })
         return view
     }
+
 }

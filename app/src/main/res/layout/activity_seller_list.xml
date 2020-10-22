@@ -102,11 +102,11 @@
 
     <TextView
         android:id="@+id/rangeTxt"
-        android:layout_width="30sp"
+        android:layout_width="45sp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="32dp"
-        android:text="1"
+        android:text="1 km"
         app:layout_constraintBottom_toTopOf="@+id/buttonSearch"
         app:layout_constraintEnd_toEndOf="parent" />
 
