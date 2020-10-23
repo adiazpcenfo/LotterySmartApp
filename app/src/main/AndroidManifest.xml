@@ -16,7 +16,7 @@
         <activity android:name=".activity.TypeUserActivity" />
         <activity android:name=".activity.RegisterSellerActivity" />
         <activity android:name=".activity.SellerListActivity" />
-        <activity android:name=".activity.SearchSellerActivity" />
+<!--        <activity android:name=".activity.SearchSellerActivity" />-->
         <activity android:name=".activity.RegisterUserActivity" />
         <activity
             android:name=".activity.AuthenticationActivity"
@@ -36,10 +36,10 @@
             android:name=".activity.ForgetPasswordActivity"
             android:label="@string/title_activity_forget_password"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity 
-        android:name=".activity.DrawActivity"
-        android:label="DrawActivity" 
-        android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.DrawActivity"
+            android:label="DrawActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

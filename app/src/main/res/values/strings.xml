@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">LotterySmartApp</string>
-    <string name ="preferences_file">com.mobile.lotterySmart.PREFERENCE_FILE_KEY</string>
+    <string name="preferences_file">com.mobile.lotterySmart.PREFERENCE_FILE_KEY</string>
     <string name="action_settings">Settings</string>
     <string name="password">Contraseña</string>
     <string name="email">Correo</string>
@@ -55,5 +55,5 @@
     <string name="registrar_vendedor">Registrar vendedor</string>
     <string name="la_contrase_a_debe_contener_m_s_de_6_caracteres">**La contraseña debe contener más de 6 caracteres.</string>
     <string name="su_ubicaci_n">Su ubicación:</string>
-    <string name="Google_Signin">Accede con Google</string>
+    <string name="modificar_informaci_n">Modificar información</string>
 </resources>

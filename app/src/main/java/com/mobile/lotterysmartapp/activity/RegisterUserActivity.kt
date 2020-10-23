@@ -76,14 +76,16 @@ class RegisterUserActivity : AppCompatActivity() {
                    textPassword.text.toString()
                ).addOnCompleteListener {
                    if (it.isSuccessful) {
-                       database.child(getRandomString()).setValue(
+                       var id = getRandomString()
+                       database.child(id).setValue(
                            User(
+                               id,
                                textEmail.text.toString(),
                                textName.text.toString(),
                                textMiddleName.text.toString(),
                                userType,
-                               "0",
-                               "0"
+                               0.0,
+                               0.0
                            )
                        )
                        showHome(textEmail.text.toString(),  Provider.APPLICATION)
