@@ -2,6 +2,7 @@ package com.mobile.lotterysmartapp.activity
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -20,22 +21,23 @@ class ModifyUserActivity : AppCompatActivity() {
     private lateinit var tempUser: User
     private var email: String? = null
     private val userType = com.mobile.lotterysmartapp.model.userType.BUYER.type
-    private val saveData = "Se guardaron los nuevos datos."
-    private val successAlert = "¡Éxito!"
     private val nullData = "No se ha modificado la información."
     private val nullAlert = "¡No hay datos para modificar!"
+    private val saveData = "Se guardaron los nuevos datos."
+    private val successAlert = "¡Éxito!"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_modify_user)
 
+        //Initialize variables
         preferences =
             getSharedPreferences(getString(R.string.preferences_file), Context.MODE_PRIVATE)
         email = preferences.getString(Constants.EMAIL, null)
 
         ref = FirebaseDatabase.getInstance().getReference("User")
 
-        //Makes the setup for the view
+        //Setup for the view
         loadData()
         getData()
     }
@@ -79,15 +81,19 @@ class ModifyUserActivity : AppCompatActivity() {
                     .isNullOrBlank() && !textMiddleNameModifyUser.text.toString().isNullOrBlank()
             ) {
                 modifyBoth()
+                toProfile()
             } else if (!textMiddleNameModifyUser.text.toString().isNullOrBlank()) {
                 modifyOnlyMiddleName()
+                toProfile()
             } else if (!textNameModifyUser.text.toString().isNullOrBlank()) {
                 modifyOnlyName()
+                toProfile()
             } else if (textNameModifyUser.text.toString()
                     .isNullOrBlank() or textMiddleNameModifyUser.text.toString().isNullOrBlank()
             ) {
                 alert(nullAlert, nullData)
             }
+
         }
     }
 
@@ -179,15 +185,19 @@ class ModifyUserActivity : AppCompatActivity() {
     }
 
     /**
-     * Send the user to the home view when the back button is used
+     * Sends the user to the profile view.
      *
      * @author Jimena Vega
      */
-//    override fun onBackPressed() {
-//        clearForm()
-//        val intentToBack = Intent(this, HomeActivity::class.java)
-//        intentToBack.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//        startActivity(intentToBack)
-//    }
+    private fun toProfile() {
+        var intent = Intent()
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        clearForm()
+        intent = Intent(this, ProfileUserActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
 
 }
+
+

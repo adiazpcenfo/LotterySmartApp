@@ -128,9 +128,9 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             }
 
-            //Send to modify profile option
-            R.id.modify_profile -> {
-                intentMenu = Intent(this, ModifyUserActivity::class.java)
+            //Send to profile option
+            R.id.profile -> {
+                intentMenu = Intent(this, ProfileUserActivity::class.java)
                 startActivity(intentMenu)
             }
 

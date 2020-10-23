@@ -185,6 +185,7 @@ class RegisterUserActivity : AppCompatActivity() {
             putExtra(Constants.PROVIDER, provider.toString())
         }
         startActivity(homeIntent)
+        finish()
     }
 
     /**

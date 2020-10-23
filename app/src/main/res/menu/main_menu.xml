@@ -32,9 +32,9 @@
             <group android:checkableBehavior="single">
 
                 <item
-                    android:id="@+id/modify_profile"
-                    android:icon="@drawable/configuration"
-                    android:title="Modificar perfil" />
+                    android:id="@+id/profile"
+                    android:icon="@drawable/icon_profile"
+                    android:title="Mi perfil" />
 
                 <item
                     android:id="@+id/log_out"

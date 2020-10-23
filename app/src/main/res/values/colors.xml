@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">#023E8A</color>
     <color name="colorTextInput">#023E8A</color>
     <color name="colorAccent">#000000</color>
+    <color name="profileText">#FF77797C</color>
 </resources>
