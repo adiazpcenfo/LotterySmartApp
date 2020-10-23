@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import androidx.core.graphics.toColorInt
 import com.google.firebase.database.*
 import com.mobile.lotterysmartapp.R
 import com.mobile.lotterysmartapp.model.Inventory
@@ -45,7 +46,7 @@ class SellerListAdapter(
 
 
         val name = view.findViewById<TextView>(R.id.nameTextView)
-        val email = view.findViewById<TextView>(R.id.emailTextView)
+        val series = view.findViewById<TextView>(R.id.seriesTextView)
 
         val seller = sellerList[position]
 
@@ -61,11 +62,12 @@ class SellerListAdapter(
                     userList.clear()
                     for (s in snapshot.children) {
                         val user = s.getValue(User::class.java)
-                        if (user != null && seller.userEmail == user.email && user.userType == "Vendedor") {
+                        if (user != null && seller.userEmail == user.id) {
                             userList.add(user)
 
                             name.text = user.name
-                            email.text = seller.series
+                            series.text = seller.series
+
                         }
                     }
                 }
@@ -73,5 +75,4 @@ class SellerListAdapter(
         })
         return view
     }
-
 }

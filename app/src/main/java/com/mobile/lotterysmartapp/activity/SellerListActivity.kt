@@ -20,7 +20,6 @@ import com.mobile.lotterysmartapp.model.Draw
 import com.mobile.lotterysmartapp.model.Inventory
 import com.mobile.lotterysmartapp.model.User
 import kotlinx.android.synthetic.main.activity_seller_list.*
-import kotlinx.coroutines.delay
 import java.text.DecimalFormat
 import java.util.*
 import kotlin.math.acos
@@ -28,22 +27,22 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 class SellerListActivity : AppCompatActivity() {
-    lateinit var ref: DatabaseReference
-    lateinit var ref2: DatabaseReference
-    lateinit var ref3: DatabaseReference
+    lateinit var inventoryReference: DatabaseReference
+    lateinit var drawReference: DatabaseReference
+    lateinit var userReference: DatabaseReference
     lateinit var sellerList: ArrayList<Inventory>
+    lateinit var userList: ArrayList<User>
     lateinit var listView: ListView
     lateinit var drawSpinner: Spinner
     lateinit var numberSpinner: Spinner
     lateinit var seekBarRange: SeekBar
-    lateinit var query: Query
     var numSelectedValue: String = ""
     var drawSelectedValue: String = ""
     var latitudeValue = 0.0
     var longitudeValue = 0.0
     var rangeSelected: Int = 0
+    var userInventory: User? = null
     var finalDistance = 0
-    var queryListener: ValueEventListener? = null
     private var locationManager: LocationManager? = null
 
 
@@ -52,23 +51,22 @@ class SellerListActivity : AppCompatActivity() {
      *
      * @author Josue Calderón Varela
      */
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_seller_list)
 
         sellerList = arrayListOf()
+        userList = arrayListOf()
         listView = findViewById(R.id.sellerList)
         drawSpinner = findViewById(R.id.drawSpinner)
         numberSpinner = findViewById(R.id.numberSpinner)
         seekBarRange = findViewById(R.id.seekBarRange)
 
-        ref = FirebaseDatabase.getInstance().getReference("Inventory")
-        ref2 = FirebaseDatabase.getInstance().getReference("Draw")
-        ref3 = FirebaseDatabase.getInstance().getReference("User")
+        inventoryReference = FirebaseDatabase.getInstance().getReference("Inventory")
+        drawReference = FirebaseDatabase.getInstance().getReference("Draw")
+        userReference = FirebaseDatabase.getInstance().getReference("User")
 
         locationManager = getSystemService(LOCATION_SERVICE) as LocationManager?
-
 
         try {
 
@@ -100,6 +98,7 @@ class SellerListActivity : AppCompatActivity() {
             )
         }
 
+        sellerData()
         drawSpinner()
         numberSpinner()
         rangeSeekBar()
@@ -107,6 +106,11 @@ class SellerListActivity : AppCompatActivity() {
 
     }
 
+    /**
+     *Get my current latitude and longitude
+     *
+     * @author Josue Calderón Varela
+     */
     val locationListener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location) {
 
@@ -114,10 +118,8 @@ class SellerListActivity : AppCompatActivity() {
                 val geocoder = Geocoder(this@SellerListActivity, Locale.getDefault())
                 val addresses =
                     geocoder.getFromLocation(location.latitude, location.longitude, 1)
-                var latV = addresses[0].latitude
-                var longV = addresses[0].longitude
-                latitudeValue = latV
-                longitudeValue = longV
+                latitudeValue = addresses[0].latitude
+                longitudeValue = addresses[0].longitude
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -129,42 +131,95 @@ class SellerListActivity : AppCompatActivity() {
     }
 
     /**
-     *Load all data from inventory using Realtime Database with specific filter
+     *Load all users from database
      *
      * @author Josue Calderón Varela
      */
+    private fun sellerData() {
 
-    private fun loadTable() {
+        userReference.addValueEventListener(object : ValueEventListener {
 
-        query = ref.orderByChild("number").equalTo(numSelectedValue)
-        query = ref.orderByChild("drawName").equalTo(drawSelectedValue)
-
-        queryListener?.let { query.addValueEventListener(it) }
-
-        queryListener = object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
+                for (seller in snapshot.children) {
+                    val user = seller.getValue(User::class.java)
+                    if (user != null) {
+                        userList.add(user)
+                    }
+                }
+            }
+        })
+    }
+
+
+    /**
+     *Get final distance between two points
+     *
+     * @author Josue Calderón Varela
+     */
+    fun getDistance(): Int {
+
+
+        var distanceValue =
+            userInventory?.coordinatesY?.let {
+                userInventory?.coordinatesX?.let { it1 ->
+                    distance(
+                        latitudeValue, longitudeValue, it1,
+                        it
+                    )
+                }
+            }
+
+        if (distanceValue != null) {
+            finalDistance = distanceValue
+        }
+
+        return finalDistance
+    }
+
+
+    /**
+     *Load all data from inventory using Realtime Database with specific filter
+     *
+     * @author Josue Calderón Varela
+     */
+    private fun loadTable() {
+
+        inventoryReference.addValueEventListener(object : ValueEventListener {
+
+            override fun onCancelled(error: DatabaseError) {}
+
+            override fun onDataChange(snapshot: DataSnapshot) {
 
                 sellerList.clear()
+
                 for (s in snapshot.children) {
-                    for (u in snapshot.children) {
 
-                        val inventory = s.getValue(Inventory::class.java)
-                        val user = u.getValue(User::class.java)
+                    val inventory = s.getValue(Inventory::class.java)
 
-                        if (inventory != null && user != null && inventory.drawName == drawSelectedValue && inventory.number == numSelectedValue && getDistance() <= rangeSelected
-                        ) {
-                            sellerList.add(inventory)
-                        } else {
+                    for (user in userList) {
 
-                            alertNotExist()
+                        if (user.id == inventory?.userEmail) {
+
+                            userInventory = user
 
                         }
+                    }
+
+                    if (inventory != null && userInventory != null && inventory.drawName == drawSelectedValue && inventory.number == numSelectedValue && getDistance() <= rangeSelected
+                        && userInventory!!.userType == "Vendedor") {
+
+                        sellerList.add(inventory)
+
+                    } else if (sellerList.isEmpty()){
+
+                        alert("No está disponible", "El número buscado no se encuentra disponible.")
 
                     }
+
 
                     val adapter =
                         SellerListAdapter(
@@ -177,33 +232,9 @@ class SellerListActivity : AppCompatActivity() {
 
                 }
             }
-        }
-    }
 
-    fun getDistance():Int{
-
-        ref3.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    for (u in snapshot.children) {
-                        val user = u.getValue(User::class.java)
-                        if (user != null) {
-                            var distanceValue = distance(latitudeValue, longitudeValue, user.coordinatesX, user.coordinatesY)
-                            finalDistance = distanceValue
-                        }
-                    }
-                }
-            }
         })
-
-        return finalDistance
-
     }
-
 
     /**
      *Fill spinner with numbers (0...99) and get value from spinner
@@ -246,7 +277,6 @@ class SellerListActivity : AppCompatActivity() {
 
     }
 
-
     /**
      *Apply filter and search data
      *
@@ -257,13 +287,31 @@ class SellerListActivity : AppCompatActivity() {
         buttonSearch.setOnClickListener() {
 
 
+            if (numSelectedValue == "Número") {
 
-            if (numSelectedValue == "Número" || drawSelectedValue == "Sorteo" || rangeSelected == 0) {
-                alert()
+                alert(
+                    "Seleccionar número",
+                    "Seleccionar un número para poder realizar la búsqueda."
+                )
+
+            } else if (drawSelectedValue == "Sorteo") {
+
+                alert(
+                    "Seleccionar sorteo",
+                    "Seleccionar un sorteo para poder realizar la búsqueda."
+                )
+
+            } else if (rangeSelected == 0) {
+
+                alert(
+                    "Seleccionar rango",
+                    "El rango seleccionado es inválido, por favor aumentar rango de distancia."
+                )
+
             } else {
-                getDistance()
-                Thread.sleep(5_000)
+
                 loadTable()
+
             }
 
         }
@@ -275,9 +323,6 @@ class SellerListActivity : AppCompatActivity() {
      * @author Josue Calderón Varela
      */
     private fun rangeSeekBar() {
-
-        var startPoint = 0
-        var endPoint = 0
 
         seekBarRange.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(
@@ -292,15 +337,11 @@ class SellerListActivity : AppCompatActivity() {
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                if (seekBar != null) {
-                    startPoint = seekBar.progress
-                }
+                seekBar?.progress
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                if (seekBar != null) {
-                    endPoint = seekBar.progress
-                }
+                seekBar?.progress
             }
 
         })
@@ -316,7 +357,7 @@ class SellerListActivity : AppCompatActivity() {
 
         val drawOptions = arrayListOf("Sorteo")
 
-        ref2.addValueEventListener(object : ValueEventListener {
+        drawReference.addValueEventListener(object : ValueEventListener {
 
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
@@ -369,16 +410,19 @@ class SellerListActivity : AppCompatActivity() {
     }
 
     /**
-     *Create alert to validate empty draw and number spinner value
+     *Create custom alerts
      *
      * @author Josue Calderón Varela
+     *
+     * @param title alert title
+     * @param message alert message
      */
-    private fun alert() {
+    private fun alert(title: String, message: String) {
 
         val builder = AlertDialog.Builder(this)
 
-        builder.setTitle("Datos vacíos")
-        builder.setMessage("Seleccionar sorteo y número para realizar la búsqueda.")
+        builder.setTitle(title)
+        builder.setMessage(message)
 
         builder.setPositiveButton(android.R.string.yes) { dialog, which ->
 
@@ -394,36 +438,24 @@ class SellerListActivity : AppCompatActivity() {
     }
 
     /**
-     *Create alert for when there are no results
+     *Get distance between two points
      *
-     * @author Josue Calderón Varela
+     *@author Josue Calderón Varela
+     *
+     * @param lat1 current latitude
+     * @param lon1 current longitude
+     * @param lat2 seller latitude
+     * @param lon2 seller longitude
+     *
+     * @return distance
      */
-    private fun alertNotExist() {
-
-        val builder = AlertDialog.Builder(this)
-
-        builder.setTitle("No está disponible")
-        builder.setMessage("El número buscado no se encuentra disponible.")
-
-        builder.setPositiveButton(android.R.string.yes) { dialog, which ->
-
-            Toast.makeText(
-                applicationContext,
-                android.R.string.yes, Toast.LENGTH_SHORT
-            ).show()
-
-        }
-
-        builder.show()
-
-    }
-
-    fun distance(
+    private fun distance(
         lat1: Double,
         lon1: Double,
         lat2: Double,
         lon2: Double
     ): Int {
+
         val theta = lon1 - lon2
         var dist = (sin(deg2rad(lat1))
                 * sin(deg2rad(lat2))
@@ -446,6 +478,3 @@ class SellerListActivity : AppCompatActivity() {
         return rad * 180.0 / Math.PI
     }
 }
-
-
-

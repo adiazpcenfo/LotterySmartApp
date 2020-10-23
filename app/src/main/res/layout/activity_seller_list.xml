@@ -81,7 +81,7 @@
         android:min="0"
         android:outlineAmbientShadowColor="@color/colorPrimaryDark"
         android:outlineSpotShadowColor="@color/colorPrimaryDark"
-        android:progress="1"
+        android:progress="0"
         android:progressTint="@color/colorPrimaryDark"
         android:thumbTint="@color/colorPrimaryDark"
         app:layout_constraintBottom_toTopOf="@+id/buttonSearch"
@@ -106,7 +106,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="32dp"
-        android:text="1 km"
+        android:text="0 km"
         app:layout_constraintBottom_toTopOf="@+id/buttonSearch"
         app:layout_constraintEnd_toEndOf="parent" />
 
