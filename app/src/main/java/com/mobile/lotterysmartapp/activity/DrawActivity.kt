@@ -3,6 +3,7 @@ package com.mobile.lotterysmartapp.activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.inputmethod.InputMethodManager
@@ -22,10 +23,11 @@ import java.util.*
 class DrawActivity : AppCompatActivity() {
 
     private lateinit var database: DatabaseReference
-    private lateinit var auth: FirebaseAuth
+   // private lateinit var auth: FirebaseAuth
     private val draws: MutableList<Draw> = mutableListOf()
 
     private val MESSAGE_ERROR :String = "Error"
+    private val MESSAGE_ALERT :String = "Alert"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,7 +79,7 @@ class DrawActivity : AppCompatActivity() {
                     //guarda el valor
                     database.child("Draw").child(key).setValue(draw)
                 }
-
+                alert("Registro exitoso",MESSAGE_ALERT)
                 clearForm()
 
             }else{
@@ -87,7 +89,10 @@ class DrawActivity : AppCompatActivity() {
 
         button_drawCancel.setOnClickListener{
             clearForm()
-
+            var intentMenu = Intent()
+            intentMenu.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            intentMenu = Intent(this, HomeActivity::class.java)
+            startActivity(intentMenu)
         }
 
     }
@@ -97,6 +102,7 @@ class DrawActivity : AppCompatActivity() {
         var alertMessage: String=""
 
         if(isValidForm && draw.name.isEmpty()){
+
             alert("Debe ingresar el nombre del sorteo",MESSAGE_ERROR)
             isValidForm=false
         }
@@ -142,6 +148,7 @@ class DrawActivity : AppCompatActivity() {
         editTextResult1.text.clear()
         editTextResult2.text.clear()
         editTextResult3.text.clear()
+        editTextDrawDate.text.clear()
 
     }
     private fun calendarMode(){

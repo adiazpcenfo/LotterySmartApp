@@ -40,6 +40,10 @@
         android:name=".activity.DrawActivity"
         android:label="DrawActivity" 
         android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.SellerLotteryActivity"
+            android:label="SellerLotteryActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
