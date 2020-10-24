@@ -33,9 +33,9 @@
     <string name="todo">TODO</string>
     <string name="drawName">Nombre de Sorteo</string>
     <string name="name">Nombre</string>
-    <string name="result1">Primer Premio</string>
-    <string name="result2">Segundo Premio</string>
-    <string name="result3">Tercer Premio</string>
+    <string name="result1">1er</string>
+    <string name="result2">2do</string>
+    <string name="result3">3er</string>
     <string name="drawDate">Fecha de Sorteo</string>
     <string name="drawMaint">Sorteo</string>
     <string name="save">Guardar</string>
@@ -57,4 +57,6 @@
     <string name="nombre">Nombre</string>
     <string name="apellidos">Apellidos</string>
     <string name="modificar_perfil">Modificar perfil</string>
+    <string name="sellerLottery">Lotería de Vendedor</string>
+    <string name="seriesNumber">Número de Serie</string>
 </resources>

@@ -41,9 +41,13 @@
             android:name=".activity.ForgetPasswordActivity"
             android:label="@string/title_activity_forget_password"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity 
+        android:name=".activity.DrawActivity"
+        android:label="DrawActivity" 
+        android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.DrawActivity"
-            android:label="DrawActivity"
+            android:name=".activity.SellerLotteryActivity"
+            android:label="SellerLotteryActivity"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 

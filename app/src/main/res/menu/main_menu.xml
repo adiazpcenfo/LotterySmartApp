@@ -23,6 +23,10 @@
             android:id="@+id/list_winners"
             android:icon="@drawable/list_winners"
             android:title="Números ganadores" />
+        <item
+            android:id="@+id/list_sellerLottery"
+            android:icon="@drawable/list_winners"
+            android:title="Loteria vendedor" />
     </group>
 
     <item android:title="Perfil">
