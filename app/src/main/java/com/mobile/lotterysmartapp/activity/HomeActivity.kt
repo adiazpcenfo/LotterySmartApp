@@ -120,6 +120,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             //Send to reserved nums option
             R.id.list_reserved_nums -> {
 
+
             }
 
             //Send to nums winners option
@@ -127,9 +128,10 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             }
 
-            //Send to modify profile option
-            R.id.modify_profile -> {
-
+            //Send to profile option
+            R.id.profile -> {
+                intentMenu = Intent(this, ProfileUserActivity::class.java)
+                startActivity(intentMenu)
             }
 
             //Logout user option
