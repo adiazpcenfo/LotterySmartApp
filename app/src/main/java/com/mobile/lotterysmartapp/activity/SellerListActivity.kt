@@ -97,6 +97,7 @@ class SellerListActivity : AppCompatActivity() {
         }
 
         sellerData()
+        getDistance()
         drawSpinner()
         numberSpinner()
         rangeSeekBar()
@@ -425,11 +426,11 @@ class SellerListActivity : AppCompatActivity() {
         builder.setTitle(title)
         builder.setMessage(message)
 
-        builder.setPositiveButton(android.R.string.yes) { _, _ ->
+        builder.setPositiveButton("Aceptar") { _, _ ->
 
             Toast.makeText(
                 applicationContext,
-                android.R.string.yes, Toast.LENGTH_SHORT
+                "Aceptar", Toast.LENGTH_SHORT
             ).show()
 
         }
