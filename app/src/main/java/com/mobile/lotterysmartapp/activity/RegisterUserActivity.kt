@@ -14,7 +14,7 @@ import com.mobile.lotterysmartapp.R
 import com.mobile.lotterysmartapp.model.Constants
 import com.mobile.lotterysmartapp.model.Provider
 import com.mobile.lotterysmartapp.model.User
-import com.mobile.lotterysmartapp.model.userType
+import com.mobile.lotterysmartapp.model.UserType
 import kotlinx.android.synthetic.main.activity_register_user.*
 
 
@@ -49,7 +49,7 @@ class RegisterUserActivity : AppCompatActivity() {
     private fun setUp() {
         //setup of registerUserButton
         val database = FirebaseDatabase.getInstance().getReference("User")
-        val userType =userType.BUYER.type
+        val userType =UserType.BUYER.type
         buttonRegisterUser.setOnClickListener {
             try {
                 register(database, userType)
