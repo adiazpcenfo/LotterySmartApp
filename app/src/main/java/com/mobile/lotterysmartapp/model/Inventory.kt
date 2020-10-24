@@ -12,10 +12,10 @@ class Inventory {
         drawName: String,
         userEmail: String,
         state: String,
-        number: String,
+        number: Int,
         series: String,
-        fractions: String,
-        availableFractions: String
+        fractions: Int,
+        availableFractions: Int
     ) {
         this.Id = Id
         this.drawName = drawName
@@ -53,7 +53,7 @@ class Inventory {
             field = value
         }
 
-    var number: String = ""
+    var number: Int = 0
         get() = field        // getter
         set(value) {         // setter
             field = value
@@ -65,13 +65,13 @@ class Inventory {
             field = value
         }
 
-    var fractions: String = ""
+    var fractions: Int = 0
         get() = field        // getter
         set(value) {         // setter
             field = value
         }
 
-    var availableFractions: String = ""
+    var availableFractions: Int = 0
         get() = field        // getter
         set(value) {         // setter
             field = value

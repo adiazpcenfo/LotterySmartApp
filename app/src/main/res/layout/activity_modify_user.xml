@@ -10,58 +10,24 @@
         android:id="@+id/buttonModifyUser"
         android:layout_width="314dp"
         android:layout_height="60dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/custom_search_seller_btn"
         android:text="@string/guardar"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textMiddleName2" />
-
-    <Button
-        android:id="@+id/buttonBackUser"
-        android:layout_width="314dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="36dp"
-        android:background="@android:color/darker_gray"
-        android:text="@string/atr_s"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonModifyUser" />
-
-    <EditText
-        android:id="@+id/textMiddleName2"
-        android:layout_width="314dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="36dp"
-        android:autofillHints=""
-        android:background="@drawable/custom_input"
-        android:ems="10"
-        android:hint="@string/apellidos"
-        android:inputType="text"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textName2" />
+        app:layout_constraintTop_toBottomOf="@+id/textMiddleNameModifyUser" />
 
     <TextView
-        android:id="@+id/modifyUserLbl"
+        android:id="@+id/modifyUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="168dp"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="148dp"
         android:layout_marginEnd="168dp"
-        android:text="@string/modificar_perfil"
+        android:text="@string/modificar_informaci_n"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
@@ -69,21 +35,36 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/textName2"
+        android:id="@+id/textNameModifyUser"
         android:layout_width="314dp"
         android:layout_height="60dp"
+        android:layout_marginTop="36dp"
         android:autofillHints=""
         android:background="@drawable/custom_input"
         android:ems="10"
-        android:hint="@string/nombre"
         android:inputType="text"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/modifyUserLbl"
-        app:layout_constraintVertical_bias="0.111" />
+        app:layout_constraintTop_toBottomOf="@+id/modifyUser" />
+
+    <EditText
+        android:id="@+id/textMiddleNameModifyUser"
+        android:layout_width="314dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="32dp"
+        android:autofillHints=""
+        android:background="@drawable/custom_input"
+        android:ems="10"
+        android:inputType="text"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textNameModifyUser" />
 </androidx.constraintlayout.widget.ConstraintLayout>

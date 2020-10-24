@@ -120,16 +120,27 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             //Send to reserved nums option
             R.id.list_reserved_nums -> {
 
+
             }
 
             //Send to nums winners option
             R.id.list_winners -> {
-
+                intentMenu = Intent(this, DrawActivity::class.java)
+                startActivity(intentMenu)
+                drawerLayout.closeDrawer(GravityCompat.START)
             }
 
-            //Send to modify profile option
-            R.id.modify_profile -> {
+            //Send to Lottery Vendor option
+            R.id.list_sellerLottery -> {
+                intentMenu = Intent(this, SellerLotteryActivity::class.java)
+                startActivity(intentMenu)
+                drawerLayout.closeDrawer(GravityCompat.START)
+            }
 
+            //Send to profile option
+            R.id.profile -> {
+                intentMenu = Intent(this, ProfileUserActivity::class.java)
+                startActivity(intentMenu)
             }
 
             //Logout user option
