@@ -138,9 +138,7 @@ class SellerListActivity : AppCompatActivity() {
 
         userReference.addValueEventListener(object : ValueEventListener {
 
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
+            override fun onCancelled(error: DatabaseError) {}
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (seller in snapshot.children) {
@@ -257,9 +255,8 @@ class SellerListActivity : AppCompatActivity() {
 
         numberSpinner.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    TODO("Not yet implemented")
-                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
 
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
@@ -361,9 +358,7 @@ class SellerListActivity : AppCompatActivity() {
 
         drawReference.addValueEventListener(object : ValueEventListener {
 
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
+            override fun onCancelled(error: DatabaseError) {}
 
             override fun onDataChange(snapshot: DataSnapshot) {
 
@@ -390,9 +385,8 @@ class SellerListActivity : AppCompatActivity() {
 
                 drawSpinner.onItemSelectedListener =
                     object : AdapterView.OnItemSelectedListener {
-                        override fun onNothingSelected(parent: AdapterView<*>?) {
-                            TODO("Not yet implemented")
-                        }
+
+                        override fun onNothingSelected(parent: AdapterView<*>?) {}
 
                         override fun onItemSelected(
                             parent: AdapterView<*>?,
