@@ -209,7 +209,7 @@ class SellerListActivity : AppCompatActivity() {
                         }
                     }
 
-                    if (inventory != null && userInventory != null && inventory.drawName == drawSelectedValue && inventory.number == numSelectedValue && getDistance() <= rangeSelected
+                    if (inventory != null && userInventory != null && inventory.drawName == drawSelectedValue && inventory.number == numSelectedValue.toInt() && getDistance() <= rangeSelected
                         && userInventory!!.userType == "Vendedor") {
 
                         sellerList.add(inventory)
