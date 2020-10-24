@@ -38,7 +38,7 @@ class User {
 
 }
 
-enum class userType(val type:String){
+enum class UserType(val type:String){
     SELLER("Vendedor"),
     BUYER("Comprador")
 }

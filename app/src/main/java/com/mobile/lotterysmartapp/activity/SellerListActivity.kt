@@ -27,22 +27,22 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 class SellerListActivity : AppCompatActivity() {
-    lateinit var inventoryReference: DatabaseReference
-    lateinit var drawReference: DatabaseReference
-    lateinit var userReference: DatabaseReference
-    lateinit var sellerList: ArrayList<Inventory>
-    lateinit var userList: ArrayList<User>
-    lateinit var listView: ListView
-    lateinit var drawSpinner: Spinner
-    lateinit var numberSpinner: Spinner
-    lateinit var seekBarRange: SeekBar
-    var numSelectedValue: String = ""
-    var drawSelectedValue: String = ""
-    var latitudeValue = 0.0
-    var longitudeValue = 0.0
-    var rangeSelected: Int = 0
-    var userInventory: User? = null
-    var finalDistance = 0
+    private lateinit var inventoryReference: DatabaseReference
+    private lateinit var drawReference: DatabaseReference
+    private lateinit var userReference: DatabaseReference
+    private lateinit var sellerList: ArrayList<Inventory>
+    private lateinit var userList: ArrayList<User>
+    private lateinit var listView: ListView
+    private lateinit var drawSpinner: Spinner
+    private lateinit var numberSpinner: Spinner
+    private lateinit var seekBarRange: SeekBar
+    private var numSelectedValue: String = ""
+    private var drawSelectedValue: String = ""
+    private var latitudeValue = 0.0
+    private var longitudeValue = 0.0
+    private var rangeSelected: Int = 0
+    private var userInventory: User? = null
+    private var finalDistance = 0
     private var locationManager: LocationManager? = null
 
 
@@ -92,9 +92,7 @@ class SellerListActivity : AppCompatActivity() {
         } else {
 
             ActivityCompat.requestPermissions(
-                this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
-
-                , 100
+                this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 100
             )
         }
 
@@ -111,7 +109,7 @@ class SellerListActivity : AppCompatActivity() {
      *
      * @author Josue Calderón Varela
      */
-    val locationListener: LocationListener = object : LocationListener {
+    private val locationListener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location) {
 
             try {
@@ -163,7 +161,7 @@ class SellerListActivity : AppCompatActivity() {
     fun getDistance(): Int {
 
 
-        var distanceValue =
+        val distanceValue =
             userInventory?.coordinatesY?.let {
                 userInventory?.coordinatesX?.let { it1 ->
                     distance(
@@ -210,11 +208,12 @@ class SellerListActivity : AppCompatActivity() {
                     }
 
                     if (inventory != null && userInventory != null && inventory.drawName == drawSelectedValue && inventory.number == numSelectedValue.toInt() && getDistance() <= rangeSelected
-                        && userInventory!!.userType == "Vendedor") {
+                        && userInventory!!.userType == "Vendedor"
+                    ) {
 
                         sellerList.add(inventory)
 
-                    } else if (sellerList.isEmpty()){
+                    } else if (sellerList.isEmpty()) {
 
                         alert("No está disponible", "El número buscado no se encuentra disponible.")
 
@@ -243,7 +242,7 @@ class SellerListActivity : AppCompatActivity() {
      */
     private fun numberSpinner() {
 
-        var numbersOptions = arrayListOf("Número")
+        val numbersOptions = arrayListOf("Número")
 
         for (i: Number in 0 until 100) {
             numbersOptions.add(i.toString())
@@ -284,34 +283,36 @@ class SellerListActivity : AppCompatActivity() {
      */
     private fun search() {
 
-        buttonSearch.setOnClickListener() {
+        buttonSearch.setOnClickListener {
 
+            when {
+                numSelectedValue == "Número" -> {
+                    alert(
+                        "Seleccionar número",
+                        "Seleccionar un número para poder realizar la búsqueda."
+                    )
+                }
+                drawSelectedValue == "Sorteo" -> {
 
-            if (numSelectedValue == "Número") {
+                    alert(
+                        "Seleccionar sorteo",
+                        "Seleccionar un sorteo para poder realizar la búsqueda."
+                    )
 
-                alert(
-                    "Seleccionar número",
-                    "Seleccionar un número para poder realizar la búsqueda."
-                )
+                }
+                rangeSelected == 0 -> {
 
-            } else if (drawSelectedValue == "Sorteo") {
+                    alert(
+                        "Seleccionar rango",
+                        "El rango seleccionado es inválido, por favor aumentar rango de distancia."
+                    )
 
-                alert(
-                    "Seleccionar sorteo",
-                    "Seleccionar un sorteo para poder realizar la búsqueda."
-                )
+                }
+                else -> {
 
-            } else if (rangeSelected == 0) {
+                    loadTable()
 
-                alert(
-                    "Seleccionar rango",
-                    "El rango seleccionado es inválido, por favor aumentar rango de distancia."
-                )
-
-            } else {
-
-                loadTable()
-
+                }
             }
 
         }
@@ -424,7 +425,7 @@ class SellerListActivity : AppCompatActivity() {
         builder.setTitle(title)
         builder.setMessage(message)
 
-        builder.setPositiveButton(android.R.string.yes) { dialog, which ->
+        builder.setPositiveButton(android.R.string.yes) { _, _ ->
 
             Toast.makeText(
                 applicationContext,
