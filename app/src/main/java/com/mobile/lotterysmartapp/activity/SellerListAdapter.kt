@@ -62,7 +62,7 @@ class SellerListAdapter(
                     userList.clear()
                     for (s in snapshot.children) {
                         val user = s.getValue(User::class.java)
-                        if (user != null && seller.userEmail == user.id) {
+                        if (user != null && seller.userEmail == user.email) {
                             userList.add(user)
 
                             name.text = user.name

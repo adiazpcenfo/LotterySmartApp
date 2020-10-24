@@ -202,7 +202,7 @@ class SellerListActivity : AppCompatActivity() {
 
                     for (user in userList) {
 
-                        if (user.id == inventory?.userEmail) {
+                        if (user.email == inventory?.userEmail) {
 
                             userInventory = user
 
