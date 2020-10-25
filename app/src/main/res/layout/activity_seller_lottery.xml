@@ -40,7 +40,7 @@
         android:id="@+id/editTextSeriesNumber"
         android:layout_width="314dp"
         android:layout_height="46dp"
-        android:layout_marginTop="108dp"
+        android:layout_marginTop="36dp"
         android:background="@drawable/custom_input"
         android:ems="10"
         android:hint="@string/seriesNumber"
@@ -49,7 +49,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_draw" />
 
     <TextView
         android:id="@+id/textView5"
@@ -64,5 +64,14 @@
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinner_draw"
+        android:layout_width="314dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="36dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -156,7 +156,7 @@ class SellerListActivity : AppCompatActivity() {
      */
     private fun drawSpinner() {
 
-        val drawOptions = arrayListOf("Sorteo")
+        var drawOptions = arrayListOf("Sorteo")
 
         ref2.addValueEventListener(object : ValueEventListener {
 
@@ -165,7 +165,7 @@ class SellerListActivity : AppCompatActivity() {
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
-
+                drawOptions = arrayListOf("Sorteo")
                 if (snapshot.exists()) {
 
                     for (d in snapshot.children) {

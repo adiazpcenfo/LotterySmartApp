@@ -57,4 +57,5 @@
     <string name="su_ubicaci_n">Su ubicación:</string>
     <string name="sellerLottery">Lotería de Vendedor</string>
     <string name="seriesNumber">Número de Serie</string>
+    <string name="draw">Sorteo</string>
 </resources>

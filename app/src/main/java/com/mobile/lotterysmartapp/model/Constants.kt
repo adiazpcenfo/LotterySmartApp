@@ -9,4 +9,7 @@ object Constants {
     const val EMAIL = "email"
     const val PROVIDER = "provider"
     const val NAME = "name"
+
+    const val INVENTORY = "Inventory"
+    const val DRAW = "Draw"
 }
