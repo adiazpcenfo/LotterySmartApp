@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.firebase.database.*
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.mobile.lotterysmartapp.R
 import com.mobile.lotterysmartapp.model.Constants
 import com.mobile.lotterysmartapp.model.User
@@ -53,9 +54,7 @@ class ModifyUserActivity : AppCompatActivity() {
         queryListener?.let { query.addValueEventListener(it) }
 
         query.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
+            override fun onCancelled(error: DatabaseError) {}
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (s in snapshot.children) {
@@ -78,18 +77,18 @@ class ModifyUserActivity : AppCompatActivity() {
     private fun getData() {
         buttonModifyUser.setOnClickListener {
             if (!textNameModifyUser.text.toString()
-                    .isNullOrBlank() && !textMiddleNameModifyUser.text.toString().isNullOrBlank()
+                    .isBlank() && !textMiddleNameModifyUser.text.toString().isBlank()
             ) {
                 modifyBoth()
                 toProfile()
-            } else if (!textMiddleNameModifyUser.text.toString().isNullOrBlank()) {
+            } else if (!textMiddleNameModifyUser.text.toString().isBlank()) {
                 modifyOnlyMiddleName()
                 toProfile()
-            } else if (!textNameModifyUser.text.toString().isNullOrBlank()) {
+            } else if (!textNameModifyUser.text.toString().isBlank()) {
                 modifyOnlyName()
                 toProfile()
             } else if (textNameModifyUser.text.toString()
-                    .isNullOrBlank() or textMiddleNameModifyUser.text.toString().isNullOrBlank()
+                    .isBlank() or textMiddleNameModifyUser.text.toString().isBlank()
             ) {
                 alert(nullAlert, nullData)
             }
@@ -172,6 +171,12 @@ class ModifyUserActivity : AppCompatActivity() {
         alertBuilder.setPositiveButton("Aceptar", null)
         val dialog: AlertDialog = alertBuilder.create()
         dialog.show()
+        setContentView(R.layout.activity_modify_user)
+
+        val analytics = FirebaseAnalytics.getInstance(this)
+        val bundle = Bundle()
+        bundle.putString("Message", "Modify User")
+        analytics.logEvent("ModifyUserScreen", bundle)
     }
 
     /**

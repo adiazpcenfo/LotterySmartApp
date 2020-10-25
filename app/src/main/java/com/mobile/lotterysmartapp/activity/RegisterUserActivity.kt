@@ -19,12 +19,10 @@ import kotlinx.android.synthetic.main.activity_register_user.*
 
 
 class RegisterUserActivity : AppCompatActivity() {
-    private val accountSuccess = "Su cuenta se registró correctamente."
     private val verifyPassword = "Verifique que la contraseña tenga más de 6 caracteres."
     private val verifyInputs = "Por favor verifique que todos los datos sean correctos."
     private val accountError = "Lo sentimos, su cuenta no se registró correctamente, por favor intente de nuevo."
     private val errorAlert = "¡Error!"
-    private val successAlert = "¡Éxito!"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,7 +74,7 @@ class RegisterUserActivity : AppCompatActivity() {
                    textPassword.text.toString()
                ).addOnCompleteListener {
                    if (it.isSuccessful) {
-                       var id = getRandomString()
+                       val id = getRandomString()
                        database.child(id).setValue(
                            User(
                                id,
@@ -160,9 +158,7 @@ class RegisterUserActivity : AppCompatActivity() {
     }
 
     /**
-     * Makes a random sequence of Strings
-     *
-     * @param length size of the sequence of Strings
+     * Makes a random sequence of String
      *
      * @author Jimena Vega
      */

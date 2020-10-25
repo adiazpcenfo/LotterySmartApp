@@ -11,7 +11,6 @@ import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.constraintlayout.motion.widget.Debug
 import androidx.constraintlayout.motion.widget.Debug.getLocation
 import androidx.core.app.ActivityCompat
 import androidx.core.util.PatternsCompat
@@ -25,8 +24,7 @@ import com.mobile.lotterysmartapp.model.Provider
 import com.mobile.lotterysmartapp.model.User
 import com.mobile.lotterysmartapp.model.UserType
 import kotlinx.android.synthetic.main.activity_register_seller.*
-import kotlinx.android.synthetic.main.activity_register_user.*
-import kotlinx.android.synthetic.main.activity_register_user.buttonRegisterUser
+
 import java.util.*
 
 class RegisterSellerActivity : AppCompatActivity() {
@@ -34,7 +32,8 @@ class RegisterSellerActivity : AppCompatActivity() {
     private val accountSuccess = "Su cuenta se registró correctamente."
     private val verifyPassword = "Verifique que la contraseña tenga más de 6 caracteres."
     private val verifyInputs = "Por favor verifique que todos los datos sean correctos."
-    private val accountError = "Lo sentimos, su cuenta no se registró correctamente, por favor intente de nuevo."
+    private val accountError =
+        "Lo sentimos, su cuenta no se registró correctamente, por favor intente de nuevo."
     private val errorAlert = "¡Error!"
     private val successAlert = "¡Éxito!"
     private var locationManager: LocationManager? = null
@@ -102,7 +101,7 @@ class RegisterSellerActivity : AppCompatActivity() {
         buttonRegisterUserSeller.setOnClickListener {
             try {
                 register(database, userType)
-            }catch (e : Exception){
+            } catch (e: Exception) {
                 println(e.message)
             }
 
@@ -141,15 +140,15 @@ class RegisterSellerActivity : AppCompatActivity() {
      * @param userType the type of user can be: seller or buyer
      *
      */
-    private fun register(database: DatabaseReference, userType: String){
-        if(verifyPasswordLength()){
-            if(verifyEmail() && verifyPasswords()){
+    private fun register(database: DatabaseReference, userType: String) {
+        if (verifyPasswordLength()) {
+            if (verifyEmail() && verifyPasswords()) {
                 FirebaseAuth.getInstance().createUserWithEmailAndPassword(
                     textEmailSeller.text.toString(),
                     textPasswordSeller.text.toString()
                 ).addOnCompleteListener {
                     if (it.isSuccessful) {
-                        var id = getRandomString()
+                        val id = getRandomString()
                         database.child(id).setValue(
                             User(
                                 id,
@@ -161,16 +160,16 @@ class RegisterSellerActivity : AppCompatActivity() {
                                 longitudeValue
                             )
                         )
-                        showHome(textEmailSeller.text.toString(),  Provider.APPLICATION)
+                        showHome(textEmailSeller.text.toString(), Provider.APPLICATION)
                         clearForm()
                     }
-                }.addOnFailureListener{
+                }.addOnFailureListener {
                     alert(errorAlert, verifyInputs)
                 }
-            }else{
-                alert(errorAlert, accountError )
+            } else {
+                alert(errorAlert, accountError)
             }
-        }else{
+        } else {
             alert(errorAlert, verifyPassword)
         }
     }
@@ -190,7 +189,7 @@ class RegisterSellerActivity : AppCompatActivity() {
      *
      * @author Jimena Vega
      */
-    private fun verifyPasswordLength(): Boolean{
+    private fun verifyPasswordLength(): Boolean {
         return textPasswordSeller.text.length > 6
     }
 
@@ -225,7 +224,7 @@ class RegisterSellerActivity : AppCompatActivity() {
      *
      * @author Jimena Vega
      */
-    private fun clearForm(){
+    private fun clearForm() {
         textNameSeller.text.clear()
         textEmailSeller.text.clear()
         textPasswordSeller.text.clear()
@@ -252,7 +251,7 @@ class RegisterSellerActivity : AppCompatActivity() {
      * @param email user email
      * @param provider Account provider
      */
-    private fun showHome(email : String?, provider: Provider) {
+    private fun showHome(email: String?, provider: Provider) {
         val homeIntent = Intent(this, HomeActivity::class.java).apply {
             putExtra(Constants.EMAIL, email)
             putExtra(Constants.PROVIDER, provider.toString())
@@ -268,8 +267,12 @@ class RegisterSellerActivity : AppCompatActivity() {
      */
     override fun onBackPressed() {
         clearForm()
-        val intentToBack = Intent(this,TypeUserActivity::class.java)
+        val intentToBack = Intent(this, TypeUserActivity::class.java)
         intentToBack.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intentToBack)
+        val analytics = FirebaseAnalytics.getInstance(this)
+        val bundle = Bundle()
+        bundle.putString("Message", "Register Seller")
+        analytics.logEvent("RegisterSellerScreen", bundle)
     }
 }

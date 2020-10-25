@@ -78,7 +78,7 @@ class ModifySellerActivity : AppCompatActivity() {
     private fun getData() {
         buttonModifyUser.setOnClickListener {
             if (!textNameModifySeller.text.toString()
-                    .isNullOrBlank() && !textMiddleNameModifyUser.text.toString().isNullOrBlank()
+                    .isBlank() && !textMiddleNameModifyUser.text.toString().isBlank()
             ) {
                 modifyNameSeller()
                 toProfile()

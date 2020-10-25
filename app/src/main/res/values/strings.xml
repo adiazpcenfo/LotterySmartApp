@@ -60,4 +60,5 @@
     <string name="sellerLottery">Lotería de Vendedor</string>
     <string name="seriesNumber">Número de Serie</string>
     <string name="ubicaci_n_de_su_puesto">Ubicación de su puesto</string>
+    <string name="draw">Sorteo</string>
 </resources>

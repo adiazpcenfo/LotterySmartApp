@@ -14,6 +14,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.motion.widget.Debug.getLocation
 import androidx.core.app.ActivityCompat
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.database.*
 import com.mobile.lotterysmartapp.R
 import com.mobile.lotterysmartapp.model.Draw
@@ -105,7 +106,11 @@ class SellerListActivity : AppCompatActivity() {
         numberSpinner()
         rangeSeekBar()
         search()
-
+        
+        val analytics = FirebaseAnalytics.getInstance(this)
+        val bundle = Bundle()
+        bundle.putString("Message", "Seller List")
+        analytics.logEvent("SellerListScreen", bundle)
     }
 
     /**
@@ -414,14 +419,14 @@ class SellerListActivity : AppCompatActivity() {
      */
     private fun drawSpinner() {
 
-        val drawOptions = arrayListOf("Sorteo")
+        var drawOptions: ArrayList<String>
 
         drawReference.addValueEventListener(object : ValueEventListener {
 
             override fun onCancelled(error: DatabaseError) {}
 
             override fun onDataChange(snapshot: DataSnapshot) {
-
+                drawOptions = arrayListOf("Sorteo")
                 if (snapshot.exists()) {
 
                     for (d in snapshot.children) {

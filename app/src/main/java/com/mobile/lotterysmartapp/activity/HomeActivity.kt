@@ -29,7 +29,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
     private lateinit var toolbar: Toolbar
-    private lateinit var menu: Menu
     private lateinit var textView: TextView
 
 
@@ -47,6 +46,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val bundle = intent.extras
         val email = bundle?.getString(Constants.EMAIL)
         val provider = bundle?.getString(Constants.PROVIDER)
+
 
         // Save email and password for the session
         saveCredentials(email!!, provider!!)

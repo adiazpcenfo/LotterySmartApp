@@ -1,6 +1,5 @@
 package com.mobile.lotterysmartapp.activity
 
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -42,30 +41,13 @@ class ProfileUserActivity : AppCompatActivity() {
      *
      * @author Jimena Vega
      */
-    private fun modifyUser(){
+    private fun modifyUser() {
         var intent = Intent()
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        buttonModifyUserProfile.setOnClickListener{
+        buttonModifyUserProfile.setOnClickListener {
             intent = Intent(this, ModifyUserActivity::class.java)
             startActivity(intent)
         }
-    }
-
-    /**
-     * Show alert.
-     *
-     * @param title a string with the title to show
-     * @param message a string with the message to show
-     *
-     * @author Franklin Cardenas
-     */
-    private fun alert(title: String?, message: String?) {
-        val alertBuilder = AlertDialog.Builder(this)
-        alertBuilder.setTitle(title)
-        alertBuilder.setMessage(message)
-        alertBuilder.setPositiveButton("Aceptar", null)
-        val dialog: AlertDialog = alertBuilder.create()
-        dialog.show()
     }
 
     /**

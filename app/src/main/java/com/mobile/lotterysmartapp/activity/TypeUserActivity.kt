@@ -3,16 +3,20 @@ package com.mobile.lotterysmartapp.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.view.GravityCompat
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.mobile.lotterysmartapp.R
 import kotlinx.android.synthetic.main.activity_select_type_user.*
-import kotlinx.coroutines.selects.select
 
 class TypeUserActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select_type_user)
+
+        val analytics = FirebaseAnalytics.getInstance(this)
+        val bundle = Bundle()
+        bundle.putString("Message", "Type User")
+        analytics.logEvent("TypeUserScreen", bundle)
 
         selectType()
     }

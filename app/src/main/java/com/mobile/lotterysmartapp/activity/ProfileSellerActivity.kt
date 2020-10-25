@@ -1,6 +1,5 @@
 package com.mobile.lotterysmartapp.activity
 
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -50,23 +49,6 @@ class ProfileSellerActivity : AppCompatActivity() {
     }
 
     /**
-     * Show alert.
-     *
-     * @param title a string with the title to show
-     * @param message a string with the message to show
-     *
-     * @author Franklin Cardenas
-     */
-    private fun alert(title: String?, message: String?) {
-        val alertBuilder = AlertDialog.Builder(this)
-        alertBuilder.setTitle(title)
-        alertBuilder.setMessage(message)
-        alertBuilder.setPositiveButton("Aceptar", null)
-        val dialog: AlertDialog = alertBuilder.create()
-        dialog.show()
-    }
-
-    /**
      * Load and set the data of the profile
      *
      * @author Jimena Vega
@@ -78,9 +60,7 @@ class ProfileSellerActivity : AppCompatActivity() {
         queryListener?.let { query.addValueEventListener(it) }
 
         query.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
+            override fun onCancelled(error: DatabaseError) {}
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (s in snapshot.children) {
