@@ -22,6 +22,7 @@ import com.mobile.lotterysmartapp.model.User
 import kotlinx.android.synthetic.main.activity_seller_list.*
 import java.text.DecimalFormat
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.acos
 import kotlin.math.cos
 import kotlin.math.sin
@@ -32,6 +33,7 @@ class SellerListActivity : AppCompatActivity() {
     private lateinit var userReference: DatabaseReference
     private lateinit var sellerList: ArrayList<Inventory>
     private lateinit var userList: ArrayList<User>
+    private lateinit var inventoryList: ArrayList<Inventory>
     private lateinit var listView: ListView
     private lateinit var drawSpinner: Spinner
     private lateinit var numberSpinner: Spinner
@@ -45,7 +47,6 @@ class SellerListActivity : AppCompatActivity() {
     private var finalDistance = 0
     private var locationManager: LocationManager? = null
 
-
     /**
      *On Create method for SellerListActivity.
      *
@@ -57,6 +58,7 @@ class SellerListActivity : AppCompatActivity() {
 
         sellerList = arrayListOf()
         userList = arrayListOf()
+        inventoryList = arrayListOf()
         listView = findViewById(R.id.sellerList)
         drawSpinner = findViewById(R.id.drawSpinner)
         numberSpinner = findViewById(R.id.numberSpinner)
@@ -96,7 +98,9 @@ class SellerListActivity : AppCompatActivity() {
             )
         }
 
+        inventoryData()
         sellerData()
+        getDistance()
         drawSpinner()
         numberSpinner()
         rangeSeekBar()
@@ -113,13 +117,19 @@ class SellerListActivity : AppCompatActivity() {
         override fun onLocationChanged(location: Location) {
 
             try {
+
                 val geocoder = Geocoder(this@SellerListActivity, Locale.getDefault())
+
                 val addresses =
                     geocoder.getFromLocation(location.latitude, location.longitude, 1)
+
                 latitudeValue = addresses[0].latitude
                 longitudeValue = addresses[0].longitude
+
             } catch (e: Exception) {
+
                 e.printStackTrace()
+
             }
         }
 
@@ -137,28 +147,110 @@ class SellerListActivity : AppCompatActivity() {
 
         userReference.addValueEventListener(object : ValueEventListener {
 
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
+            override fun onCancelled(error: DatabaseError) {}
 
             override fun onDataChange(snapshot: DataSnapshot) {
+
+                userList.clear()
+
                 for (seller in snapshot.children) {
+
                     val user = seller.getValue(User::class.java)
+
                     if (user != null) {
+
                         userList.add(user)
+
                     }
                 }
             }
         })
     }
 
+    /**
+     *Load all inventories from database
+     *
+     * @author Josue Calderón Varela
+     */
+    private fun inventoryData() {
+
+        inventoryReference.addValueEventListener(object : ValueEventListener {
+
+            override fun onCancelled(error: DatabaseError) {}
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                inventoryList.clear()
+
+                for (inventory in snapshot.children) {
+
+                    val inventoryData = inventory.getValue(Inventory::class.java)
+
+                    if (inventoryData != null) {
+
+                        inventoryList.add(inventoryData)
+
+                    }
+                }
+            }
+        })
+    }
+
+    /**
+     *Load inventory using Realtime Database with specific filter
+     *
+     * @author Josue Calderón Varela
+     */
+    private fun loadTable() {
+
+        sellerList.clear()
+
+        for (inventory in inventoryList) {
+
+            for (user in userList) {
+
+                if (user.email == inventory.userEmail) {
+
+                    userInventory = user
+
+                }
+            }
+
+            if (userInventory != null && inventory.drawName == drawSelectedValue && inventory.number == numSelectedValue.toInt() && getDistance() <= rangeSelected
+                && userInventory!!.userType == "Vendedor"
+            ) {
+
+                sellerList.add(inventory)
+                searchesCount(inventory)
+
+            }
+        }
+    }
+
+    /**
+     *Fill custom list with table data
+     *
+     * @author Josue Calderón Varela
+     */
+    private fun fillCustomList(){
+
+        val adapter =
+            SellerListAdapter(
+                this@SellerListActivity,
+                R.layout.seller_list,
+                sellerList
+            )
+
+        listView.adapter = adapter
+        adapter.notifyDataSetChanged()
+    }
 
     /**
      *Get final distance between two points
      *
      * @author Josue Calderón Varela
      */
-    fun getDistance(): Int {
+    private fun getDistance(): Int {
 
 
         val distanceValue =
@@ -178,61 +270,27 @@ class SellerListActivity : AppCompatActivity() {
         return finalDistance
     }
 
-
     /**
-     *Load all data from inventory using Realtime Database with specific filter
+     *Update the number of inventory searches for each search
      *
      * @author Josue Calderón Varela
+     * @param inventory all inventory data
      */
-    private fun loadTable() {
+    private fun searchesCount(inventory: Inventory) {
 
-        inventoryReference.addValueEventListener(object : ValueEventListener {
-
-            override fun onCancelled(error: DatabaseError) {}
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-
-                sellerList.clear()
-
-                for (s in snapshot.children) {
-
-                    val inventory = s.getValue(Inventory::class.java)
-
-                    for (user in userList) {
-
-                        if (user.id == inventory?.userEmail) {
-
-                            userInventory = user
-
-                        }
-                    }
-
-                    if (inventory != null && userInventory != null && inventory.drawName == drawSelectedValue && inventory.number == numSelectedValue.toInt() && getDistance() <= rangeSelected
-                        && userInventory!!.userType == "Vendedor"
-                    ) {
-
-                        sellerList.add(inventory)
-
-                    } else if (sellerList.isEmpty()) {
-
-                        alert("No está disponible", "El número buscado no se encuentra disponible.")
-
-                    }
-
-
-                    val adapter =
-                        SellerListAdapter(
-                            this@SellerListActivity,
-                            R.layout.seller_list,
-                            sellerList
-                        )
-                    listView.adapter = adapter
-                    adapter.notifyDataSetChanged()
-
-                }
-            }
-
-        })
+        inventoryReference.child(inventory.Id).setValue(
+            Inventory(
+                inventory.Id,
+                inventory.drawName,
+                inventory.userEmail,
+                inventory.state,
+                inventory.number,
+                inventory.series,
+                inventory.fractions,
+                inventory.availableFractions,
+                inventory.searches + 1
+            )
+        )
     }
 
     /**
@@ -256,9 +314,8 @@ class SellerListActivity : AppCompatActivity() {
 
         numberSpinner.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    TODO("Not yet implemented")
-                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
 
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
@@ -311,6 +368,7 @@ class SellerListActivity : AppCompatActivity() {
                 else -> {
 
                     loadTable()
+                    fillCustomList()
 
                 }
             }
@@ -360,9 +418,7 @@ class SellerListActivity : AppCompatActivity() {
 
         drawReference.addValueEventListener(object : ValueEventListener {
 
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
+            override fun onCancelled(error: DatabaseError) {}
 
             override fun onDataChange(snapshot: DataSnapshot) {
 
@@ -389,9 +445,8 @@ class SellerListActivity : AppCompatActivity() {
 
                 drawSpinner.onItemSelectedListener =
                     object : AdapterView.OnItemSelectedListener {
-                        override fun onNothingSelected(parent: AdapterView<*>?) {
-                            TODO("Not yet implemented")
-                        }
+
+                        override fun onNothingSelected(parent: AdapterView<*>?) {}
 
                         override fun onItemSelected(
                             parent: AdapterView<*>?,
@@ -425,11 +480,11 @@ class SellerListActivity : AppCompatActivity() {
         builder.setTitle(title)
         builder.setMessage(message)
 
-        builder.setPositiveButton(android.R.string.yes) { _, _ ->
+        builder.setPositiveButton("Aceptar") { _, _ ->
 
             Toast.makeText(
                 applicationContext,
-                android.R.string.yes, Toast.LENGTH_SHORT
+                "Aceptar", Toast.LENGTH_SHORT
             ).show()
 
         }

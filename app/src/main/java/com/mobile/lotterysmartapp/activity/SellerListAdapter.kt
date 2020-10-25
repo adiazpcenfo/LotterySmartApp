@@ -1,12 +1,12 @@
 package com.mobile.lotterysmartapp.activity
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import androidx.core.graphics.toColorInt
 import com.google.firebase.database.*
 import com.mobile.lotterysmartapp.R
 import com.mobile.lotterysmartapp.model.Inventory
@@ -18,14 +18,14 @@ import com.mobile.lotterysmartapp.model.User
  * @author Josue Calderon Varela
  */
 class SellerListAdapter(
-    val mCtx: Context,
-    val layoutId: Int,
-    val sellerList: MutableList<Inventory>
+    private val mCtx: Context,
+    private val layoutId: Int,
+    private val sellerList: MutableList<Inventory>
 ) :
     ArrayAdapter<Inventory>(mCtx, layoutId, sellerList) {
 
-    lateinit var ref: DatabaseReference
-    lateinit var userList: MutableList<User>
+    private lateinit var ref: DatabaseReference
+    private lateinit var userList: MutableList<User>
 
     /**
      * Load data into a custom listView to be used in a main listView
@@ -38,12 +38,13 @@ class SellerListAdapter(
      * @param parent ViewGroup
      * @return data view
      */
+    @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+
         val layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)
         val view: View = layoutInflater.inflate(layoutId, null)
 
         userList = mutableListOf()
-
 
         val name = view.findViewById<TextView>(R.id.nameTextView)
         val series = view.findViewById<TextView>(R.id.seriesTextView)
@@ -53,16 +54,21 @@ class SellerListAdapter(
         ref = FirebaseDatabase.getInstance().getReference("User")
 
         ref.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
+
+            override fun onCancelled(error: DatabaseError) {}
 
             override fun onDataChange(snapshot: DataSnapshot) {
+
                 if (snapshot.exists()) {
+
                     userList.clear()
+
                     for (s in snapshot.children) {
+
                         val user = s.getValue(User::class.java)
-                        if (user != null && seller.userEmail == user.id) {
+
+                        if (user != null && seller.userEmail == user.email) {
+
                             userList.add(user)
 
                             name.text = user.name
