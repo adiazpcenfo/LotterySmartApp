@@ -4,7 +4,6 @@ package com.mobile.lotterysmartapp.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -14,9 +13,14 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.mobile.lotterysmartapp.R
 import com.mobile.lotterysmartapp.model.Constants
-
+import com.mobile.lotterysmartapp.model.Inventory
+import kotlinx.android.synthetic.main.activity_home.*
 
 /**
  * Class in charge of Home Activity.
@@ -30,7 +34,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var navigationView: NavigationView
     private lateinit var toolbar: Toolbar
     private lateinit var textView: TextView
-
+    private var inventoryReference = FirebaseDatabase.getInstance().getReference("Inventory")
 
     /**
      * On Create method for Home Activity.
@@ -56,6 +60,9 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         //Setup function for the menu
         setupMenu()
+
+
+        mostSearchedNumber()
     }
 
     /**
@@ -64,7 +71,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
      * @author Franklin Cardenas
      */
     private fun setup() {
-
     }
 
     /**
@@ -195,5 +201,71 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         FirebaseAuth.getInstance().signOut()
         val homeIntent = Intent(this, AuthenticationActivity::class.java)
         startActivity(homeIntent)
+    }
+
+    /**
+     * Ask in the database for the most searched number
+     *
+     * @author Franklin Cardenas
+     */
+    private fun mostSearchedNumber() {
+        inventoryReference.orderByChild("number")
+            .addValueEventListener(object : ValueEventListener {
+
+                override fun onCancelled(error: DatabaseError) {}
+
+                /**
+                 * This method will be called with a snapshot of the data at this location. It will also be called
+                 * each time that data changes.
+                 *
+                 * @param snapshot The current data at the location
+                 * @author Franklin Cardenas
+                 */
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val numberMap = HashMap<String, Int>()
+
+                    for (i in 0..99) {
+                        numberMap[i.toString()] = 0
+                    }
+
+                    for (entry in snapshot.children) {
+                        val inventory = entry.getValue(Inventory::class.java)
+                        if (inventory != null) {
+                            val key = inventory.number.toString()
+                            numberMap[key] = numberMap[key]!! + inventory.searches
+                        }
+                    }
+                    updateMostSearchedNumber(calculateMostSearchedNumber(numberMap))
+                }
+            })
+    }
+
+    /**
+     * Update the text view that display the Most Searched Number.
+     *
+     * @param number Most searched Number.
+     * @author Franklin Cardenas
+     */
+    private fun updateMostSearchedNumber(number: String) {
+        mostSearchedNumberTextView.text = number
+    }
+
+    /**
+     * Get the number with the highest searched amount.
+     *
+     * @param numberMap Map that contains all numbers with each searched amounts.
+     * @return Most searched number.
+     * @author Franklin Cardenas
+     */
+    private fun calculateMostSearchedNumber(numberMap: HashMap<String, Int>): String {
+        var mostSearchedNumber = ""
+        var highestSearches = 0
+        for (key in numberMap.keys) {
+            if (numberMap[key]!! > highestSearches) {
+                mostSearchedNumber = key
+                highestSearches = numberMap[key]!!
+            }
+        }
+        return mostSearchedNumber
     }
 }
