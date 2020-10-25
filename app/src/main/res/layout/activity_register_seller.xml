@@ -6,31 +6,47 @@
     android:layout_height="match_parent"
     tools:context=".activity.RegisterSellerActivity">
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/mapView"
+    <Button
+        android:id="@+id/buttonRegisterUserSeller"
         android:layout_width="314dp"
-        android:layout_height="259dp"
-        android:layout_marginTop="72dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/custom_search_seller_btn"
+        android:text="@string/registrar"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.594"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textConfirmPassword3" />
+        app:layout_constraintTop_toBottomOf="@+id/mapView" />
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="314dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="64dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.594"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textConfirmPasswordSeller" />
 
     <TextView
         android:id="@+id/registerUserLbl7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="168dp"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="168dp"
         android:text="@string/registrar_vendedor"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/textPassword3"
+        android:id="@+id/textPasswordSeller"
         android:layout_width="314dp"
         android:layout_height="60dp"
         android:layout_marginTop="32dp"
@@ -45,10 +61,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.594"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textEmail3" />
+        app:layout_constraintTop_toBottomOf="@+id/textEmailSeller" />
 
     <EditText
-        android:id="@+id/textName4"
+        android:id="@+id/textNameSeller"
         android:layout_width="314dp"
         android:layout_height="60dp"
         android:layout_marginTop="36dp"
@@ -66,7 +82,7 @@
         app:layout_constraintTop_toBottomOf="@+id/registerUserLbl7" />
 
     <EditText
-        android:id="@+id/textEmail3"
+        android:id="@+id/textEmailSeller"
         android:layout_width="314dp"
         android:layout_height="60dp"
         android:layout_marginTop="32dp"
@@ -81,10 +97,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.594"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textName4" />
+        app:layout_constraintTop_toBottomOf="@+id/textNameSeller" />
 
     <EditText
-        android:id="@+id/textConfirmPassword3"
+        android:id="@+id/textConfirmPasswordSeller"
         android:layout_width="314dp"
         android:layout_height="60dp"
         android:layout_marginTop="36dp"
@@ -99,7 +115,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.594"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textPassword3" />
+        app:layout_constraintTop_toBottomOf="@+id/textPasswordSeller" />
 
     <TextView
         android:id="@+id/registerUserLbl8"
@@ -108,10 +124,10 @@
         android:layout_marginTop="8dp"
         android:text="@string/la_contrase_a_debe_contener_m_s_de_6_caracteres"
         android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/textConfirmPassword3"
+        app:layout_constraintBottom_toTopOf="@+id/textConfirmPasswordSeller"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textPassword3"
+        app:layout_constraintTop_toBottomOf="@+id/textPasswordSeller"
         app:layout_constraintVertical_bias="0.166" />
 
     <TextView
@@ -126,6 +142,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.164"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textConfirmPassword3"
+        app:layout_constraintTop_toBottomOf="@+id/textConfirmPasswordSeller"
         app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="47dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="361dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
