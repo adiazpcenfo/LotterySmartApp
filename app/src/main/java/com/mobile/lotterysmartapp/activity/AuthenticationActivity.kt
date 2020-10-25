@@ -210,12 +210,13 @@ class AuthenticationActivity : AppCompatActivity() {
         }
     }
 
-//    private fun showDrawMantain(email : String?, provider : Provider) {
-//        val homeIntent = Intent(this, DrawActivity::class.java).apply {
-//            putExtra(Constants.EMAIL, email)
-//            putExtra(Constants.PROVIDER, provider)
-//        }
-//        startActivity(homeIntent)
-//    }
+    /**
+     * Disable back press to prevent return after logout.
+     *
+     * @author Franklin Cardenas
+     */
+    override fun onBackPressed() {
+
+    }
 }
 

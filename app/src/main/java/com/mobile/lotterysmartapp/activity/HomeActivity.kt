@@ -193,6 +193,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         preferences.apply()
 
         FirebaseAuth.getInstance().signOut()
-        finish()
+        val homeIntent = Intent(this, AuthenticationActivity::class.java)
+        startActivity(homeIntent)
     }
 }

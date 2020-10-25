@@ -12,7 +12,7 @@
     <string name="title_activity_forget_password">ForgetPasswordActivity</string>
     <string name="RestorePassword">Restablecer contraseña</string>
     <string name="puntos_de_venta">Puntos de venta</string>
-    <string name="forgetMyPaswordTitle">Olvide mi contrasena</string>
+    <string name="forgetMyPaswordTitle">Olvide mi contraseña</string>
     <string name="registrar">Registrar</string>
     <string name="contrase_a">Contraseña</string>
     <string name="confirmar_contrase_a">Confirmar contraseña</string>
