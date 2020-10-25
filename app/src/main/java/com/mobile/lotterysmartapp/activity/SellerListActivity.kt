@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.database.*
 import com.mobile.lotterysmartapp.R
 import com.mobile.lotterysmartapp.model.Draw
@@ -41,6 +42,11 @@ class SellerListActivity : AppCompatActivity() {
         numberSpinner = findViewById(R.id.numberSpinner)
         ref = FirebaseDatabase.getInstance().getReference("Inventory")
         ref2 = FirebaseDatabase.getInstance().getReference("Draw")
+
+        val analytics = FirebaseAnalytics.getInstance(this)
+        val bundle = Bundle()
+        bundle.putString("Message", "Seller List")
+        analytics.logEvent("SellerListScreen", bundle)
 
         drawSpinner()
         numberSpinner()

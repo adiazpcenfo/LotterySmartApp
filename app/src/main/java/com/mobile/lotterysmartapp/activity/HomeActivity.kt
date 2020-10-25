@@ -48,6 +48,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val email = bundle?.getString(Constants.EMAIL)
         val provider = bundle?.getString(Constants.PROVIDER)
 
+
         // Save email and password for the session
         saveCredentials(email!!, provider!!)
 
