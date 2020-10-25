@@ -12,8 +12,7 @@ import com.mobile.lotterysmartapp.model.Constants
 import com.mobile.lotterysmartapp.model.User
 import kotlinx.android.synthetic.main.activity_profile_user.*
 
-class ProfileUserActivity : AppCompatActivity() {
-
+class ProfileSellerActivity : AppCompatActivity() {
     private lateinit var ref: DatabaseReference
     private var queryListener: ValueEventListener? = null
     private lateinit var preferences: SharedPreferences
@@ -21,10 +20,9 @@ class ProfileUserActivity : AppCompatActivity() {
     private lateinit var tempUser: User
     private var email: String? = null
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile_user)
+        setContentView(R.layout.activity_profile_seller)
 
         //Initialize variables
         preferences =
@@ -34,7 +32,7 @@ class ProfileUserActivity : AppCompatActivity() {
 
         //Setup for the view
         loadData()
-        modifyUser()
+        modifyUserSeller()
     }
 
     /**
@@ -42,11 +40,11 @@ class ProfileUserActivity : AppCompatActivity() {
      *
      * @author Jimena Vega
      */
-    private fun modifyUser(){
+    private fun modifyUserSeller(){
         var intent = Intent()
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         buttonModifyUserProfile.setOnClickListener{
-            intent = Intent(this, ModifyUserActivity::class.java)
+            intent = Intent(this, ModifySellerActivity::class.java)
             startActivity(intent)
         }
     }
@@ -90,8 +88,8 @@ class ProfileUserActivity : AppCompatActivity() {
                     if (user != null) {
                         tempUser = user
                         nameValueLbl.text = tempUser.name
-                        middleNameValueLbl.text = tempUser.middleName
                         emailValueLbl.text = tempUser.email
+                        //Put coordinates here
                     }
                 }
             }
