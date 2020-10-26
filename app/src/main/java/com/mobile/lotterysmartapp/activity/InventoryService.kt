@@ -1,19 +1,17 @@
 package com.mobile.lotterysmartapp.activity
 
-import android.content.Context
-import android.content.Context.*
-import android.view.View
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.Query
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.mobile.lotterysmartapp.R
-import com.mobile.lotterysmartapp.model.Constants
 import com.mobile.lotterysmartapp.model.Inventory
-import com.mobile.lotterysmartapp.model.Provider
-import kotlinx.android.synthetic.main.activity_authentication.*
 
+
+
+/**
+ * @author Allan Diaz
+ * **/
 class InventoryService (){
 
     private lateinit var database: DatabaseReference
@@ -22,12 +20,18 @@ class InventoryService (){
     private val MESSAGE_ERROR :String = "Error"
     private val FRACTIONS_NUMBER: Int = 10
     private val STATUS_ACT ="ACT"
+    private val AVAILABLE_FRACTIONS =0
 
     fun addUserInventory(inventory:Inventory){
 
 
 
     }
+
+    /**
+     * @author Allan Diaz
+     * create set of numbers for Seller from series
+     * */
 
     fun addSellerInventory(inventory:Inventory){
 
@@ -37,13 +41,9 @@ class InventoryService (){
 
         iterator.forEach {
             sellerInventory.Id=getInventoryKey()
+            sellerInventory.availableFractions=AVAILABLE_FRACTIONS
+            sellerInventory.number = it
 
-          //  if(sellerInventory.number>0 && it>0){
-                sellerInventory.number = it
-
-            //}else{
-             //   sellerInventory.number=1
-            //}
             sellerInventory.fractions = FRACTIONS_NUMBER
             sellerInventory.availableFractions = FRACTIONS_NUMBER
             sellerInventory.state=STATUS_ACT
