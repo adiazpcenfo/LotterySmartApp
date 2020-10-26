@@ -11,9 +11,16 @@ import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.constraintlayout.motion.widget.Debug.getLocation
 import androidx.core.app.ActivityCompat
 import androidx.core.util.PatternsCompat
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -39,6 +46,8 @@ class RegisterSellerActivity : AppCompatActivity() {
     private var locationManager: LocationManager? = null
     private var latitudeValue = 0.0
     private var longitudeValue = 0.0
+    lateinit var mapFragment: SupportMapFragment
+    lateinit var googleMap : GoogleMap
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +62,14 @@ class RegisterSellerActivity : AppCompatActivity() {
 
         //Initialize variables
         locationManager = getSystemService(LOCATION_SERVICE) as LocationManager?
+        mapFragment = supportFragmentManager.findFragmentById(R.id.mapView) as SupportMapFragment
+        mapFragment.getMapAsync(OnMapReadyCallback {
+            googleMap = it
+            val locationUser = LatLng(latitudeValue, longitudeValue)
+            val markerOptions = MarkerOptions().position(locationUser)
+            googleMap.addMarker(markerOptions)
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(locationUser, 12f))
+        })
 
         //setup location
         try {

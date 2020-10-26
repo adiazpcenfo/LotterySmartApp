@@ -21,10 +21,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mapView" />
 
-    <com.google.android.gms.maps.MapView
+    <!--    <com.google.android.gms.maps.MapView-->
+    <fragment
         android:id="@+id/mapView"
         android:layout_width="314dp"
         android:layout_height="150dp"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_marginTop="64dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.594"
