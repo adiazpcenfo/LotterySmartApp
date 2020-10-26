@@ -59,4 +59,9 @@
     <string name="modificar_perfil">Modificar perfil</string>
     <string name="sellerLottery">Lotería de Vendedor</string>
     <string name="seriesNumber">Número de Serie</string>
+    <string name="title_activity_seller_address">Map</string>
+    <string name="buscar_n_mero">Buscar número</string>
+    <string name="buscar">Buscar</string>
+    <string name="seleccionar_rango">Seleccionar rango</string>
+    <string name="_0_km">0 km</string>
 </resources>

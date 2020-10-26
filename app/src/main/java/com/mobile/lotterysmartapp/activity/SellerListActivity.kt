@@ -215,7 +215,7 @@ class SellerListActivity : AppCompatActivity() {
                 }
             }
 
-            if (userInventory != null && inventory.drawName == drawSelectedValue && inventory.number == numSelectedValue.toInt() && getDistance() <=rangeSelected
+            if (userInventory != null && inventory.drawName == drawSelectedValue && inventory.number == numSelectedValue.toInt() && getDistance() <= rangeSelected
                 && userInventory!!.userType == "Vendedor"
             ) {
 
@@ -368,9 +368,16 @@ class SellerListActivity : AppCompatActivity() {
                     loadTable()
                     fillCustomList()
 
+                    if (sellerList.size < 1) {
+
+                        alert(
+                            "No hay resultados",
+                            "No se encontraron números con los datos indicados."
+                        )
+
+                    }
                 }
             }
-
         }
     }
 
@@ -503,7 +510,7 @@ class SellerListActivity : AppCompatActivity() {
      *
      * @return distance
      */
-    fun distance(lat1: Double, long1: Double, lat2: Double, long2: Double): Int {
+    private fun distance(lat1: Double, long1: Double, lat2: Double, long2: Double): Int {
 
         val locationA = Location("punto A")
 
@@ -517,7 +524,7 @@ class SellerListActivity : AppCompatActivity() {
 
         val format = DecimalFormat("#")
 
-        return format.format(locationA.distanceTo(locationB)/1000).toInt()
+        return format.format(locationA.distanceTo(locationB) / 1000).toInt()
 
     }
 }
