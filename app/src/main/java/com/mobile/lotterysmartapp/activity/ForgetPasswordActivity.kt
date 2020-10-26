@@ -53,7 +53,7 @@ class ForgetPasswordActivity : AppCompatActivity() {
      * @author Franklin Cardenas
      */
     private fun setup() {
-        this.title = "Login";
+        this.title = "Login"
 
         //Setup Restore Password button
         buttonRestorePassword.setOnClickListener {

@@ -4,6 +4,10 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -12,11 +16,13 @@
         android:roundIcon="@mipmap/app_logo_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.ModifyUserActivity"></activity>
+        <activity android:name=".activity.ModifySellerActivity"></activity>
+        <activity android:name=".activity.profile_seller" />
+        <activity android:name=".activity.ProfileUserActivity" />
+        <activity android:name=".activity.ModifyUserActivity" />
         <activity android:name=".activity.TypeUserActivity" />
         <activity android:name=".activity.RegisterSellerActivity" />
         <activity android:name=".activity.SellerListActivity" />
-        <activity android:name=".activity.SearchSellerActivity" />
         <activity android:name=".activity.RegisterUserActivity" />
         <activity
             android:name=".activity.AuthenticationActivity"
@@ -36,10 +42,10 @@
             android:name=".activity.ForgetPasswordActivity"
             android:label="@string/title_activity_forget_password"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity 
-        android:name=".activity.DrawActivity"
-        android:label="DrawActivity" 
-        android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.DrawActivity"
+            android:label="DrawActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.SellerLotteryActivity"
             android:label="SellerLotteryActivity"

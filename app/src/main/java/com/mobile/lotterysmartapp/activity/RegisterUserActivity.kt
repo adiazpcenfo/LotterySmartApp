@@ -14,17 +14,15 @@ import com.mobile.lotterysmartapp.R
 import com.mobile.lotterysmartapp.model.Constants
 import com.mobile.lotterysmartapp.model.Provider
 import com.mobile.lotterysmartapp.model.User
-import com.mobile.lotterysmartapp.model.userType
+import com.mobile.lotterysmartapp.model.UserType
 import kotlinx.android.synthetic.main.activity_register_user.*
 
 
 class RegisterUserActivity : AppCompatActivity() {
-    private val accountSuccess = "Su cuenta se registró correctamente."
     private val verifyPassword = "Verifique que la contraseña tenga más de 6 caracteres."
     private val verifyInputs = "Por favor verifique que todos los datos sean correctos."
     private val accountError = "Lo sentimos, su cuenta no se registró correctamente, por favor intente de nuevo."
     private val errorAlert = "¡Error!"
-    private val successAlert = "¡Éxito!"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +47,7 @@ class RegisterUserActivity : AppCompatActivity() {
     private fun setUp() {
         //setup of registerUserButton
         val database = FirebaseDatabase.getInstance().getReference("User")
-        val userType =userType.BUYER.type
+        val userType =UserType.BUYER.type
         buttonRegisterUser.setOnClickListener {
             try {
                 register(database, userType)
@@ -76,18 +74,20 @@ class RegisterUserActivity : AppCompatActivity() {
                    textPassword.text.toString()
                ).addOnCompleteListener {
                    if (it.isSuccessful) {
-                       database.child(getRandomString()).setValue(
+                       val id = getRandomString()
+                       database.child(id).setValue(
                            User(
+                               id,
                                textEmail.text.toString(),
                                textName.text.toString(),
                                textMiddleName.text.toString(),
                                userType,
-                               "0",
-                               "0"
+                               0.0,
+                               0.0
                            )
                        )
-                       alert(successAlert, accountSuccess)
-                       showHome(textEmail.text.toString(), textName.text.toString() )
+                       showHome(textEmail.text.toString(),  Provider.APPLICATION)
+                       clearForm()
                    }
                }.addOnFailureListener{
                    alert(errorAlert, verifyInputs)
@@ -130,6 +130,9 @@ class RegisterUserActivity : AppCompatActivity() {
     /**
      * Show alert in case the new account could not be created.
      *
+     * @param title a string with the title to show
+     * @param message a string with the message to show
+     *
      * @author Franklin Cardenas
      */
     private fun alert(title: String?, message: String?) {
@@ -142,9 +145,20 @@ class RegisterUserActivity : AppCompatActivity() {
     }
 
     /**
-     * Makes a random sequence of Strings
+     * Clear the inputs from the form.
      *
-     * @param length size of the sequence of Strings
+     * @author Jimena Vega
+     */
+    private fun clearForm(){
+        textName.text.clear()
+        textMiddleName.text.clear()
+        textEmail.text.clear()
+        textPassword.text.clear()
+        textConfirmPassword.text.clear()
+    }
+
+    /**
+     * Makes a random sequence of String
      *
      * @author Jimena Vega
      */
@@ -161,20 +175,22 @@ class RegisterUserActivity : AppCompatActivity() {
      * @param email user email
      * @param provider Account provider
      */
-    private fun showHome(email : String?, name : String?) {
+    private fun showHome(email : String?, provider: Provider) {
         val homeIntent = Intent(this, HomeActivity::class.java).apply {
             putExtra(Constants.EMAIL, email)
-            putExtra(Constants.NAME, name)
+            putExtra(Constants.PROVIDER, provider.toString())
         }
         startActivity(homeIntent)
+        finish()
     }
 
     /**
-     * Send the user to the login view when the back button is used
+     * Send the user to the type of user view when the back button is used
      *
      * @author Jimena Vega
      */
     override fun onBackPressed() {
+        clearForm()
         val intentToBack = Intent(this,TypeUserActivity::class.java)
         intentToBack.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intentToBack)

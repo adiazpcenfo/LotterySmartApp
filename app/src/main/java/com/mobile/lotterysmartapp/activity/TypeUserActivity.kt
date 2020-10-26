@@ -3,11 +3,9 @@ package com.mobile.lotterysmartapp.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.view.GravityCompat
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.mobile.lotterysmartapp.R
 import kotlinx.android.synthetic.main.activity_select_type_user.*
-import kotlinx.coroutines.selects.select
 
 class TypeUserActivity : AppCompatActivity() {
 

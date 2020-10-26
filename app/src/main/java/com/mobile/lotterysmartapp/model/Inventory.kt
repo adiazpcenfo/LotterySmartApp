@@ -15,7 +15,8 @@ class Inventory {
         number: Int,
         series: String,
         fractions: Int,
-        availableFractions: Int
+        availableFractions: Int,
+        searches: Int
     ) {
         this.Id = Id
         this.drawName = drawName
@@ -25,6 +26,7 @@ class Inventory {
         this.series = series
         this.fractions = fractions
         this.availableFractions = availableFractions
+        this.searches = searches
     }
 
     constructor()
@@ -72,6 +74,12 @@ class Inventory {
         }
 
     var availableFractions: Int = 0
+        get() = field        // getter
+        set(value) {         // setter
+            field = value
+        }
+
+    var searches: Int = 0
         get() = field        // getter
         set(value) {         // setter
             field = value

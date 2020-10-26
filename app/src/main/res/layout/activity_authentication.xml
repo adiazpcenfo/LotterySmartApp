@@ -14,12 +14,11 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="32dp"
-        android:background="@android:color/black"
         android:contentDescription="@string/loterry_smart_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ls_contexto" />
+        app:srcCompat="@drawable/logo_texto_azul" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -71,8 +70,9 @@
 
         <Button
             android:id="@+id/buttonGoogleSignIn"
-            android:layout_width="match_parent"
+            android:layout_width="193dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
             android:layout_weight="0.5"
             android:background="?android:attr/selectableItemBackground"
             android:drawableStart="@drawable/googleg_standard_color_18"
@@ -91,7 +91,7 @@
         <Button
             android:id="@+id/buttonLogIn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="14dp"
             android:layout_weight="0.5"
             android:background="@drawable/custom_search_seller_btn"
             android:text="@string/access"

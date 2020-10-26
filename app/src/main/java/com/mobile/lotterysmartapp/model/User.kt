@@ -8,23 +8,26 @@ import android.text.Editable
  * @author Franklin Cardenas
  */
 class User {
+    var id = ""
     var email = ""
     var name = ""
     var middleName = ""
     var userType = ""
-    var coordinatesX = ""
-    var coordinatesY = ""
+    var coordinatesX = 0.0
+    var coordinatesY = 0.0
 
     constructor()
 
     constructor(
+        id: String,
         email: String,
         name: String,
         middleName: String,
         userType: String,
-        coordinatesX: String,
-        coordinatesY: String
+        coordinatesX: Double,
+        coordinatesY: Double
     ){
+        this.id = id
         this.email = email
         this.name = name
         this.middleName = middleName
@@ -35,7 +38,7 @@ class User {
 
 }
 
-enum class userType(val type:String){
+enum class UserType(val type:String){
     SELLER("Vendedor"),
     BUYER("Comprador")
 }

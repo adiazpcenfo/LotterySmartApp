@@ -22,9 +22,6 @@ import java.util.*
 class DrawActivity : AppCompatActivity() {
 
     private lateinit var database: DatabaseReference
-   // private lateinit var auth: FirebaseAuth
-    private val draws: MutableList<Draw> = mutableListOf()
-
     private val MESSAGE_ERROR :String = "Error"
     private val MESSAGE_ALERT :String = "Alert"
 
@@ -44,18 +41,12 @@ class DrawActivity : AppCompatActivity() {
         mantainDraw()
     }
 
-    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
-        super.onSaveInstanceState(outState, outPersistentState)
-    }
-
     private fun mantainDraw(){
         this.title = "Draw Mantainance"
-
 
         button_drawSave.setOnClickListener {
 
             getLastRegister()
-
 
             val draw = Draw()
             draw.id=""
@@ -68,10 +59,8 @@ class DrawActivity : AppCompatActivity() {
 
             if(validateForm(draw)){
 
-
                 //obtiene el id unico de la BD, de la entidad con la que esta trabajando
                 val key = database.child("Draw").push().key
-
 
                 if (key != null) {
                     draw.id = key
@@ -98,7 +87,6 @@ class DrawActivity : AppCompatActivity() {
 
     private fun validateForm(draw:Draw):Boolean{
         var isValidForm =true
-        var alertMessage: String=""
 
         if(isValidForm && draw.name.isEmpty()){
 
@@ -117,7 +105,6 @@ class DrawActivity : AppCompatActivity() {
             alert("Debe ingresar el tercer premio",MESSAGE_ERROR)
             isValidForm=false
         }
-
         return isValidForm
     }
 
@@ -132,27 +119,18 @@ class DrawActivity : AppCompatActivity() {
     }
 
     private fun getLastRegister(): Query {
-
-        var query:Query
-        query = database.child("Draw").limitToFirst(1)
-
-        val json = query.toString()
-        return query
-
+        return database.child("Draw").limitToFirst(1)
     }
 
     private fun clearForm(){
-
         editTextName.text.clear()
         editTextResult1.text.clear()
         editTextResult2.text.clear()
         editTextResult3.text.clear()
         editTextDrawDate.text.clear()
-
     }
+
     private fun calendarMode(){
-
-
         editTextDrawDate.setOnClickListener {
 
             closeKeyBoard()
@@ -164,12 +142,11 @@ class DrawActivity : AppCompatActivity() {
 
             var drawDate=""
 
-            val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+            val dpd = DatePickerDialog(this, { _, year, monthOfYear, dayOfMonth ->
 
+                val monthNum = monthOfYear +1
 
-                var monthNum = monthOfYear.toInt()+1
-
-                 drawDate ="" + dayOfMonth + "/" + monthNum + "/" + year
+                 drawDate = "$dayOfMonth/$monthNum/$year"
                 editTextDrawDate.setText(drawDate)
 
             }, year, month, day)
@@ -185,16 +162,5 @@ class DrawActivity : AppCompatActivity() {
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
-    }
-
-
-    private fun convertStringToDate(dateS:String): LocalDate{
-      //  val string = "May 31, 2020"
-
-        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy ", Locale.ENGLISH)
-        val date = LocalDate.parse(dateS, formatter)
-        return date//java.sql.Timestamp.valueOf(date.toString())
-
-
     }
 }
