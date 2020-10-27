@@ -75,13 +75,13 @@ class DrawActivity : AppCompatActivity() {
             }
         }
 
-        button_drawCancel.setOnClickListener{
+        /*button_drawCancel.setOnClickListener{
             clearForm()
             var intentMenu = Intent()
             intentMenu.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             intentMenu = Intent(this, HomeActivity::class.java)
             startActivity(intentMenu)
-        }
+        }*/
 
     }
 
@@ -140,7 +140,7 @@ class DrawActivity : AppCompatActivity() {
             val month = c.get(Calendar.MONTH)
             val day = c.get(Calendar.DAY_OF_MONTH)
 
-            var drawDate=""
+            var drawDate:String
 
             val dpd = DatePickerDialog(this, { _, year, monthOfYear, dayOfMonth ->
 
