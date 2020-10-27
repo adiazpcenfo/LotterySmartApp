@@ -20,11 +20,38 @@ class InventoryService (){
     private val MESSAGE_ERROR :String = "Error"
     private val FRACTIONS_NUMBER: Int = 10
     private val STATUS_ACT ="ACT"
-    private val AVAILABLE_FRACTIONS =0
+    private val SEARCHES =0
+    private val CERO = 0
 
-    fun addUserInventory(inventory:Inventory){
+
+    /**
+     * @author Allan Diaz
+     * Save Buyer  number reserve
+     *
+     * **/
+    private fun addUserInventory(inventory:Inventory,fractions: Int){
+
+        inventory.Id = getInventoryKey()
+        inventory.availableFractions=CERO
+        inventory.fractions=fractions
+        inventory.searches=CERO
+        inventory.state=STATUS_ACT
+
+        database.child("Inventory").child(inventory.Id).setValue(inventory)
+    }
+
+    /**
+     * @author Allan Diaz
+     * Calculate number of fraction rest to object, save seller number, create new register to buyer with reserve number and fractions
+     * */
+    fun reserveNumber(inventory: Inventory,fractions:Int){
 
 
+        inventory.fractions= inventory.fractions-fractions
+
+        database.child("Inventory").child(inventory.Id).setValue(inventory)
+
+        addUserInventory(inventory,fractions)
 
     }
 
@@ -41,9 +68,9 @@ class InventoryService (){
 
         iterator.forEach {
             sellerInventory.Id=getInventoryKey()
-            sellerInventory.availableFractions=AVAILABLE_FRACTIONS
-            sellerInventory.number = it
 
+            sellerInventory.number = it
+            sellerInventory.searches=SEARCHES
             sellerInventory.fractions = FRACTIONS_NUMBER
             sellerInventory.availableFractions = FRACTIONS_NUMBER
             sellerInventory.state=STATUS_ACT
@@ -60,14 +87,14 @@ class InventoryService (){
 
     }
 
-    private fun getLastRegister(): Query {
+   /* private fun getLastRegister(): Query {
 
         var query: Query = database.child("Inventory").limitToFirst(1)
 
         val json = query.toString()
         return query
 
-    }
+    }*/
 
 
 }
