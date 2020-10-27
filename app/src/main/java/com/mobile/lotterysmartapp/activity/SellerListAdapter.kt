@@ -2,10 +2,12 @@ package com.mobile.lotterysmartapp.activity
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.TextView
 import com.google.firebase.database.*
 import com.mobile.lotterysmartapp.R
@@ -26,6 +28,7 @@ class SellerListAdapter(
 
     private lateinit var ref: DatabaseReference
     private lateinit var userList: MutableList<User>
+
 
     /**
      * Load data into a custom listView to be used in a main listView
@@ -48,6 +51,7 @@ class SellerListAdapter(
 
         val name = view.findViewById<TextView>(R.id.nameTextView)
         val series = view.findViewById<TextView>(R.id.seriesTextView)
+        val button = view.findViewById<Button>(R.id.buttonViewAddress)
 
         val seller = sellerList[position]
 
@@ -74,11 +78,25 @@ class SellerListAdapter(
                             name.text = user.name
                             series.text = seller.series
 
+                            button.setOnClickListener {
+
+                                val intent = Intent(mCtx, SellerAddressActivity::class.java)
+                                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
+                                intent.putExtra("coordinatesX", user.coordinatesX)
+                                intent.putExtra("coordinatesY", user.coordinatesY)
+                                intent.putExtra("name", user.name)
+
+                                mCtx.startActivity(intent)
+
+                            }
                         }
                     }
                 }
             }
         })
+
         return view
+
     }
 }
