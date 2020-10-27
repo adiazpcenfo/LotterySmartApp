@@ -2,12 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/home_icon"
-            android:iconTint="@color/colorTextInput"
-
-            android:title="Home" />
 
         <item
             android:id="@+id/list_sellers"

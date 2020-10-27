@@ -47,7 +47,7 @@ class RegisterSellerActivity : AppCompatActivity() {
     private var latitudeValue = 0.0
     private var longitudeValue = 0.0
     lateinit var mapFragment: SupportMapFragment
-    lateinit var googleMap : GoogleMap
+    lateinit var mMap : GoogleMap
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,11 +64,8 @@ class RegisterSellerActivity : AppCompatActivity() {
         locationManager = getSystemService(LOCATION_SERVICE) as LocationManager?
         mapFragment = supportFragmentManager.findFragmentById(R.id.mapView) as SupportMapFragment
         mapFragment.getMapAsync(OnMapReadyCallback {
-            googleMap = it
-            val locationUser = LatLng(latitudeValue, longitudeValue)
-            val markerOptions = MarkerOptions().position(locationUser)
-            googleMap.addMarker(markerOptions)
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(locationUser, 12f))
+            mMap = it
+
         })
 
         //setup location
@@ -139,6 +136,10 @@ class RegisterSellerActivity : AppCompatActivity() {
                     geocoder.getFromLocation(location.latitude, location.longitude, 1)
                 latitudeValue = addresses[0].latitude
                 longitudeValue = addresses[0].longitude
+                val point = LatLng(latitudeValue, longitudeValue)
+                mMap.addMarker(MarkerOptions().position(point).title("Ubicación de su puesto"))
+                mMap.uiSettings.isZoomControlsEnabled = true
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(point, 18F))
             } catch (e: Exception) {
                 e.printStackTrace()
             }
