@@ -1,6 +1,7 @@
 package com.mobile.lotterysmartapp.activity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.pm.PackageManager
 import android.location.Geocoder
@@ -23,10 +24,7 @@ import com.mobile.lotterysmartapp.model.User
 import kotlinx.android.synthetic.main.activity_seller_list.*
 import java.text.DecimalFormat
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.math.acos
-import kotlin.math.cos
-import kotlin.math.sin
+
 
 class SellerListActivity : AppCompatActivity() {
     private lateinit var inventoryReference: DatabaseReference
@@ -206,6 +204,7 @@ class SellerListActivity : AppCompatActivity() {
      *
      * @author Josue Calderón Varela
      */
+    @SuppressLint("SetTextI18n")
     private fun loadTable() {
 
         sellerList.clear()
@@ -237,7 +236,7 @@ class SellerListActivity : AppCompatActivity() {
      *
      * @author Josue Calderón Varela
      */
-    private fun fillCustomList(){
+    private fun fillCustomList() {
 
         val adapter =
             SellerListAdapter(
@@ -256,7 +255,6 @@ class SellerListActivity : AppCompatActivity() {
      * @author Josue Calderón Varela
      */
     private fun getDistance(): Int {
-
 
         val distanceValue =
             userInventory?.coordinatesY?.let {
@@ -375,9 +373,16 @@ class SellerListActivity : AppCompatActivity() {
                     loadTable()
                     fillCustomList()
 
+                    if (sellerList.size < 1) {
+
+                        alert(
+                            "No hay resultados",
+                            "No se encontraron números con los datos indicados."
+                        )
+
+                    }
                 }
             }
-
         }
     }
 
@@ -504,38 +509,27 @@ class SellerListActivity : AppCompatActivity() {
      *@author Josue Calderón Varela
      *
      * @param lat1 current latitude
-     * @param lon1 current longitude
+     * @param long1 current longitude
      * @param lat2 seller latitude
-     * @param lon2 seller longitude
+     * @param long2 seller longitude
      *
      * @return distance
      */
-    private fun distance(
-        lat1: Double,
-        lon1: Double,
-        lat2: Double,
-        lon2: Double
-    ): Int {
+    private fun distance(lat1: Double, long1: Double, lat2: Double, long2: Double): Int {
 
-        val theta = lon1 - lon2
-        var dist = (sin(deg2rad(lat1))
-                * sin(deg2rad(lat2))
-                + (cos(deg2rad(lat1))
-                * cos(deg2rad(lat2))
-                * cos(deg2rad(theta))))
-        dist = acos(dist)
-        dist = rad2deg(dist)
-        dist *= 60 * 1.1515
+        val locationA = Location("punto A")
+
+        locationA.latitude = lat1
+        locationA.longitude = long1
+
+        val locationB = Location("punto B")
+
+        locationB.latitude = lat2
+        locationB.longitude = long2
+
         val format = DecimalFormat("#")
 
-        return format.format(dist).toInt()
-    }
+        return format.format(locationA.distanceTo(locationB) / 1000).toInt()
 
-    private fun deg2rad(deg: Double): Double {
-        return deg * Math.PI / 180.0
-    }
-
-    private fun rad2deg(rad: Double): Double {
-        return rad * 180.0 / Math.PI
     }
 }

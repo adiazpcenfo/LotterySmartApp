@@ -75,13 +75,13 @@ class SellerLotteryActivity : AppCompatActivity() {
             }
         }
 
-        button_drawCancel2.setOnClickListener {
+        /*button_drawCancel2.setOnClickListener {
             cleanForm()
             var intentMenu = Intent()
             intentMenu.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             intentMenu = Intent(this, HomeActivity::class.java)
             startActivity(intentMenu)
-        }
+        }*/
 
     }
 
