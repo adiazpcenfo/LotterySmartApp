@@ -5,8 +5,8 @@
 
         <item
             android:id="@+id/list_sellers"
-            android:icon="@drawable/list_sellers"
-            android:title="Vendedores"/>
+            android:icon="@drawable/icon_search"
+            android:title="Buscar número"/>
 
         <item
             android:id="@+id/list_reserved_nums"

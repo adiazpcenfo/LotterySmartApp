@@ -4,34 +4,142 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/white_background"
     tools:context=".activity.RegisterSellerActivity">
 
-    <Button
-        android:id="@+id/buttonRegisterUserSeller"
-        android:layout_width="314dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="28dp"
-        android:background="@drawable/custom_search_seller_btn"
-        android:text="@string/registrar"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.594"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mapView" />
-
     <!--    <com.google.android.gms.maps.MapView-->
-    <fragment
-        android:id="@+id/mapView"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="314dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="50dp"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
+        android:layout_width="350dp"
+        android:layout_height="650dp"
+        android:layout_marginBottom="24dp"
+        android:background="#C8FFFFFF"
+        android:backgroundTint="#C8FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.594"
+        app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textConfirmPasswordSeller" />
+        app:layout_constraintTop_toBottomOf="@+id/registerUserLbl7">
+
+        <EditText
+            android:id="@+id/textNameSeller"
+            android:layout_width="314dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="24dp"
+            android:autofillHints=""
+            android:background="@drawable/custom_input"
+            android:ems="10"
+            android:hint="@string/nombre"
+            android:inputType="text"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/registerUserLbl8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/la_contrase_a_debe_contener_m_s_de_6_caracteres"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/textConfirmPasswordSeller"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textPasswordSeller" />
+
+        <EditText
+            android:id="@+id/textEmailSeller"
+            android:layout_width="314dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="24dp"
+            android:autofillHints=""
+            android:background="@drawable/custom_input"
+            android:ems="10"
+            android:hint="@string/correo_electr_nico"
+            android:inputType="textEmailAddress"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textNameSeller" />
+
+        <TextView
+            android:id="@+id/ubicationLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/su_ubicaci_n"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textConfirmPasswordSeller" />
+
+        <Button
+            android:id="@+id/buttonRegisterUserSeller"
+            android:layout_width="314dp"
+            android:layout_height="60dp"
+            android:background="@drawable/custom_search_seller_btn"
+            android:text="@string/registrar"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mapView"
+            app:layout_constraintVertical_bias="0.211" />
+
+        <fragment
+            android:id="@+id/mapView"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="314dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.444"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ubicationLbl" />
+
+        <EditText
+            android:id="@+id/textConfirmPasswordSeller"
+            android:layout_width="314dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/custom_input"
+            android:ems="10"
+            android:hint="@string/confirmar_contrase_a"
+            android:importantForAutofill="no"
+            android:inputType="textPassword"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textPasswordSeller" />
+
+        <EditText
+            android:id="@+id/textPasswordSeller"
+            android:layout_width="314dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/custom_input"
+            android:ems="10"
+            android:hint="@string/contrase_a"
+            android:importantForAutofill="no"
+            android:inputType="textPassword"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textEmailSeller" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/registerUserLbl7"
@@ -47,117 +155,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/textPasswordSeller"
-        android:layout_width="314dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/custom_input"
-        android:ems="10"
-        android:hint="@string/contrase_a"
-        android:importantForAutofill="no"
-        android:inputType="textPassword"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.594"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textEmailSeller" />
-
-    <EditText
-        android:id="@+id/textNameSeller"
-        android:layout_width="314dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="36dp"
-        android:autofillHints=""
-        android:background="@drawable/custom_input"
-        android:ems="10"
-        android:hint="@string/nombre"
-        android:inputType="text"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.594"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerUserLbl7" />
-
-    <EditText
-        android:id="@+id/textEmailSeller"
-        android:layout_width="314dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="30dp"
-        android:autofillHints=""
-        android:background="@drawable/custom_input"
-        android:ems="10"
-        android:hint="@string/correo_electr_nico"
-        android:inputType="textEmailAddress"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.594"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textNameSeller" />
-
-    <EditText
-        android:id="@+id/textConfirmPasswordSeller"
-        android:layout_width="314dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/custom_input"
-        android:ems="10"
-        android:hint="@string/confirmar_contrase_a"
-        android:importantForAutofill="no"
-        android:inputType="textPassword"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.594"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textPasswordSeller" />
-
-    <TextView
-        android:id="@+id/registerUserLbl8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/la_contrase_a_debe_contener_m_s_de_6_caracteres"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/textConfirmPasswordSeller"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textPasswordSeller"
-        app:layout_constraintVertical_bias="0.166" />
-
-    <TextView
-        android:id="@+id/ubicationLbl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/su_ubicaci_n"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/mapView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.164"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textConfirmPasswordSeller"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="47dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="361dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
