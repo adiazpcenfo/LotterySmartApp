@@ -66,4 +66,6 @@
     <string name="buscar">Buscar</string>
     <string name="seleccionar_rango">Seleccionar rango</string>
     <string name="_0_km">0 km</string>
+    <string name="reserve">Reservar</string>
+    <string name="available">Disponible:</string>
 </resources>

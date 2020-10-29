@@ -2,6 +2,7 @@ package com.mobile.lotterysmartapp.activity
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.Query
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -15,7 +16,8 @@ import com.mobile.lotterysmartapp.model.Inventory
 class InventoryService (){
 
     private lateinit var database: DatabaseReference
-    private lateinit var auth: FirebaseAuth
+    private lateinit var databaseInv: DatabaseReference
+
 
     private val MESSAGE_ERROR :String = "Error"
     private val FRACTIONS_NUMBER: Int = 10
@@ -37,7 +39,7 @@ class InventoryService (){
         inventory.searches=CERO
         inventory.state=STATUS_ACT
 
-        database.child("Inventory").child(inventory.Id).setValue(inventory)
+        databaseInv.child(inventory.Id).setValue(inventory)
     }
 
     /**
@@ -46,10 +48,12 @@ class InventoryService (){
      * */
     fun reserveNumber(inventory: Inventory,fractions:Int){
 
+        databaseInv= FirebaseDatabase.getInstance().getReference("Inventory")
 
-        inventory.fractions= inventory.fractions-fractions
 
-        database.child("Inventory").child(inventory.Id).setValue(inventory)
+        inventory.availableFractions= inventory.availableFractions-fractions
+
+        databaseInv.child(inventory.Id).setValue(inventory)
 
         addUserInventory(inventory,fractions)
 
