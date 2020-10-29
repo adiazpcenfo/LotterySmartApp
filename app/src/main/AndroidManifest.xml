@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mobile.lotterysmartapp">
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -11,7 +10,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
@@ -21,10 +19,11 @@
         android:roundIcon="@mipmap/app_logo_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.ModifySellerActivity"></activity>
+        <activity android:name=".activity.HeaderSellerActivity"></activity>
+        <activity android:name=".activity.HomeSellerActivity" />
+        <activity android:name=".activity.ModifySellerActivity" />
         <activity android:name=".activity.ProfileSellerActivity" />
         <activity android:name=".activity.ProfileUserActivity" />
-
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -39,7 +38,7 @@
 
         <activity
             android:name=".activity.SellerAddressActivity"
-            android:label="@string/title_activity_seller_address"></activity>
+            android:label="@string/title_activity_seller_address" />
         <activity android:name=".activity.ModifyUserActivity" />
         <activity android:name=".activity.TypeUserActivity" />
         <activity android:name=".activity.RegisterSellerActivity" />
@@ -71,7 +70,6 @@
             android:name=".activity.SellerLotteryActivity"
             android:label="SellerLotteryActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
     </application>
 
 </manifest>

@@ -24,9 +24,9 @@ import kotlinx.android.synthetic.main.activity_home.*
 /**
  * Class in charge of Home Activity.
  *
- * @author Franklin Cardenas
+ * @author Jimena Vega
  */
-class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class HomeSellerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     //Declaration of the variables for the menu
     private lateinit var drawerLayout: DrawerLayout
@@ -37,11 +37,11 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     /**
      * On Create method for Home Activity.
      *
-     * @author Franklin Cardenas
+     * @author Jimena Vega
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+        setContentView(R.layout.activity_home_seller)
         setSupportActionBar(findViewById(R.id.toolbar))
 
         //Get user and provider from login or register
@@ -108,22 +108,23 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         intentMenu.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         when (menuItem.itemId) {
 
-            //Send to seller list option
-            R.id.list_sellers -> {
-                intentMenu = Intent(this, SellerListActivity::class.java)
+            //Send to nums winners option
+            R.id.list_winners -> {
+                intentMenu = Intent(this, DrawActivity::class.java)
                 startActivity(intentMenu)
                 drawerLayout.closeDrawer(GravityCompat.START)
             }
 
-            //Send to reserved nums option
-            R.id.list_reserved_nums -> {
-
-
+            //Send to Lottery Vendor option
+            R.id.list_sellerLottery -> {
+                intentMenu = Intent(this, SellerLotteryActivity::class.java)
+                startActivity(intentMenu)
+                drawerLayout.closeDrawer(GravityCompat.START)
             }
 
             //Send to profile option
             R.id.profile -> {
-                intentMenu = Intent(this, ProfileUserActivity::class.java)
+                intentMenu = Intent(this, ProfileSellerActivity::class.java)
                 startActivity(intentMenu)
             }
 

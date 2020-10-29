@@ -44,7 +44,7 @@ class ModifyUserActivity : AppCompatActivity() {
     }
 
     /**
-     * Load the data of the profile
+     * Load the data of the user
      *
      * @author Jimena Vega
      */

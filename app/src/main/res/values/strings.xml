@@ -53,7 +53,6 @@
     <string name="la_contrase_a_debe_contener_m_s_de_6_caracteres">**La contraseña debe contener más de 6 caracteres.</string>
     <string name="su_ubicaci_n">Su ubicación:</string>
     <string name="modificar_informaci_n">Modificar información</string>
-    <string name="perfil">Perfil</string>
     <string name="nombre">Nombre</string>
     <string name="apellidos">Apellidos</string>
     <string name="modificar_perfil">Guardar</string>
@@ -66,4 +65,12 @@
     <string name="buscar">Buscar</string>
     <string name="seleccionar_rango">Seleccionar rango</string>
     <string name="_0_km">0 km</string>
+    <string name="n_meros_ganadores">Números ganadores</string>
+    <string name="loteria_vendedor">Loteria vendedor</string>
+    <string name="perfil">Perfil</string>
+    <string name="mi_perfil">Mi perfil</string>
+    <string name="cerrar_sesi_n">Cerrar sesión</string>
+    <string name="bienvenid">¡Bienvenid@!</string>
+    <string name="numero">numero</string>
+    <string name="n_mero_m_s_buscado">Número más buscado:</string>
 </resources>
