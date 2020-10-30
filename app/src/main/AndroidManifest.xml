@@ -22,7 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.ModifySellerActivity"></activity>
-        <activity android:name=".activity.profile_seller" />
+        <activity android:name=".activity.ProfileSellerActivity" />
         <activity android:name=".activity.ProfileUserActivity" />
 
         <!--
@@ -40,7 +40,6 @@
         <activity
             android:name=".activity.SellerAddressActivity"
             android:label="@string/title_activity_seller_address"></activity>
-        <activity android:name=".activity.ProfileUserActivity"></activity>
         <activity android:name=".activity.ModifyUserActivity" />
         <activity android:name=".activity.TypeUserActivity" />
         <activity android:name=".activity.RegisterSellerActivity" />
@@ -72,6 +71,7 @@
             android:name=".activity.SellerLotteryActivity"
             android:label="SellerLotteryActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>

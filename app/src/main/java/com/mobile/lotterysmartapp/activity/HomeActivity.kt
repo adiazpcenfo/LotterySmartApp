@@ -81,8 +81,8 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun setupMenu() {
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.nav_view)
-        textView = findViewById(R.id.textView)
         toolbar = findViewById(R.id.toolbar)
+        this.title="Lottery Smart"
 
         setSupportActionBar(toolbar)
 
@@ -109,12 +109,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         var intentMenu = Intent()
         intentMenu.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         when (menuItem.itemId) {
-
-            //Send to home option
-            R.id.nav_home -> {
-                intentMenu = Intent(this, HomeActivity::class.java)
-                startActivity(intentMenu)
-            }
 
             //Send to seller list option
             R.id.list_sellers -> {

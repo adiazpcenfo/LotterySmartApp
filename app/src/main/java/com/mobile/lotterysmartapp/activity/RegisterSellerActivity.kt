@@ -11,9 +11,16 @@ import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.constraintlayout.motion.widget.Debug.getLocation
 import androidx.core.app.ActivityCompat
 import androidx.core.util.PatternsCompat
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -39,6 +46,8 @@ class RegisterSellerActivity : AppCompatActivity() {
     private var locationManager: LocationManager? = null
     private var latitudeValue = 0.0
     private var longitudeValue = 0.0
+    lateinit var mapFragment: SupportMapFragment
+    lateinit var mMap : GoogleMap
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +62,11 @@ class RegisterSellerActivity : AppCompatActivity() {
 
         //Initialize variables
         locationManager = getSystemService(LOCATION_SERVICE) as LocationManager?
+        mapFragment = supportFragmentManager.findFragmentById(R.id.mapView) as SupportMapFragment
+        mapFragment.getMapAsync(OnMapReadyCallback {
+            mMap = it
+
+        })
 
         //setup location
         try {
@@ -122,6 +136,10 @@ class RegisterSellerActivity : AppCompatActivity() {
                     geocoder.getFromLocation(location.latitude, location.longitude, 1)
                 latitudeValue = addresses[0].latitude
                 longitudeValue = addresses[0].longitude
+                val point = LatLng(latitudeValue, longitudeValue)
+                mMap.addMarker(MarkerOptions().position(point).title("Ubicación de su puesto"))
+                mMap.uiSettings.isZoomControlsEnabled = true
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(point, 18F))
             } catch (e: Exception) {
                 e.printStackTrace()
             }
