@@ -1,6 +1,7 @@
 package com.mobile.lotterysmartapp.activity
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -8,9 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.Spinner
 import android.widget.TextView
 import com.google.firebase.database.*
 import com.mobile.lotterysmartapp.R
+import com.mobile.lotterysmartapp.model.Constants
 import com.mobile.lotterysmartapp.model.Inventory
 import com.mobile.lotterysmartapp.model.User
 
@@ -46,14 +49,18 @@ class SellerListAdapter(
 
         val layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)
         val view: View = layoutInflater.inflate(layoutId, null)
+        val inventoryService = InventoryService()
 
         userList = mutableListOf()
 
         val name = view.findViewById<TextView>(R.id.nameTextView)
         val series = view.findViewById<TextView>(R.id.seriesTextView)
         val button = view.findViewById<Button>(R.id.buttonViewAddress)
+        val buttonReserve = view.findViewById<Button>(R.id.buttonReserve)
 
         val seller = sellerList[position]
+
+        val spinnerAvailable:Spinner = view.findViewById<Spinner>(R.id.spinnerAvailable)
 
         ref = FirebaseDatabase.getInstance().getReference("User")
 
@@ -78,6 +85,24 @@ class SellerListAdapter(
                             name.text = user.name
                             series.text = seller.series
 
+
+                            var availableOptions = ArrayList<Int>()
+                            val iterator =(1..seller.availableFractions).iterator()
+
+                            iterator.forEach {
+                                availableOptions.add(it)
+                            }
+
+
+                            val adapter = this@SellerListAdapter?.let {
+                                spinnerAvailable.adapter =ArrayAdapter<Int>(
+                                    mCtx,
+                                    android.R.layout.simple_spinner_item,
+                                    availableOptions
+                                )
+                            }
+
+
                             button.setOnClickListener {
 
                                 val intent = Intent(mCtx, SellerAddressActivity::class.java)
@@ -90,6 +115,31 @@ class SellerListAdapter(
                                 mCtx.startActivity(intent)
 
                             }
+
+                            buttonReserve.setOnClickListener{
+
+                                val preferences =
+                                    mCtx.getSharedPreferences(mCtx.getString(R.string.preferences_file), Context.MODE_PRIVATE)
+                                val email = preferences.getString(Constants.EMAIL, null).toString()
+
+
+                               if(inventoryService.reserveNumber(seller,spinnerAvailable.selectedItem.toString().toInt(),email)){
+
+                                   val alertBuilder = AlertDialog.Builder(mCtx)
+                                   alertBuilder.setTitle("Alert")
+                                   alertBuilder.setMessage("Reserva realizada con exito")
+                                   alertBuilder.setPositiveButton("Aceptar", null)
+                                   val dialog: AlertDialog = alertBuilder.create()
+                                   dialog.show()
+
+
+                               }
+
+
+                            }
+
+
+
                         }
                     }
                 }
@@ -99,4 +149,6 @@ class SellerListAdapter(
         return view
 
     }
+
+
 }

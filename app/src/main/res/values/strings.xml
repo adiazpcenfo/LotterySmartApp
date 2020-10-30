@@ -73,4 +73,6 @@
     <string name="bienvenid">¡Bienvenid@!</string>
     <string name="numero">numero</string>
     <string name="n_mero_m_s_buscado">Número más buscado:</string>
+    <string name="reserve">Reservar</string>
+    <string name="available">Disponible:</string>
 </resources>

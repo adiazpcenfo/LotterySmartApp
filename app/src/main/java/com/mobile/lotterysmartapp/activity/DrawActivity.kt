@@ -3,9 +3,7 @@ package com.mobile.lotterysmartapp.activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -15,8 +13,6 @@ import com.google.firebase.ktx.Firebase
 import com.mobile.lotterysmartapp.R
 import com.mobile.lotterysmartapp.model.Draw
 import kotlinx.android.synthetic.main.activity_draw_maintenance.*
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 class DrawActivity : AppCompatActivity() {

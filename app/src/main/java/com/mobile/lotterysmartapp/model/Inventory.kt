@@ -1,5 +1,7 @@
 package com.mobile.lotterysmartapp.model
 
+import java.time.LocalDateTime
+
 /**
  * Class that represents Inventory collection on the database.
  *
@@ -11,22 +13,27 @@ class Inventory {
         Id: String,
         drawName: String,
         userEmail: String,
+        sellerEmail:String,
         state: String,
         number: Int,
         series: String,
         fractions: Int,
         availableFractions: Int,
+        reserveDate:String,
         searches: Int
+
     ) {
         this.Id = Id
         this.drawName = drawName
         this.userEmail = userEmail
+        this.sellerEmail = sellerEmail
         this.state = state
         this.number = number
         this.series = series
         this.fractions = fractions
         this.availableFractions = availableFractions
         this.searches = searches
+        this.reserveDate = reserveDate
     }
 
     constructor()
@@ -44,6 +51,12 @@ class Inventory {
         }
 
     var userEmail: String = ""
+        get() = field        // getter
+        set(value) {         // setter
+            field = value
+        }
+
+    var sellerEmail: String = ""
         get() = field        // getter
         set(value) {         // setter
             field = value
@@ -80,6 +93,12 @@ class Inventory {
         }
 
     var searches: Int = 0
+        get() = field        // getter
+        set(value) {         // setter
+            field = value
+        }
+
+    var reserveDate:String = "01/01/1990"
         get() = field        // getter
         set(value) {         // setter
             field = value
