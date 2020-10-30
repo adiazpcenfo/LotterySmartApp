@@ -11,11 +11,14 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.*
 import com.mobile.lotterysmartapp.R
 import com.mobile.lotterysmartapp.model.Constants
 import com.mobile.lotterysmartapp.model.Provider
+import com.mobile.lotterysmartapp.model.User
 import com.mobile.lotterysmartapp.util.AlertUtil
 import kotlinx.android.synthetic.main.activity_authentication.*
+import java.util.ArrayList
 
 /**
  * Class in charge of Authentication Activity.
@@ -30,6 +33,8 @@ class AuthenticationActivity : AppCompatActivity() {
     private val error = "Error"
     private val userAndPasswordNotPresent = "Ingrese usuario y contraseña."
     private val googleSignInId = 100
+    private lateinit var ref: DatabaseReference
+    private lateinit var userList: ArrayList<User>
 
     /**
      * On Create method for Authentication Activity.
@@ -40,9 +45,11 @@ class AuthenticationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authentication)
 
+        userList = arrayListOf()
+        ref = FirebaseDatabase.getInstance().getReference("User")
+        loadData()
         //Check active session
         session()
-
         //Set up startup analytics
         val analytics = FirebaseAnalytics.getInstance(this)
         val bundle = Bundle()
@@ -132,6 +139,34 @@ class AuthenticationActivity : AppCompatActivity() {
     }
 
     /**
+     * Load the data of the user
+     *
+     * @author Jimena Vega
+     */
+    private fun loadData() {
+        ref.addValueEventListener(object : ValueEventListener {
+
+            override fun onCancelled(error: DatabaseError) {}
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                userList.clear()
+
+                for (seller in snapshot.children) {
+
+                    val user = seller.getValue(User::class.java)
+
+                    if (user != null) {
+
+                        userList.add(user)
+
+                    }
+                }
+            }
+        })
+    }
+
+    /**
      * Setup for Register Button.
      *
      * @author Jimena Vega
@@ -152,11 +187,25 @@ class AuthenticationActivity : AppCompatActivity() {
      * @author Franklin Cardenas
      */
     private fun showHome(email: String?, provider: Provider) {
-        val homeIntent = Intent(this, HomeActivity::class.java).apply {
-            putExtra(Constants.EMAIL, email)
-            putExtra(Constants.PROVIDER, provider.toString())
+        var userView: User? = null
+        for (user in userList) {
+            if(user.email == email){
+                userView = user
+            }
         }
-        startActivity(homeIntent)
+        if (userView?.userType == "Comprador") {
+            val homeIntent = Intent(this, HomeActivity::class.java).apply {
+                putExtra(Constants.EMAIL, email)
+                putExtra(Constants.PROVIDER, provider.toString())
+            }
+            startActivity(homeIntent)
+        } else if (userView?.userType == "Vendedor") {
+            val homeIntent = Intent(this, HomeSellerActivity::class.java).apply {
+                putExtra(Constants.EMAIL, email)
+                putExtra(Constants.PROVIDER, provider.toString())
+            }
+            startActivity(homeIntent)
+        }
     }
 
 

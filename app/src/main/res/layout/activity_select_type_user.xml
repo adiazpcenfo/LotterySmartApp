@@ -4,82 +4,99 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/white_background"
     tools:context=".activity.TypeUserActivity">
 
-    <TextView
-        android:id="@+id/typeUserLbl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="152dp"
-        android:text="@string/tipo_de_usuario"
-        android:textSize="21sp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
+        android:layout_width="350dp"
+        android:layout_height="500dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="124dp"
+        android:background="#C8FFFFFF"
+        android:backgroundTint="#C8FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.462"
+        app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/registerUserLbl">
 
-    <TextView
-        android:id="@+id/registerUserLbl4"
-        android:layout_width="305dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Podrás buscar puestos de lotería cercarnos, reservar los números que deseas comprar, ver los números ganadores. ¡Pruébala!  "
-        android:textAlignment="center"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonBuyer" />
+        <Button
+            android:id="@+id/buttonSeller"
+            android:layout_width="305dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/custom_search_seller_btn"
+            android:text="@string/quiero_ser_vendedor"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/registerUserLbl4" />
 
-    <TextView
-        android:id="@+id/registerUserLbl5"
-        android:layout_width="305dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/podr_s_registrar_tu_puesto_de_loter_a_reservar_n_meros_para_tus_clientes_y_mucho_m_s"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSeller" />
+        <TextView
+            android:id="@+id/registerUserLbl5"
+            android:layout_width="305dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/podr_s_registrar_tu_puesto_de_loter_a_reservar_n_meros_para_tus_clientes_y_mucho_m_s"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonSeller" />
 
-    <Button
-        android:id="@+id/buttonBuyer"
-        android:layout_width="305dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="44dp"
-        android:background="@drawable/custom_search_seller_btn"
-        android:text="@string/quiero_ser_comprador"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/typeUserLbl" />
+        <TextView
+            android:id="@+id/registerUserLbl4"
+            android:layout_width="305dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Podrás buscar puestos de lotería cercarnos, reservar los números que deseas comprar, ver los números ganadores. ¡Pruébala!  "
+            android:textAlignment="center"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonBuyer" />
 
-    <Button
-        android:id="@+id/buttonSeller"
-        android:layout_width="305dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="28dp"
-        android:background="@drawable/custom_search_seller_btn"
-        android:text="@string/quiero_ser_vendedor"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerUserLbl4" />
+        <TextView
+            android:id="@+id/typeUserLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/tipo_de_usuario"
+            android:textSize="21sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/buttonBuyer"
+            android:layout_width="305dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/custom_search_seller_btn"
+            android:text="@string/quiero_ser_comprador"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/typeUserLbl" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/lotterySmartLbl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="92dp"
+        android:layout_marginTop="52dp"
         android:text="@string/bienvenido_a_lottery_smart"
         android:textSize="28sp"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.41"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.531" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

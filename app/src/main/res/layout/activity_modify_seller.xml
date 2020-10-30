@@ -4,51 +4,78 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/white_background"
     tools:context=".activity.ModifySellerActivity">
 
-    <Button
-        android:id="@+id/buttonModifySeller"
-        android:layout_width="314dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/custom_search_seller_btn"
-        android:text="@string/guardar"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:textSize="20sp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="343dp"
+        android:layout_height="413dp"
+        android:layout_marginTop="56dp"
+        android:background="#C8FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textNameModifySeller" />
+        app:layout_constraintTop_toBottomOf="@+id/modifySeller">
 
-    <EditText
-        android:id="@+id/textNameModifySeller"
-        android:layout_width="314dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="36dp"
-        android:autofillHints=""
-        android:background="@drawable/custom_input"
-        android:ems="10"
-        android:inputType="text"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/modifySeller" />
+        <EditText
+            android:id="@+id/textNameModifySeller"
+            android:layout_width="314dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="80dp"
+            android:autofillHints=""
+            android:background="@drawable/custom_input"
+            android:ems="10"
+            android:inputType="text"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonModifySeller"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.448"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.35" />
+
+        <TextView
+            android:id="@+id/nameLbl2"
+            android:layout_width="314dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="64dp"
+            android:text="@string/nombre"
+            android:textColor="@color/profileText"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.517"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/buttonModifySeller"
+            android:layout_width="314dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="116dp"
+            android:background="@drawable/custom_search_seller_btn"
+            android:text="@string/guardar"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.448"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/modifySeller"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="168dp"
-        android:layout_marginTop="148dp"
-        android:layout_marginEnd="168dp"
+        android:layout_marginTop="100dp"
         android:text="@string/modificar_informaci_n"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
