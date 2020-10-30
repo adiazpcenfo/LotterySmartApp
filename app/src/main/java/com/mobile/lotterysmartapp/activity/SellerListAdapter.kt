@@ -13,6 +13,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import com.google.firebase.database.*
 import com.mobile.lotterysmartapp.R
+import com.mobile.lotterysmartapp.model.Constants
 import com.mobile.lotterysmartapp.model.Inventory
 import com.mobile.lotterysmartapp.model.User
 
@@ -99,10 +100,8 @@ class SellerListAdapter(
                                     android.R.layout.simple_spinner_item,
                                     availableOptions
                                 )
-
                             }
 
-                            //spinnerAvailable.adapter(ArrayAdapter<String>)
 
                             button.setOnClickListener {
 
@@ -119,8 +118,12 @@ class SellerListAdapter(
 
                             buttonReserve.setOnClickListener{
 
+                                val preferences =
+                                    mCtx.getSharedPreferences(mCtx.getString(R.string.preferences_file), Context.MODE_PRIVATE)
+                                val email = preferences.getString(Constants.EMAIL, null).toString()
 
-                               if(inventoryService.reserveNumber(seller,spinnerAvailable.selectedItem.toString().toInt())){
+
+                               if(inventoryService.reserveNumber(seller,spinnerAvailable.selectedItem.toString().toInt(),email)){
 
                                    val alertBuilder = AlertDialog.Builder(mCtx)
                                    alertBuilder.setTitle("Alert")

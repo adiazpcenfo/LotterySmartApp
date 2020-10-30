@@ -1,13 +1,16 @@
 package com.mobile.lotterysmartapp.activity
 
+import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.Query
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.mobile.lotterysmartapp.R
+import com.mobile.lotterysmartapp.model.Constants
 import com.mobile.lotterysmartapp.model.Inventory
-
+import java.time.LocalDateTime
 
 
 /**
@@ -22,6 +25,7 @@ class InventoryService (){
     private val MESSAGE_ERROR :String = "Error"
     private val FRACTIONS_NUMBER: Int = 10
     private val STATUS_ACT ="ACT"
+    private val STATUS_RSV ="RSV"
     private val SEARCHES =0
     private val CERO = 0
 
@@ -31,36 +35,35 @@ class InventoryService (){
      * Save Buyer  number reserve
      *
      * **/
-    private fun addUserInventory(inventory:Inventory,fractions: Int){
+    private fun addUserInventoryReserve(inventory:Inventory,fractions: Int,email:String){
 
         inventory.Id = getInventoryKey()
         inventory.availableFractions=CERO
         inventory.fractions=fractions
         inventory.searches=CERO
-        inventory.state=STATUS_ACT
+        inventory.state=STATUS_RSV
+        inventory.userEmail = email
+        inventory.reserveDate = LocalDateTime.now().toString()
 
         databaseInv.child(inventory.Id).setValue(inventory)
     }
+
 
     /**
      * @author Allan Diaz
      * Calculate number of fraction rest to object, save seller number, create new register to buyer with reserve number and fractions
      * */
-    fun reserveNumber(inventory: Inventory,fractions:Int):Boolean{
+    fun reserveNumber(inventory: Inventory,fractions:Int,email:String):Boolean{
 
-        var result =false
         databaseInv= FirebaseDatabase.getInstance().getReference("Inventory")
-
 
         inventory.availableFractions= inventory.availableFractions-fractions
 
         databaseInv.child(inventory.Id).setValue(inventory)
 
-        addUserInventory(inventory,fractions)
+        addUserInventoryReserve(inventory,fractions,email)
 
-        result= true
-
-        return result
+        return true
 
     }
 
@@ -83,6 +86,7 @@ class InventoryService (){
             sellerInventory.fractions = FRACTIONS_NUMBER
             sellerInventory.availableFractions = FRACTIONS_NUMBER
             sellerInventory.state=STATUS_ACT
+            sellerInventory.sellerEmail = sellerInventory.userEmail
 
             database.child("Inventory").child(sellerInventory.Id).setValue(sellerInventory)
         }
@@ -92,18 +96,8 @@ class InventoryService (){
     private fun getInventoryKey():String{
         database = Firebase.database.reference
         var key = database.child("Inventory").push().key
+
         return key.toString()
-
     }
-
-   /* private fun getLastRegister(): Query {
-
-        var query: Query = database.child("Inventory").limitToFirst(1)
-
-        val json = query.toString()
-        return query
-
-    }*/
-
 
 }

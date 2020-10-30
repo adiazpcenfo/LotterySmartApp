@@ -286,12 +286,15 @@ class SellerListActivity : AppCompatActivity() {
                 inventory.Id,
                 inventory.drawName,
                 inventory.userEmail,
+                inventory.sellerEmail,
                 inventory.state,
                 inventory.number,
                 inventory.series,
                 inventory.fractions,
                 inventory.availableFractions,
+                inventory.reserveDate,
                 inventory.searches + 1
+
             )
         )
     }
