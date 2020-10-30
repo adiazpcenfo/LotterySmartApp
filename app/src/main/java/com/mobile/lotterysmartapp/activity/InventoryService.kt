@@ -46,8 +46,9 @@ class InventoryService (){
      * @author Allan Diaz
      * Calculate number of fraction rest to object, save seller number, create new register to buyer with reserve number and fractions
      * */
-    fun reserveNumber(inventory: Inventory,fractions:Int){
+    fun reserveNumber(inventory: Inventory,fractions:Int):Boolean{
 
+        var result =false
         databaseInv= FirebaseDatabase.getInstance().getReference("Inventory")
 
 
@@ -56,6 +57,10 @@ class InventoryService (){
         databaseInv.child(inventory.Id).setValue(inventory)
 
         addUserInventory(inventory,fractions)
+
+        result= true
+
+        return result
 
     }
 

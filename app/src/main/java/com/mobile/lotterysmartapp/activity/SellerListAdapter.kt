@@ -1,6 +1,7 @@
 package com.mobile.lotterysmartapp.activity
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -98,6 +99,7 @@ class SellerListAdapter(
                                     android.R.layout.simple_spinner_item,
                                     availableOptions
                                 )
+
                             }
 
                             //spinnerAvailable.adapter(ArrayAdapter<String>)
@@ -116,8 +118,24 @@ class SellerListAdapter(
                             }
 
                             buttonReserve.setOnClickListener{
-                                inventoryService.reserveNumber(seller,spinnerAvailable.selectedItem.toString().toInt())
+
+
+                               if(inventoryService.reserveNumber(seller,spinnerAvailable.selectedItem.toString().toInt())){
+
+                                   val alertBuilder = AlertDialog.Builder(mCtx)
+                                   alertBuilder.setTitle("Alert")
+                                   alertBuilder.setMessage("Reserva realizada con exito")
+                                   alertBuilder.setPositiveButton("Aceptar", null)
+                                   val dialog: AlertDialog = alertBuilder.create()
+                                   dialog.show()
+
+
+                               }
+
+
                             }
+
+
 
                         }
                     }
