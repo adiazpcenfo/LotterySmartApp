@@ -159,6 +159,8 @@ class SellerListAdapter(
                     )
                 }
             }
+
+
         })
 
         return view
