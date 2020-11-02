@@ -10,6 +10,7 @@ import com.google.firebase.ktx.Firebase
 import com.mobile.lotterysmartapp.R
 import com.mobile.lotterysmartapp.model.Constants
 import com.mobile.lotterysmartapp.model.Inventory
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 
@@ -43,7 +44,7 @@ class InventoryService (){
         inventory.searches=CERO
         inventory.state=STATUS_RSV
         inventory.userEmail = email
-        inventory.reserveDate = LocalDateTime.now().toString()
+        inventory.reserveDate = LocalDate.now().toString()
 
         databaseInv.child(inventory.Id).setValue(inventory)
     }
@@ -98,6 +99,17 @@ class InventoryService (){
         var key = database.child("Inventory").push().key
 
         return key.toString()
+    }
+
+    private fun calculateDate(dateTime: LocalDateTime):String{
+        var resultDate:String=""
+        var dateFormat = "ddMMyyyy"
+
+
+
+
+        return resultDate
+
     }
 
 }

@@ -27,6 +27,7 @@ import java.util.*
 
 
 class SellerListActivity : AppCompatActivity() {
+
     private lateinit var inventoryReference: DatabaseReference
     private lateinit var drawReference: DatabaseReference
     private lateinit var userReference: DatabaseReference
@@ -205,7 +206,7 @@ class SellerListActivity : AppCompatActivity() {
      * @author Josue Calderón Varela
      */
     @SuppressLint("SetTextI18n")
-    private fun loadTable() {
+    public fun loadTable() {
 
         sellerList.clear()
 

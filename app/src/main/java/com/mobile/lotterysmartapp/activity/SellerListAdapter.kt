@@ -16,6 +16,8 @@ import com.mobile.lotterysmartapp.R
 import com.mobile.lotterysmartapp.model.Constants
 import com.mobile.lotterysmartapp.model.Inventory
 import com.mobile.lotterysmartapp.model.User
+import kotlinx.android.synthetic.main.activity_seller_list.*
+import kotlinx.android.synthetic.main.activity_seller_list.view.*
 
 /**
  * Class in charge of Seller List Adapter.
@@ -85,23 +87,9 @@ class SellerListAdapter(
                             name.text = user.name
                             series.text = seller.series
 
+                            var availableFractions = seller.availableFractions
 
-                            var availableOptions = ArrayList<Int>()
-                            val iterator =(1..seller.availableFractions).iterator()
-
-                            iterator.forEach {
-                                availableOptions.add(it)
-                            }
-
-
-                            val adapter = this@SellerListAdapter?.let {
-                                spinnerAvailable.adapter =ArrayAdapter<Int>(
-                                    mCtx,
-                                    android.R.layout.simple_spinner_item,
-                                    availableOptions
-                                )
-                            }
-
+                            calculateSpinnerData(0,availableFractions)
 
                             button.setOnClickListener {
 
@@ -118,22 +106,24 @@ class SellerListAdapter(
 
                             buttonReserve.setOnClickListener{
 
-                                val preferences =
-                                    mCtx.getSharedPreferences(mCtx.getString(R.string.preferences_file), Context.MODE_PRIVATE)
+                                val preferences = mCtx.getSharedPreferences(mCtx.getString(R.string.preferences_file), Context.MODE_PRIVATE)
                                 val email = preferences.getString(Constants.EMAIL, null).toString()
 
+                                val reservedNumbers = spinnerAvailable.selectedItem.toString().toInt()
+                                availableFractions -= reservedNumbers
 
-                               if(inventoryService.reserveNumber(seller,spinnerAvailable.selectedItem.toString().toInt(),email)){
+                                if(inventoryService.reserveNumber(seller,reservedNumbers,email)){
 
-                                   val alertBuilder = AlertDialog.Builder(mCtx)
-                                   alertBuilder.setTitle("Alert")
-                                   alertBuilder.setMessage("Reserva realizada con exito")
-                                   alertBuilder.setPositiveButton("Aceptar", null)
-                                   val dialog: AlertDialog = alertBuilder.create()
-                                   dialog.show()
+                                    calculateSpinnerData(reservedNumbers,availableFractions)
 
+                                    val alertBuilder = AlertDialog.Builder(mCtx)
+                                    alertBuilder.setTitle("Alert")
+                                     alertBuilder.setMessage("Reserva realizada con exito")
+                                    alertBuilder.setPositiveButton("Aceptar", null)
+                                    val dialog: AlertDialog = alertBuilder.create()
+                                    dialog.show()
 
-                               }
+                                }
 
 
                             }
@@ -142,6 +132,31 @@ class SellerListAdapter(
 
                         }
                     }
+                }
+            }
+
+            /**
+             * @author Allan Diaz
+             * Refresh available numbers spinner
+             * **/
+            fun calculateSpinnerData(reservedNumbers :Int,availableFractions:Int){
+
+                var availableOptions = ArrayList<Int>()
+             //   val iterator =(1..seller.availableFractions-reservedNumbers).iterator()
+
+                val iterator =(1..availableFractions).iterator()
+
+
+                iterator.forEach {
+                    availableOptions.add(it)
+                }
+
+                this@SellerListAdapter?.let {
+                    spinnerAvailable.adapter =ArrayAdapter<Int>(
+                        mCtx,
+                        android.R.layout.simple_spinner_item,
+                        availableOptions
+                    )
                 }
             }
         })
