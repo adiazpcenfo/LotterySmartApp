@@ -47,7 +47,7 @@ class RegisterSellerActivity : AppCompatActivity() {
     private var latitudeValue = 0.0
     private var longitudeValue = 0.0
     lateinit var mapFragment: SupportMapFragment
-    lateinit var mMap : GoogleMap
+    lateinit var mMap: GoogleMap
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -178,7 +178,11 @@ class RegisterSellerActivity : AppCompatActivity() {
                                 longitudeValue
                             )
                         )
-                        showHome(textEmailSeller.text.toString(), Provider.APPLICATION)
+                        showHome(
+                            textEmailSeller.text.toString(),
+                            Provider.APPLICATION,
+                            UserType.SELLER
+                        )
                         clearForm()
                     }
                 }.addOnFailureListener {
@@ -269,10 +273,11 @@ class RegisterSellerActivity : AppCompatActivity() {
      * @param email user email
      * @param provider Account provider
      */
-    private fun showHome(email: String?, provider: Provider) {
+    private fun showHome(email: String?, provider: Provider, userType: UserType) {
         val homeIntent = Intent(this, HomeActivity::class.java).apply {
             putExtra(Constants.EMAIL, email)
             putExtra(Constants.PROVIDER, provider.toString())
+            putExtra(Constants.USERTYPE, userType.name)
         }
         startActivity(homeIntent)
         finish()

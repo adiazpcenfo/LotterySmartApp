@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -16,9 +17,10 @@ import com.mobile.lotterysmartapp.R
 import com.mobile.lotterysmartapp.model.Constants
 import com.mobile.lotterysmartapp.model.Provider
 import com.mobile.lotterysmartapp.model.User
+import com.mobile.lotterysmartapp.model.UserType
 import com.mobile.lotterysmartapp.util.AlertUtil
 import kotlinx.android.synthetic.main.activity_authentication.*
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Class in charge of Authentication Activity.
@@ -33,7 +35,7 @@ class AuthenticationActivity : AppCompatActivity() {
     private val error = "Error"
     private val userAndPasswordNotPresent = "Ingrese usuario y contraseña."
     private val googleSignInId = 100
-    private lateinit var ref: DatabaseReference
+    private val userReference = FirebaseDatabase.getInstance().getReference("User")
     private lateinit var userList: ArrayList<User>
 
     /**
@@ -46,15 +48,11 @@ class AuthenticationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_authentication)
 
         userList = arrayListOf()
-        ref = FirebaseDatabase.getInstance().getReference("User")
-        loadData()
-        //Check active session
+
         session()
-        //Set up startup analytics
-        val analytics = FirebaseAnalytics.getInstance(this)
-        val bundle = Bundle()
-        bundle.putString("Message", "Application started")
-        analytics.logEvent("InitScreen", bundle)
+
+        loadData()
+
         setup()
     }
 
@@ -80,6 +78,12 @@ class AuthenticationActivity : AppCompatActivity() {
         setupLoginButton()
         setupForgetPasswordButton()
         setupGoogleSignInButton()
+
+        //Set up startup analytics
+        val analytics = FirebaseAnalytics.getInstance(this)
+        val bundle = Bundle()
+        bundle.putString("Message", "Application started")
+        analytics.logEvent("InitScreen", bundle)
     }
 
     /**
@@ -103,7 +107,9 @@ class AuthenticationActivity : AppCompatActivity() {
         buttonGoogleSignIn.setOnClickListener {
             val googleConfiguration =
                 GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestIdToken(getString(R.string.default_web_client_id)).requestEmail()
+                    .requestIdToken(getString(R.string.default_web_client_id))
+                    .requestEmail()
+                    .requestProfile()
                     .build()
             val googleClient = GoogleSignIn.getClient(this, googleConfiguration)
             googleClient.signOut()
@@ -139,27 +145,20 @@ class AuthenticationActivity : AppCompatActivity() {
     }
 
     /**
-     * Load the data of the user
+     * Load the userlist with all users
      *
      * @author Jimena Vega
      */
     private fun loadData() {
-        ref.addValueEventListener(object : ValueEventListener {
-
+        userReference.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {}
 
             override fun onDataChange(snapshot: DataSnapshot) {
-
                 userList.clear()
-
                 for (seller in snapshot.children) {
-
                     val user = seller.getValue(User::class.java)
-
                     if (user != null) {
-
                         userList.add(user)
-
                     }
                 }
             }
@@ -188,23 +187,38 @@ class AuthenticationActivity : AppCompatActivity() {
      */
     private fun showHome(email: String?, provider: Provider) {
         var userView: User? = null
+
         for (user in userList) {
-            if(user.email == email){
+            if (user.email == email) {
                 userView = user
             }
         }
-        if (userView?.userType == "Comprador") {
-            val homeIntent = Intent(this, HomeActivity::class.java).apply {
-                putExtra(Constants.EMAIL, email)
-                putExtra(Constants.PROVIDER, provider.toString())
-            }
-            startActivity(homeIntent)
-        } else if (userView?.userType == "Vendedor") {
-            val homeIntent = Intent(this, HomeSellerActivity::class.java).apply {
-                putExtra(Constants.EMAIL, email)
-                putExtra(Constants.PROVIDER, provider.toString())
-            }
-            startActivity(homeIntent)
+
+        if (userView?.userType == UserType.BUYER.type) {
+            startActivity(getHomeActivityIntentByUserType(UserType.BUYER, email, provider))
+        } else if (userView?.userType == UserType.SELLER.type) {
+            startActivity(getHomeActivityIntentByUserType(UserType.SELLER, email, provider))
+        }
+
+    }
+
+    /**
+     * Select correct home activity based on User Type.
+     *
+     * @param userType User Type
+     * @param email user email
+     * @param provider Account provider
+     * @author Franklin Cardenas
+     */
+    private fun getHomeActivityIntentByUserType(
+        userType: UserType,
+        email: String?,
+        provider: Provider
+    ): Intent? {
+        return Intent(this, HomeActivity::class.java).apply {
+            putExtra(Constants.EMAIL, email)
+            putExtra(Constants.PROVIDER, provider.toString())
+            putExtra(Constants.USERTYPE, userType.name)
         }
     }
 
@@ -215,14 +229,24 @@ class AuthenticationActivity : AppCompatActivity() {
      * @author Franklin Cardenas
      */
     private fun session() {
+
         val preferences =
             getSharedPreferences(getString(R.string.preferences_file), Context.MODE_PRIVATE)
         val email = preferences.getString(Constants.EMAIL, null)
         val provider = preferences.getString(Constants.PROVIDER, null)
+        val userType = preferences.getString(Constants.USERTYPE, null)
 
-        if (email != null && provider != null) {
+
+        if (email != null && provider != null && userType != null) {
             authenticationLayout.visibility = View.INVISIBLE
-            showHome(email, Provider.valueOf(provider))
+            val homeActivity =
+                getHomeActivityIntentByUserType(
+                    UserType.valueOf(userType),
+                    email,
+                    Provider.valueOf(provider)
+                )
+
+            startActivity(homeActivity)
         }
     }
 
@@ -233,17 +257,16 @@ class AuthenticationActivity : AppCompatActivity() {
      */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
         if (requestCode == googleSignInId) {
-
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             val account = task.getResult(ApiException::class.java)
-
             try {
                 if (account != null) {
+                    if (!isUserPreviouslyRegistered(account)) {
+                        registerUser(account, UserType.BUYER)
+                    }
                     val credential = GoogleAuthProvider
                         .getCredential(account.idToken, null)
-
                     FirebaseAuth.getInstance().signInWithCredential(credential)
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
@@ -260,12 +283,49 @@ class AuthenticationActivity : AppCompatActivity() {
     }
 
     /**
+     * Register a user to the database based on a Google Account.
+     *
+     * @param account Google Sign In Account.
+     * @param userType User Type.
+     * @author Franklin Cardenas
+     */
+
+    private fun registerUser(account: GoogleSignInAccount, userType: UserType) {
+        val id = UUID.randomUUID().toString()
+        userReference.child(id).setValue(
+            User(
+                id,
+                account.email!!,
+                account.givenName!!,
+                account.familyName!!,
+                userType.type,
+                0.0,
+                0.0
+            )
+        )
+    }
+
+    /**
+     * Checks inside the userList if the account is already registered.
+     *
+     * @param account Google Sign In Account
+     * @return True if the user is registered. False if the user is not registered.
+     * @author Franklin Cardenas
+     */
+    private fun isUserPreviouslyRegistered(account: GoogleSignInAccount): Boolean {
+        for (user in userList) {
+            if (user.email == account.email) {
+                return true
+            }
+        }
+        return false
+    }
+
+    /**
      * Disable back press to prevent return after logout.
      *
      * @author Franklin Cardenas
      */
-    override fun onBackPressed() {
-
-    }
+    override fun onBackPressed() {}
 }
 

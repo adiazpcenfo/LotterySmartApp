@@ -21,7 +21,8 @@ import kotlinx.android.synthetic.main.activity_register_user.*
 class RegisterUserActivity : AppCompatActivity() {
     private val verifyPassword = "Verifique que la contraseña tenga más de 6 caracteres."
     private val verifyInputs = "Por favor verifique que todos los datos sean correctos."
-    private val accountError = "Lo sentimos, su cuenta no se registró correctamente, por favor intente de nuevo."
+    private val accountError =
+        "Lo sentimos, su cuenta no se registró correctamente, por favor intente de nuevo."
     private val errorAlert = "¡Error!"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,11 +48,11 @@ class RegisterUserActivity : AppCompatActivity() {
     private fun setUp() {
         //setup of registerUserButton
         val database = FirebaseDatabase.getInstance().getReference("User")
-        val userType =UserType.BUYER.type
+        val userType = UserType.BUYER.type
         buttonRegisterUser.setOnClickListener {
             try {
                 register(database, userType)
-            }catch (e : Exception){
+            } catch (e: Exception) {
                 println(e.message)
             }
 
@@ -66,38 +67,38 @@ class RegisterUserActivity : AppCompatActivity() {
      * @param userType the type of user can be: seller or buyer
      *
      */
-    private fun register(database: DatabaseReference, userType: String){
-       if(verifyPasswordLength()){
-           if(verifyEmail() && verifyPasswords()){
-               FirebaseAuth.getInstance().createUserWithEmailAndPassword(
-                   textEmail.text.toString(),
-                   textPassword.text.toString()
-               ).addOnCompleteListener {
-                   if (it.isSuccessful) {
-                       val id = getRandomString()
-                       database.child(id).setValue(
-                           User(
-                               id,
-                               textEmail.text.toString(),
-                               textName.text.toString(),
-                               textMiddleName.text.toString(),
-                               userType,
-                               0.0,
-                               0.0
-                           )
-                       )
-                       showHome(textEmail.text.toString(),  Provider.APPLICATION)
-                       clearForm()
-                   }
-               }.addOnFailureListener{
-                   alert(errorAlert, verifyInputs)
-               }
-           }else{
-               alert(errorAlert, accountError )
-           }
-       }else{
-           alert(errorAlert, verifyPassword)
-       }
+    private fun register(database: DatabaseReference, userType: String) {
+        if (verifyPasswordLength()) {
+            if (verifyEmail() && verifyPasswords()) {
+                FirebaseAuth.getInstance().createUserWithEmailAndPassword(
+                    textEmail.text.toString(),
+                    textPassword.text.toString()
+                ).addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        val id = getRandomString()
+                        database.child(id).setValue(
+                            User(
+                                id,
+                                textEmail.text.toString(),
+                                textName.text.toString(),
+                                textMiddleName.text.toString(),
+                                userType,
+                                0.0,
+                                0.0
+                            )
+                        )
+                        showHome(textEmail.text.toString(), Provider.APPLICATION, UserType.BUYER)
+                        clearForm()
+                    }
+                }.addOnFailureListener {
+                    alert(errorAlert, verifyInputs)
+                }
+            } else {
+                alert(errorAlert, accountError)
+            }
+        } else {
+            alert(errorAlert, verifyPassword)
+        }
     }
 
     /**
@@ -114,7 +115,7 @@ class RegisterUserActivity : AppCompatActivity() {
      *
      * @author Jimena Vega
      */
-    private fun verifyPasswordLength(): Boolean{
+    private fun verifyPasswordLength(): Boolean {
         return textPassword.text.length > 6
     }
 
@@ -149,7 +150,7 @@ class RegisterUserActivity : AppCompatActivity() {
      *
      * @author Jimena Vega
      */
-    private fun clearForm(){
+    private fun clearForm() {
         textName.text.clear()
         textMiddleName.text.clear()
         textEmail.text.clear()
@@ -175,10 +176,11 @@ class RegisterUserActivity : AppCompatActivity() {
      * @param email user email
      * @param provider Account provider
      */
-    private fun showHome(email : String?, provider: Provider) {
+    private fun showHome(email: String?, provider: Provider, userType: UserType) {
         val homeIntent = Intent(this, HomeActivity::class.java).apply {
             putExtra(Constants.EMAIL, email)
             putExtra(Constants.PROVIDER, provider.toString())
+            putExtra(Constants.USERTYPE, userType.name)
         }
         startActivity(homeIntent)
         finish()
@@ -191,7 +193,7 @@ class RegisterUserActivity : AppCompatActivity() {
      */
     override fun onBackPressed() {
         clearForm()
-        val intentToBack = Intent(this,TypeUserActivity::class.java)
+        val intentToBack = Intent(this, TypeUserActivity::class.java)
         intentToBack.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intentToBack)
     }

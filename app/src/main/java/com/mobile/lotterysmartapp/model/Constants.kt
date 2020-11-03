@@ -12,4 +12,5 @@ object Constants {
     const val MAPVIEW_BUNDLE_KEY = "MapViewBundleKey"
     const val INVENTORY = "Inventory"
     const val DRAW = "Draw"
+    const val USERTYPE = "userType"
 }

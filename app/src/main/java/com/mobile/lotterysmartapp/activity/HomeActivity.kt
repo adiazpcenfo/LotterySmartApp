@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener
 import com.mobile.lotterysmartapp.R
 import com.mobile.lotterysmartapp.model.Constants
 import com.mobile.lotterysmartapp.model.Inventory
+import com.mobile.lotterysmartapp.model.UserType
 import kotlinx.android.synthetic.main.activity_home.*
 
 /**
@@ -41,17 +42,24 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
-        setSupportActionBar(findViewById(R.id.toolbar))
 
         //Get user and provider from login or register
         val bundle = intent.extras
         val email = bundle?.getString(Constants.EMAIL)
         val provider = bundle?.getString(Constants.PROVIDER)
-
+        val userType = bundle?.getString(Constants.USERTYPE)
 
         // Save email and password for the session
-        saveCredentials(email!!, provider!!)
+        saveCredentials(email!!, provider!!, userType!!)
+
+        //Set Layout based on User Type
+        if (userType == UserType.BUYER.name) {
+            setContentView(R.layout.activity_home)
+        } else {
+            setContentView(R.layout.activity_home_seller)
+        }
+
+        setSupportActionBar(findViewById(R.id.toolbar))
 
         //Setup process for Home Activity
         setup()
@@ -80,7 +88,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.nav_view)
         toolbar = findViewById(R.id.toolbar)
-        this.title="Lottery Smart"
+        this.title = "Lottery Smart"
 
         setSupportActionBar(toolbar)
 
@@ -117,8 +125,20 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             //Send to reserved nums option
             R.id.list_reserved_nums -> {
+            }
 
+            //Send to nums winners option
+            R.id.list_winners -> {
+                intentMenu = Intent(this, DrawActivity::class.java)
+                startActivity(intentMenu)
+                drawerLayout.closeDrawer(GravityCompat.START)
+            }
 
+            //Send to Lottery Vendor option
+            R.id.list_sellerLottery -> {
+                intentMenu = Intent(this, SellerLotteryActivity::class.java)
+                startActivity(intentMenu)
+                drawerLayout.closeDrawer(GravityCompat.START)
             }
 
             //Send to profile option
@@ -156,11 +176,12 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
      * @param provider - authentication provider
      * @author Franklin Cardenas
      */
-    private fun saveCredentials(email: String, provider: String) {
+    private fun saveCredentials(email: String, provider: String, userType: String?) {
         val preferences =
             getSharedPreferences(getString(R.string.preferences_file), Context.MODE_PRIVATE).edit()
         preferences.putString(Constants.EMAIL, email)
         preferences.putString(Constants.PROVIDER, provider)
+        preferences.putString(Constants.USERTYPE, userType)
         preferences.apply()
     }
 
