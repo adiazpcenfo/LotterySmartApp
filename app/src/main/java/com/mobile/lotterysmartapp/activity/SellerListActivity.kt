@@ -27,6 +27,7 @@ import java.util.*
 
 
 class SellerListActivity : AppCompatActivity() {
+
     private lateinit var inventoryReference: DatabaseReference
     private lateinit var drawReference: DatabaseReference
     private lateinit var userReference: DatabaseReference
@@ -45,6 +46,7 @@ class SellerListActivity : AppCompatActivity() {
     private var userInventory: User? = null
     private var finalDistance = 0
     private var locationManager: LocationManager? = null
+    private val inventoryService = InventoryService()
 
     /**
      *On Create method for SellerListActivity.
@@ -205,7 +207,7 @@ class SellerListActivity : AppCompatActivity() {
      * @author Josue Calderón Varela
      */
     @SuppressLint("SetTextI18n")
-    private fun loadTable() {
+    public fun loadTable() {
 
         sellerList.clear()
 
@@ -221,7 +223,7 @@ class SellerListActivity : AppCompatActivity() {
             }
 
             if (userInventory != null && inventory.drawName == drawSelectedValue && inventory.number == numSelectedValue.toInt() && getDistance() <= rangeSelected
-                && userInventory!!.userType == "Vendedor"
+                && userInventory!!.userType == "Vendedor" && inventory.state=="ACT"
             ) {
 
                 sellerList.add(inventory)
@@ -229,6 +231,8 @@ class SellerListActivity : AppCompatActivity() {
 
             }
         }
+
+        inventoryService.validateReservedNumbers(inventoryList)
     }
 
     /**
@@ -372,9 +376,12 @@ class SellerListActivity : AppCompatActivity() {
 
                 }
                 else -> {
+                   // inventoryService.validateReservedNumbers()
 
                     loadTable()
                     fillCustomList()
+
+                 //   inventoryService.validateReservedNumbers2(sellerList)
 
                     if (sellerList.size < 1) {
 
