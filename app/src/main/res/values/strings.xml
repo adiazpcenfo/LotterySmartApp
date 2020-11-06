@@ -75,4 +75,10 @@
     <string name="n_mero_m_s_buscado">Número más buscado:</string>
     <string name="reserve">Reservar</string>
     <string name="available">Disponible:</string>
+    <string name="n_meros_reservados">Números reservados</string>
+    <string name="buyer">Comprador:</string>
+    <string name="date">Fecha:</string>
+    <string name="serie">Serie:</string>
+    <string name="number">Número:</string>
+    <string name="sell">Vender</string>
 </resources>

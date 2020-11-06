@@ -147,6 +147,12 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivity(intentMenu)
             }
 
+            //Send to reserved numbers by seller
+            R.id.list_reservedNumbers -> {
+                intentMenu = Intent(this, SellerReservedNumbersActivity::class.java)
+                startActivity(intentMenu)
+            }
+
             //Logout user option
             R.id.log_out -> {
                 logout()

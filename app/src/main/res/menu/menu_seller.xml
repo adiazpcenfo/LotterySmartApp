@@ -13,6 +13,11 @@
             android:id="@+id/list_sellerLottery"
             android:icon="@drawable/list_winners"
             android:title="@string/loteria_vendedor" />
+
+        <item
+            android:id="@+id/list_reservedNumbers"
+            android:icon="@drawable/list_winners"
+            android:title="@string/n_meros_reservados" />
     </group>
 
     <item android:title="@string/perfil">
