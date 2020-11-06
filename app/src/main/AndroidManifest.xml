@@ -20,7 +20,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.HeaderSellerActivity"></activity>
-        <activity android:name=".activity.HomeSellerActivity" />
         <activity android:name=".activity.ModifySellerActivity" />
         <activity android:name=".activity.ProfileSellerActivity" />
         <activity android:name=".activity.ProfileUserActivity" />
