@@ -159,8 +159,6 @@ class InventoryService (){
 
         }
 
-
-
         if(inventoryReservedList.size>0){
             for(inventoryO in inventoryReservedList){
 
