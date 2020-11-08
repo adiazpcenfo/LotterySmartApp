@@ -125,6 +125,9 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             //Send to reserved nums option
             R.id.list_reserved_nums -> {
+                intentMenu = Intent(this, BuyerReservedNumberActivity::class.java)
+                startActivity(intentMenu)
+                drawerLayout.closeDrawer(GravityCompat.START)
             }
 
             //Send to nums winners option

@@ -81,4 +81,5 @@
     <string name="serie">Serie:</string>
     <string name="number">Número:</string>
     <string name="sell">Vender</string>
+    <string name="returnFractions">Devolver Reserva</string>
 </resources>
