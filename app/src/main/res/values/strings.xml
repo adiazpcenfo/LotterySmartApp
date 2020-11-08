@@ -86,4 +86,7 @@
     <string name="delete_draw">Eliminar Sorteo</string>
     <string name="delete">Eliminar</string>
     <string name="returnFractions">Devolver Reserva</string>
+    <string name="segundo_premio">Segundo Premio</string>
+    <string name="primer_premio">Primer Premio</string>
+    <string name="tercer_premio">Tercer Premio</string>
 </resources>

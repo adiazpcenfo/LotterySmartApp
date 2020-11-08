@@ -47,9 +47,9 @@ class RegisterDrawActivity : AppCompatActivity() {
             val draw = Draw()
             draw.id = ""
             draw.name = editTextName.text.toString()
-            draw.result1 = "0"
-            draw.result2 = "0"
-            draw.result3 = "0"
+            draw.result1 = "00-000"
+            draw.result2 = "00-000"
+            draw.result3 = "00-000"
             draw.drawDate = editTextDrawDate.text.toString()
             draw.state = "ACT"
 
@@ -70,15 +70,6 @@ class RegisterDrawActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
         }
-
-        /*button_drawCancel.setOnClickListener{
-            clearForm()
-            var intentMenu = Intent()
-            intentMenu.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            intentMenu = Intent(this, HomeActivity::class.java)
-            startActivity(intentMenu)
-        }*/
-
     }
 
     private fun validateForm(draw: Draw): Boolean {
