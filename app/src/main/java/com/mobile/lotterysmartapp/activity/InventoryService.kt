@@ -159,8 +159,6 @@ class InventoryService (){
 
         }
 
-
-
         if(inventoryReservedList.size>0){
             for(inventoryO in inventoryReservedList){
 
@@ -188,6 +186,31 @@ class InventoryService (){
         }
 
 
+    }
+    /***
+     * @author Allan Diaz
+     * Method for buyer return reserved number to seller
+     * **/
+    public fun returnReservedNumber(buyerReservedNumber:Inventory,inventoryList : ArrayList<Inventory>){
+        databaseInv= FirebaseDatabase.getInstance().getReference("Inventory")
+        if(buyerReservedNumber.state==STATUS_RSV){
+
+
+            for(activeInventory in inventoryList){
+                if(activeInventory.userEmail == buyerReservedNumber.sellerEmail && activeInventory.number==buyerReservedNumber.number){
+
+                    var totalFractions =  activeInventory.availableFractions + buyerReservedNumber.fractions
+                    activeInventory.availableFractions= totalFractions
+
+                    databaseInv.child(activeInventory.Id).setValue(activeInventory)
+
+                    buyerReservedNumber.state="DEL"
+                    databaseInv.child(buyerReservedNumber.Id).setValue(buyerReservedNumber)
+                    break
+                }
+            }
+
+        }
     }
 
 }

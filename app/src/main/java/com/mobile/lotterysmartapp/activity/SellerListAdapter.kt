@@ -108,22 +108,31 @@ class SellerListAdapter(
 
                                 val preferences = mCtx.getSharedPreferences(mCtx.getString(R.string.preferences_file), Context.MODE_PRIVATE)
                                 val email = preferences.getString(Constants.EMAIL, null).toString()
+                                if(spinnerAvailable.selectedItem!=null){
+                                    val reservedNumbers = spinnerAvailable.selectedItem.toString().toInt()
+                                    availableFractions -= reservedNumbers
 
-                                val reservedNumbers = spinnerAvailable.selectedItem.toString().toInt()
-                                availableFractions -= reservedNumbers
+                                    if(inventoryService.reserveNumber(seller,reservedNumbers,email)){
 
-                                if(inventoryService.reserveNumber(seller,reservedNumbers,email)){
+                                        calculateSpinnerData(reservedNumbers,availableFractions)
 
-                                    calculateSpinnerData(reservedNumbers,availableFractions)
+                                        val alertBuilder = AlertDialog.Builder(mCtx)
+                                        alertBuilder.setTitle("Info")
+                                        alertBuilder.setMessage("Reserva realizada con exito")
+                                        alertBuilder.setPositiveButton("Aceptar", null)
+                                        val dialog: AlertDialog = alertBuilder.create()
+                                        dialog.show()
 
+                                    }
+                                }else{
                                     val alertBuilder = AlertDialog.Builder(mCtx)
-                                    alertBuilder.setTitle("Alert")
-                                     alertBuilder.setMessage("Reserva realizada con exito")
+                                    alertBuilder.setTitle("Info")
+                                    alertBuilder.setMessage("No hay fracciones disponibles para reservar")
                                     alertBuilder.setPositiveButton("Aceptar", null)
                                     val dialog: AlertDialog = alertBuilder.create()
                                     dialog.show()
-
                                 }
+
 
 
                             }

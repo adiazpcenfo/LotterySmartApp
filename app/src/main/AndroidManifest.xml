@@ -26,6 +26,7 @@
         <activity android:name=".activity.ModifySellerActivity" />
         <activity android:name=".activity.ProfileSellerActivity" />
         <activity android:name=".activity.ProfileUserActivity" />
+        <activity android:name=".activity.BuyerReservedNumberActivity"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

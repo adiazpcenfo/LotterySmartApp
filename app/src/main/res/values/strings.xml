@@ -85,4 +85,5 @@
     <string name="agregar_n_meros_ganadores">Agregar números ganadores</string>
     <string name="delete_draw">Eliminar Sorteo</string>
     <string name="delete">Eliminar</string>
+    <string name="returnFractions">Devolver Reserva</string>
 </resources>

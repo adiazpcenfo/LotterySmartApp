@@ -135,7 +135,8 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
             R.id.list_reserved_nums -> {
-
+                startActivity(Intent(this, BuyerReservedNumberActivity::class.java))
+                drawerLayout.closeDrawer(GravityCompat.START)
             }
 
             //---------------------------Seller Items----------------------------------
