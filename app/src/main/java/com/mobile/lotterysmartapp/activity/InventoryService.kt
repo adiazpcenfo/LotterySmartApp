@@ -187,7 +187,10 @@ class InventoryService (){
 
 
     }
-
+    /***
+     * @author Allan Diaz
+     * Method for buyer return reserved number to seller
+     * **/
     public fun returnReservedNumber(buyerReservedNumber:Inventory,inventoryList : ArrayList<Inventory>){
         databaseInv= FirebaseDatabase.getInstance().getReference("Inventory")
         if(buyerReservedNumber.state==STATUS_RSV){

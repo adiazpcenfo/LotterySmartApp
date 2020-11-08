@@ -55,8 +55,6 @@ class BuyerReservedListAdapter(
 
             val buyer = buyerList[position]
 
-           // buyer.state = state
-
             if(buyer.number!=null){
                 number.text = buyer.number.toString()
             }
@@ -73,12 +71,6 @@ class BuyerReservedListAdapter(
 
                 builder.setPositiveButton("Aceptar") { _, _ ->
 
-                  //  val  myDatabase = FirebaseDatabase.getInstance().getReference("Inventory")
-
-                    //buyer.state = "DEL"
-
-                  //  val inventory = Inventory(buyer.Id, buyer.drawName, buyer.userEmail, buyer.sellerEmail, buyer.state, buyer.number, buyer.series, buyer.availableFractions, buyer.fractions, buyer.reserveDate, buyer.searches)
-                  //  myDatabase.child(buyer.Id).setValue(inventory)
                     inventoryService.returnReservedNumber(buyer,inventoryList)
 
                     Toast.makeText(mCtx,"Devuelto", Toast.LENGTH_SHORT).show()
