@@ -53,10 +53,16 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         saveCredentials(email!!, provider!!, userType!!)
 
         //Set Layout based on User Type
-        if (userType == UserType.BUYER.name) {
-            setContentView(R.layout.activity_home)
-        } else {
-            setContentView(R.layout.activity_home_seller)
+        when (userType) {
+            UserType.BUYER.name -> {
+                setContentView(R.layout.activity_home)
+            }
+            UserType.SELLER.name -> {
+                setContentView(R.layout.activity_home_seller)
+            }
+            UserType.ADMIN.name -> {
+                setContentView(R.layout.activity_home_admin)
+            }
         }
 
         setSupportActionBar(findViewById(R.id.toolbar))
@@ -116,44 +122,58 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         intentMenu.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         when (menuItem.itemId) {
 
-            //Send to seller list option
-            R.id.list_sellers -> {
-                intentMenu = Intent(this, SellerListActivity::class.java)
-                startActivity(intentMenu)
-                drawerLayout.closeDrawer(GravityCompat.START)
-            }
+            //---------------------------Buyer Items----------------------------------
 
-            //Send to reserved nums option
-            R.id.list_reserved_nums -> {
-            }
-
-            //Send to nums winners option
-            R.id.list_winners -> {
-                intentMenu = Intent(this, DrawActivity::class.java)
-                startActivity(intentMenu)
-                drawerLayout.closeDrawer(GravityCompat.START)
-            }
-
-            //Send to Lottery Vendor option
-            R.id.list_sellerLottery -> {
-                intentMenu = Intent(this, SellerLotteryActivity::class.java)
-                startActivity(intentMenu)
-                drawerLayout.closeDrawer(GravityCompat.START)
-            }
-
-            //Send to profile option
             R.id.profile -> {
-                intentMenu = Intent(this, ProfileUserActivity::class.java)
-                startActivity(intentMenu)
+                startActivity(Intent(this, ProfileUserActivity::class.java))
+                drawerLayout.closeDrawer(GravityCompat.START)
             }
 
-            //Send to reserved numbers by seller
+            R.id.list_sellers -> {
+                startActivity(Intent(this, SellerListActivity::class.java))
+                drawerLayout.closeDrawer(GravityCompat.START)
+            }
+
+            R.id.list_reserved_nums -> {
+
+            }
+
+            //---------------------------Seller Items----------------------------------
+
+            R.id.profileSeller -> {
+                startActivity(Intent(this, ProfileSellerActivity::class.java))
+                drawerLayout.closeDrawer(GravityCompat.START)
+            }
+
+            R.id.list_sellerLottery -> {
+                startActivity(Intent(this, SellerLotteryActivity::class.java))
+                drawerLayout.closeDrawer(GravityCompat.START)
+            }
+
             R.id.list_reservedNumbers -> {
-                intentMenu = Intent(this, SellerReservedNumbersActivity::class.java)
-                startActivity(intentMenu)
+                startActivity(Intent(this, SellerReservedNumbersActivity::class.java))
+                drawerLayout.closeDrawer(GravityCompat.START)
             }
 
-            //Logout user option
+            //---------------------------Admin Items----------------------------------
+
+            R.id.registerDraw -> {
+                startActivity(Intent(this, RegisterDrawActivity::class.java))
+                drawerLayout.closeDrawer(GravityCompat.START)
+            }
+
+            R.id.modifyDraw -> {
+                startActivity(Intent(this, ModifyDrawResultsActivity::class.java))
+                drawerLayout.closeDrawer(GravityCompat.START)
+            }
+
+            R.id.deleteDraw -> {
+                startActivity(Intent(this, DeleteDrawActivity::class.java))
+                drawerLayout.closeDrawer(GravityCompat.START)
+            }
+
+            //---------------------------All user Items----------------------------------
+
             R.id.log_out -> {
                 logout()
             }

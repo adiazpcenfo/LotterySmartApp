@@ -19,7 +19,9 @@
         android:roundIcon="@mipmap/app_logo_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.SellerReservedNumbersActivity"></activity>
+        <activity android:name=".activity.DeleteDrawActivity"></activity>
+        <activity android:name=".activity.ModifyDrawResultsActivity" />
+        <activity android:name=".activity.SellerReservedNumbersActivity" />
         <activity android:name=".activity.HeaderSellerActivity" />
         <activity android:name=".activity.ModifySellerActivity" />
         <activity android:name=".activity.ProfileSellerActivity" />
@@ -63,7 +65,7 @@
             android:label="@string/title_activity_forget_password"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.DrawActivity"
+            android:name=".activity.RegisterDrawActivity"
             android:label="DrawActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

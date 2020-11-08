@@ -194,12 +194,17 @@ class AuthenticationActivity : AppCompatActivity() {
             }
         }
 
-        if (userView?.userType == UserType.BUYER.type) {
-            startActivity(getHomeActivityIntentByUserType(UserType.BUYER, email, provider))
-        } else if (userView?.userType == UserType.SELLER.type) {
-            startActivity(getHomeActivityIntentByUserType(UserType.SELLER, email, provider))
+        when (userView?.userType) {
+            UserType.BUYER.type -> {
+                startActivity(getHomeActivityIntentByUserType(UserType.BUYER, email, provider))
+            }
+            UserType.SELLER.type -> {
+                startActivity(getHomeActivityIntentByUserType(UserType.SELLER, email, provider))
+            }
+            UserType.ADMIN.type-> {
+                startActivity(getHomeActivityIntentByUserType(UserType.ADMIN, email, provider))
+            }
         }
-
     }
 
     /**

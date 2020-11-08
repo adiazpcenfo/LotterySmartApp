@@ -11,48 +11,12 @@ import java.util.*
  * @author Franklin Cardenas
  */
 
-
-//class Draw (var Id: String ="", val state: String="", val name: String="", val result1: String="", val result2: String="", val result3: String="",val drawDate: String=""){
-class Draw (){
-
-    var id: String=""
-        get() = field
-        set(value){
-            field=value
-        }
-
-    var state: String=""
-        get() = field
-        set(value){
-            field=value
-        }
-
-    var name: String=""
-        get() = field
-        set(value){
-            field=value
-        }
-
-    var result1: String=""
-        get() = field
-        set(value){
-            field=value
-        }
-    var result2: String=""
-        get() = field
-        set(value){
-            field=value
-        }
-    var result3: String=""
-        get() = field
-        set(value){
-            field=value
-        }
-    var drawDate: String=""
-        get() = field
-        set(value){
-            field=value
-        }
-
-
+class Draw() {
+    var id: String = ""
+    var state: String = ""
+    var name: String = ""
+    var result1: String = ""
+    var result2: String = ""
+    var result3: String = ""
+    var drawDate: String = ""
 }

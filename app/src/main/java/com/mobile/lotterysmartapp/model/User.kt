@@ -40,5 +40,6 @@ class User {
 
 enum class UserType(val type:String){
     SELLER("Vendedor"),
-    BUYER("Comprador")
+    BUYER("Comprador"),
+    ADMIN("ADMIN")
 }

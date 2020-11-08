@@ -1,36 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/list_sellerLottery"
+            android:id="@+id/registerDraw"
             android:icon="@drawable/list_winners"
-            android:title="@string/loteria_vendedor" />
+            android:title="Registrar Sorteo" />
 
         <item
-            android:id="@+id/list_reservedNumbers"
+            android:id="@+id/modifyDraw"
             android:icon="@drawable/list_winners"
-            android:title="@string/n_meros_reservados" />
+            android:title="Agregar Resultados" />
+
+        <item
+            android:id="@+id/deleteDraw"
+            android:icon="@drawable/list_winners"
+            android:title="Eliminar sorteos" />
+
     </group>
-
-    <item android:title="@string/perfil">
-
+    <item android:title="">
         <menu>
-
             <group android:checkableBehavior="single">
-
-                <item
-                    android:id="@+id/profileSeller"
-                    android:icon="@drawable/icon_profile"
-                    android:title="@string/mi_perfil" />
-
                 <item
                     android:id="@+id/log_out"
                     android:icon="@drawable/log_out_icon"
                     android:title="@string/cerrar_sesi_n" />
-
             </group>
         </menu>
     </item>
-
 </menu>

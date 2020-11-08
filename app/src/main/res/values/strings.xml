@@ -81,4 +81,8 @@
     <string name="serie">Serie:</string>
     <string name="number">Número:</string>
     <string name="sell">Vender</string>
+    <string name="logout">logoutTitleStrng</string>
+    <string name="agregar_n_meros_ganadores">Agregar números ganadores</string>
+    <string name="delete_draw">Eliminar Sorteo</string>
+    <string name="delete">Eliminar</string>
 </resources>
