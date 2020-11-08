@@ -9,6 +9,7 @@ import com.google.firebase.database.*
 import com.mobile.lotterysmartapp.R
 import com.mobile.lotterysmartapp.model.Constants
 import com.mobile.lotterysmartapp.model.User
+import kotlinx.android.synthetic.main.activity_profile_seller.*
 import kotlinx.android.synthetic.main.activity_profile_user.*
 
 class ProfileSellerActivity : AppCompatActivity() {
@@ -42,7 +43,7 @@ class ProfileSellerActivity : AppCompatActivity() {
     private fun modifyUserSeller(){
         var intent = Intent()
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        buttonModifyUserProfile.setOnClickListener{
+        buttonModifySellerProfile.setOnClickListener{
             intent = Intent(this, ModifySellerActivity::class.java)
             startActivity(intent)
         }
@@ -67,9 +68,8 @@ class ProfileSellerActivity : AppCompatActivity() {
                     val user = s.getValue(User::class.java)
                     if (user != null) {
                         tempUser = user
-                        nameValueLbl.text = tempUser.name
-                        emailValueLbl.text = tempUser.email
-                        //Put coordinates here
+                        nameSellerValueLbl.text = tempUser.name
+                        emailSellerValueLbl.text = tempUser.email
                     }
                 }
             }

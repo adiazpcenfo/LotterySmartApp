@@ -20,7 +20,6 @@ class ModifySellerActivity : AppCompatActivity() {
     private lateinit var query: Query
     private lateinit var tempUser: User
     private var email: String? = null
-    private val userType = com.mobile.lotterysmartapp.model.UserType.SELLER.type
     private val nullData = "No se ha modificado la información."
     private val nullAlert = "¡No hay datos para modificar!"
     private val saveData = "Se guardaron los nuevos datos."
@@ -76,14 +75,14 @@ class ModifySellerActivity : AppCompatActivity() {
      * @author Jimena Vega
      */
     private fun getData() {
-        buttonModifyUser.setOnClickListener {
+        buttonModifySeller.setOnClickListener {
             if (!textNameModifySeller.text.toString()
-                    .isBlank() && !textMiddleNameModifyUser.text.toString().isBlank()
+                    .isBlank()
             ) {
                 modifyNameSeller()
                 toProfile()
             } else {
-                alert(nullAlert, nullData)
+                toProfile()
             }
 
         }
@@ -101,7 +100,7 @@ class ModifySellerActivity : AppCompatActivity() {
                 tempUser.email,
                 textNameModifySeller.text.toString(),
                 tempUser.middleName,
-                userType,
+                tempUser.userType,
                 tempUser.coordinatesX,
                 tempUser.coordinatesY
             )

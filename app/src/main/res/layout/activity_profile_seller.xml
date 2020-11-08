@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="168dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="152dp"
         android:layout_marginEnd="168dp"
         android:text="@string/perfil"
         android:textSize="30sp"
@@ -22,38 +22,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="350dp"
-        android:layout_height="600dp"
+        android:layout_height="368dp"
         android:background="#C8FFFFFF"
         android:backgroundTint="#C8FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.627"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profileLbl2"
-        app:layout_constraintVertical_bias="0.396">
-
-        <TextView
-            android:id="@+id/locationSellerLbl"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:text="@string/ubicaci_n_de_su_puesto"
-            android:textColor="@color/profileText"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/emailSellerValueLbl" />
-
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/mapProfileSeller"
-            android:layout_width="314dp"
-            android:layout_height="150dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/locationSellerLbl" />
+        app:layout_constraintVertical_bias="0.238">
 
         <TextView
             android:id="@+id/emailSellerLbl"
@@ -94,34 +71,19 @@
             app:layout_constraintTop_toBottomOf="@+id/nameSellerLbl" />
 
         <Button
-            android:id="@+id/buttonModifyUserProfile2"
+            android:id="@+id/buttonModifySellerProfile"
             android:layout_width="314dp"
             android:layout_height="60dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="24dp"
             android:background="@drawable/custom_search_seller_btn"
-            android:text="@string/modificar_perfil"
+            android:text="@string/modificar_informaci_n"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.555"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonModifyLocation" />
-
-        <Button
-            android:id="@+id/buttonModifyLocation"
-            android:layout_width="314dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/green_btn"
-            android:text="Modificar ubicación"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.555"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mapProfileSeller" />
+            app:layout_constraintTop_toBottomOf="@+id/emailSellerValueLbl" />
 
         <TextView
             android:id="@+id/emailSellerValueLbl"

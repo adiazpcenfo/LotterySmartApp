@@ -23,7 +23,7 @@
         android:layout_width="314dp"
         android:layout_height="60dp"
         android:background="@drawable/custom_search_seller_btn"
-        android:text="@string/modificar_perfil"
+        android:text="@string/modificar_informaci_n"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:textSize="20sp"
