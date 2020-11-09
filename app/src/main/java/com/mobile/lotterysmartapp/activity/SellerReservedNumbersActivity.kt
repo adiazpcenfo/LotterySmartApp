@@ -4,11 +4,13 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.ListView
 import com.google.firebase.database.*
 import com.mobile.lotterysmartapp.R
 import com.mobile.lotterysmartapp.model.Constants
 import com.mobile.lotterysmartapp.model.Inventory
+import kotlinx.android.synthetic.main.activity_seller_reserved_numbers.*
 import java.util.ArrayList
 
 class SellerReservedNumbersActivity : AppCompatActivity() {
@@ -32,6 +34,7 @@ class SellerReservedNumbersActivity : AppCompatActivity() {
         inventoryList = arrayListOf()
         reservedList = arrayListOf()
         listView = findViewById(R.id.reservedList)
+        titleLayout.visibility = View.INVISIBLE
 
         preferences = getSharedPreferences(getString(R.string.preferences_file), Context.MODE_PRIVATE)
         email = preferences.getString(Constants.EMAIL, null)
@@ -39,6 +42,7 @@ class SellerReservedNumbersActivity : AppCompatActivity() {
         inventoryReference = FirebaseDatabase.getInstance().getReference("Inventory")
 
         loadTable()
+
     }
 
     /**
@@ -77,6 +81,8 @@ class SellerReservedNumbersActivity : AppCompatActivity() {
                     }
                 }
 
+                showLabel()
+
                 val adapter =
                     ReservedListAdapter(
                         this@SellerReservedNumbersActivity,
@@ -88,5 +94,23 @@ class SellerReservedNumbersActivity : AppCompatActivity() {
 
             }
         })
+    }
+
+    /**
+     *Show title if reservedList is empty or show list if it has data
+     *
+     * @author Josue Calderón Varela
+     */
+    fun showLabel(){
+
+        if (reservedList.size == 0){
+
+            titleLayout.visibility = View.VISIBLE
+
+        }else{
+
+            titleLayout.visibility = View.INVISIBLE
+
+        }
     }
 }
