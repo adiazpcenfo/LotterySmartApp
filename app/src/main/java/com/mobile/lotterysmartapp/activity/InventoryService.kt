@@ -172,7 +172,7 @@ class InventoryService (){
 
                     for(activeInventory in inventoryActiveList){
                         if(activeInventory.userEmail == inventoryO.sellerEmail && activeInventory.number==inventoryO.number &&
-                            activeInventory.drawName == inventoryO.drawName
+                            activeInventory.drawName == inventoryO.drawName && activeInventory.series == inventoryO.series
                         ){
 
                             var totalFractions =  activeInventory.availableFractions + inventoryO.fractions
