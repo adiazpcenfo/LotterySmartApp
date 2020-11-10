@@ -7,6 +7,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.mobile.lotterysmartapp.R
 import com.mobile.lotterysmartapp.model.Constants
+import com.mobile.lotterysmartapp.model.Draw
 import com.mobile.lotterysmartapp.model.Inventory
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -21,8 +22,12 @@ class InventoryService (){
 
     private lateinit var database: DatabaseReference
     private lateinit var databaseInv: DatabaseReference
+    private lateinit var inventoryReference: DatabaseReference
+    private lateinit var drawReference: DatabaseReference
     private lateinit var inventoryReservedList: ArrayList<Inventory>
     private lateinit var inventoryActiveList: ArrayList<Inventory>
+    //private lateinit var drawInventoryList: ArrayList<Inventory>
+
 
     private val MESSAGE_ERROR :String = "Error"
     private val FRACTIONS_NUMBER: Int = 10
@@ -211,6 +216,76 @@ class InventoryService (){
             }
 
         }
+    }
+
+    /**
+     *Delete Draw inventory from database
+     * Delete Draw from Database
+     *
+     * @author Allan Diaz
+     */
+    fun deleteDrawInventory(drawName:String){
+        deleteDrawInventoryData(drawName)
+        deleteDrawData(drawName)
+    }
+
+    /**
+     *Load all inventories from database
+     *
+     * @author Allan Diaz
+     */
+    private fun deleteDrawInventoryData(drawDes:String) {
+
+        inventoryReference = FirebaseDatabase.getInstance().getReference("Inventory")
+
+        inventoryReference.addValueEventListener(object : ValueEventListener {
+
+            override fun onCancelled(error: DatabaseError) {}
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                //drawInventoryList.clear()
+
+                for (inventory in snapshot.children) {
+
+
+                    val inventoryData = inventory.getValue(Inventory::class.java)
+
+                    if (inventoryData != null && inventoryData.drawName==drawDes) {
+
+                        //drawInventoryList.add(inventoryData)
+                        inventory.ref.removeValue()
+
+                    }
+                }
+            }
+        })
+    }
+
+    private fun deleteDrawData(drawDes:String) {
+
+        drawReference = FirebaseDatabase.getInstance().getReference("Draw")
+
+        drawReference.addValueEventListener(object : ValueEventListener {
+
+            override fun onCancelled(error: DatabaseError) {}
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                for (draw in snapshot.children) {
+
+
+                    val drawData = draw.getValue(Draw::class.java)
+
+                    if (drawData != null && drawData.name==drawDes) {
+
+                        //drawInventoryList.add(inventoryData)
+                        draw.ref.removeValue()
+
+                    }
+                }
+            }
+        })
     }
 
 }
