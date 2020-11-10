@@ -202,7 +202,8 @@ class InventoryService (){
 
 
             for(activeInventory in inventoryList){
-                if(activeInventory.userEmail == buyerReservedNumber.sellerEmail && activeInventory.number==buyerReservedNumber.number){
+                if(activeInventory.userEmail == buyerReservedNumber.sellerEmail && activeInventory.number==buyerReservedNumber.number
+                    && activeInventory.series==buyerReservedNumber.series && activeInventory.drawName==buyerReservedNumber.drawName){
 
                     var totalFractions =  activeInventory.availableFractions + buyerReservedNumber.fractions
                     activeInventory.availableFractions= totalFractions
