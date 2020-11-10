@@ -1,11 +1,13 @@
 package com.mobile.lotterysmartapp.activity
 
+import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.Toast
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -36,6 +38,7 @@ class DeleteDrawActivity : AppCompatActivity() {
     private val errorMessage = "Sucedió un error al Eliminar. Por favor inténtelo de nuevo."
     private val sucessfullDelete = "Se ha eliminado el sorteo con éxito. "
     private lateinit var drawSpinner: Spinner
+    val inventoryService = InventoryService()
 
     /**
      * On Create method for Modify Draw Results Activity.
@@ -69,7 +72,32 @@ class DeleteDrawActivity : AppCompatActivity() {
      * @author Franklin Cardenas
      */
     private fun setupDeleteButton() {
-        deleteDrawButton.setOnClickListener {}
+        deleteDrawButton.setOnClickListener {
+
+            val builder = AlertDialog.Builder(this)
+
+            builder.setTitle("Eliminar Sorteo")
+            builder.setMessage("Seleccione aceptar para confirmar que desea eliminar el sorteo.")
+
+            builder.setPositiveButton("Aceptar") { _, _ ->
+
+                var drawName:String = drawSpinner.selectedItem.toString()
+                inventoryService.deleteDrawInventory(drawName)
+
+                Toast.makeText(this,"Devuelto", Toast.LENGTH_SHORT).show()
+
+            }
+
+            builder.setNegativeButton("Cancelar") { _, _ ->
+
+                Toast.makeText(this,"Cancelar", Toast.LENGTH_SHORT).show()
+
+            }
+
+            builder.show()
+
+
+        }
     }
 
     /**
